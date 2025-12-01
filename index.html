@@ -851,6 +851,7 @@
                 <a class="nav-link" onclick="switchPage('deals')">🛍️ Offerte</a>
                 <a class="nav-link" onclick="switchPage('articles')">📰 Articoli</a>
                 <a class="nav-link" onclick="switchPage('reviews')">⭐ Recensioni</a>
+                <a class="nav-link" onclick="switchPage('videos')">📹 Video</a>
                 <a class="nav-link" onclick="switchPage('news')">🔔 Tech News</a>
                 <button class="btn-small" onclick="toggleTheme()">🌙</button>
             </nav>
@@ -871,28 +872,28 @@
         <div id="home-page" class="page">
             <h2 style="font-size: 28px; margin-bottom: 30px; text-align: center;">Benvenuto su LamenDino</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px;">
-                <div class="card" style="cursor: auto;">
+                <div class="card" onclick="switchPage('deals')" style="cursor: pointer;">
                     <div style="padding: 30px; text-align: center; color: var(--primary-color);">
                         <div style="font-size: 48px; margin-bottom: 15px;">🎁</div>
                         <h3 style="margin-bottom: 10px;">Migliori Offerte</h3>
                         <p style="color: var(--text-light);">Selezionati quotidianamente per te gli sconti più convenienti</p>
                     </div>
                 </div>
-                <div class="card" style="cursor: auto;">
+                <div class="card" onclick="switchPage('reviews')" style="cursor: pointer;">
                     <div style="padding: 30px; text-align: center; color: var(--secondary-color);">
                         <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
                         <h3 style="margin-bottom: 10px;">Recensioni Dettagliate</h3>
                         <p style="color: var(--text-light);">Analisi complete con pro e contro di ogni prodotto</p>
                     </div>
                 </div>
-                <div class="card" style="cursor: auto;">
+                <div class="card" onclick="switchPage('videos')" style="cursor: pointer;">
                     <div style="padding: 30px; text-align: center; color: var(--success-color);">
-                        <div style="font-size: 48px; margin-bottom: 15px;">🔗</div>
-                        <h3 style="margin-bottom: 10px;">Link Amazon Diretti</h3>
-                        <p style="color: var(--text-light);">Acquista direttamente con un click dai nostri link</p>
+                        <div style="font-size: 48px; margin-bottom: 15px;">📹</div>
+                        <h3 style="margin-bottom: 10px;">Video Recensioni</h3>
+                        <p style="color: var(--text-light);">Le migliori video recensioni da YouTube</p>
                     </div>
                 </div>
-                <div class="card" style="cursor: auto;">
+                <div class="card" onclick="switchPage('news')" style="cursor: pointer;">
                     <div style="padding: 30px; text-align: center; color: var(--accent-purple);">
                         <div style="font-size: 48px; margin-bottom: 15px;">🔔</div>
                         <h3 style="margin-bottom: 10px;">Tech News</h3>
@@ -933,6 +934,19 @@
             </div>
             <div id="newsGrid" class="news-grid"></div>
         </div>
+
+        <!-- Videos Page -->
+        <div id="videos-page" class="page" style="display: none;">
+            <h2 style="font-size: 28px; margin-bottom: 30px;">📹 Video Recensioni da YouTube</h2>
+            <div style="margin-bottom: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="news-filter active" data-filter="all" onclick="filterVideos('all')">Tutti</button>
+                <button class="news-filter" data-filter="smartphone" onclick="filterVideos('smartphone')">Smartphone</button>
+                <button class="news-filter" data-filter="computer" onclick="filterVideos('computer')">Computer</button>
+                <button class="news-filter" data-filter="tablet" onclick="filterVideos('tablet')">Tablet</button>
+                <button class="news-filter" data-filter="audio" onclick="filterVideos('audio')">Audio</button>
+            </div>
+            <div id="videosGrid" class="news-grid"></div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -950,6 +964,70 @@
         let dealsData = [];
         let articlesData = [];
         let currentPage = 'home';
+
+        // Video Reviews Data
+        const videosData = [
+            {
+                id: 1,
+                product: "Sony WH-1000XM5",
+                youtuber: "TechChannel",
+                views: "2.3M",
+                rating: 4.8,
+                videoId: "dQw4w9WgXcQ",
+                category: "audio",
+                thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+            },
+            {
+                id: 2,
+                product: "iPhone 16 Pro Max",
+                youtuber: "Tech Reviews Italia",
+                views: "1.8M",
+                rating: 4.9,
+                videoId: "jNQXAC9IVRw",
+                category: "smartphone",
+                thumbnail: "https://img.youtube.com/vi/jNQXAC9IVRw/maxresdefault.jpg"
+            },
+            {
+                id: 3,
+                product: "Samsung Galaxy S25",
+                youtuber: "AndroidLover",
+                views: "1.5M",
+                rating: 4.7,
+                videoId: "9bZkp7q19f0",
+                category: "smartphone",
+                thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg"
+            },
+            {
+                id: 4,
+                product: "MacBook Pro M4",
+                youtuber: "Mac Addict",
+                views: "890K",
+                rating: 4.8,
+                videoId: "nfKPoq8FB3E",
+                category: "computer",
+                thumbnail: "https://img.youtube.com/vi/nfKPoq8FB3E/maxresdefault.jpg"
+            },
+            {
+                id: 5,
+                product: "iPad Pro 2025",
+                youtuber: "Apple Insider",
+                views: "1.2M",
+                rating: 4.6,
+                videoId: "OPf0YbXqDm0",
+                category: "tablet",
+                thumbnail: "https://img.youtube.com/vi/OPf0YbXqDm0/maxresdefault.jpg"
+            },
+            {
+                id: 6,
+                product: "Pixel 9 Pro",
+                youtuber: "Google Fan",
+                views: "950K",
+                rating: 4.7,
+                videoId: "ZbB7-snyS2Q",
+                category: "smartphone",
+                thumbnail: "https://img.youtube.com/vi/ZbB7-snyS2Q/maxresdefault.jpg"
+            }
+        ];
 
         // News Data
         const newsData = [
@@ -1031,6 +1109,7 @@
                 renderArticles();
                 renderReviews();
                 renderNews();
+                renderVideos();
             } catch (error) {
                 console.error('Errore:', error);
             }
@@ -1354,10 +1433,99 @@
             window.open(`https://www.amazon.it/s?k=${encodeURIComponent(productName)}&tag=lamendino-21`, '_blank');
         }
 
+        function renderVideos(filter = 'all') {
+            const grid = document.getElementById('videosGrid');
+            const filtered = filter === 'all' ? videosData : videosData.filter(v => v.category === filter);
+            
+            grid.innerHTML = filtered.map(video => `
+                <div class="card news-card" onclick="openVideoModal(${video.id})">
+                    <div style="position: relative; width: 100%; padding-bottom: 56.25%; background: #000;">
+                        <img src="${video.thumbnail}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,0,0,0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">▶</div>
+                    </div>
+                    <div class="news-header">
+                        <h3 class="news-title">${video.product}</h3>
+                        <p class="news-excerpt">da ${video.youtuber}</p>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-author">👁️ ${video.views}</span>
+                        <span style="color: var(--primary-color); font-weight: 700;">⭐ ${video.rating}/5</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openVideoModal(videoId) {
+            const video = videosData.find(v => v.id === videoId);
+            if (!video) return;
+
+            document.getElementById('modalTitle').textContent = video.product;
+            document.getElementById('modalBody').innerHTML = `
+                <div style="position: relative; width: 100%; padding-bottom: 56.25%; margin-bottom: 25px;">
+                    <iframe 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;"
+                        src="https://www.youtube.com/embed/${video.videoId}"
+                        title="${video.product}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-label">Youtuber</div>
+                        <div class="spec-value">${video.youtuber}</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Visualizzazioni</div>
+                        <div class="spec-value">${video.views}</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Rating</div>
+                        <div class="spec-value" style="color: var(--primary-color);">⭐ ${video.rating}/5</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Categoria</div>
+                        <div class="spec-value">${video.category}</div>
+                    </div>
+                </div>
+
+                <h2>Informazioni Video</h2>
+                <p>Questo video presenta una recensione completa di <strong>${video.product}</strong> da parte di <strong>${video.youtuber}</strong>.</p>
+                <p>Con oltre <strong>${video.views}</strong> visualizzazioni e una valutazione di <strong>${video.rating}/5</strong>, è una delle recensioni più apprezzate su YouTube.</p>
+
+                <h2>Perché guardare questo video?</h2>
+                <ul style="padding-left: 25px; line-height: 1.8;">
+                    <li>Analisi dettagliata del prodotto</li>
+                    <li>Confronti con modelli competitor</li>
+                    <li>Test di performance e usabilità</li>
+                    <li>Opinione onesta e verificata dalla community</li>
+                    <li>Informazioni utili per l'acquisto</li>
+                </ul>
+
+                <div class="modal-amazon-link">
+                    <a href="#" target="_blank" onclick="event.preventDefault(); window.open('https://www.amazon.it/s?k=${encodeURIComponent(video.product)}&tag=lamendino-21', '_blank');">
+                        🛒 ACQUISTA SU AMAZON - ${video.product}
+                    </a>
+                </div>
+
+                <h2>Video Correlati</h2>
+                <p>Se hai trovato utile questo video, ti consigliamo di guardare anche le altre recensioni della nostra collezione!</p>
+            `;
+            document.getElementById('modal').classList.add('show');
+        }
+
         function filterNews(category) {
             document.querySelectorAll('.news-filter').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
             renderNews(category);
+        }
+
+        function filterVideos(category) {
+            document.querySelectorAll('.news-filter').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderVideos(category);
         }
 
         function closeModal() {
