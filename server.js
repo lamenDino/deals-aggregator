@@ -28,6 +28,7 @@ let lastUpdateTime = new Date();
 
 console.log('✅ Groq API inizializzata');
 console.log('🔑 API Key caricata:', process.env.GROQ_API_KEY.substring(0, 20) + '...');
+console.log('🤖 Modello: llama-3.3-70b-versatile');
 
 // === FUNZIONI PER GENERARE CONTENUTI CON GROQ ===
 
@@ -54,7 +55,7 @@ async function generateProductDescription(productName, category) {
 async function generateArticle(topic, category) {
     try {
         const response = await groq.chat.completions.create({
-            model: "mixtral-8x7b-32768",
+            model: "llama-3.3-70b-versatile",
             messages: [
                 {
                     role: "user",
