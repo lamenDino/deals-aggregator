@@ -34,7 +34,7 @@ console.log('🔑 API Key caricata:', process.env.GROQ_API_KEY.substring(0, 20) 
 async function generateProductDescription(productName, category) {
     try {
         const response = await groq.chat.completions.create({
-            model: "mixtral-8x7b-32768",
+            model: "llama-3.3-70b-versatile",
             messages: [
                 {
                     role: "user",
