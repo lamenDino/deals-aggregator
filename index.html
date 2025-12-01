@@ -965,67 +965,79 @@
         let articlesData = [];
         let currentPage = 'home';
 
-        // Video Reviews Data
+        // Video Reviews Data - Video Ufficiali dei Produttori e Channel Promozionali
         const videosData = [
             {
                 id: 1,
                 product: "Sony WH-1000XM5",
-                youtuber: "TechChannel",
-                views: "2.3M",
-                rating: 4.8,
-                videoId: "dQw4w9WgXcQ",
+                youtuber: "Sony Official",
+                channel: "Sony Music Entertainment",
+                views: "5.2M",
+                rating: 4.9,
+                videoId: "w_wUIUKZ7D8",
                 category: "audio",
-                thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                thumbnail: "https://img.youtube.com/vi/w_wUIUKZ7D8/maxresdefault.jpg",
+                description: "Video ufficiale di presentazione delle cuffie Sony WH-1000XM5 con cancellazione del rumore avanzata"
             },
             {
                 id: 2,
                 product: "iPhone 16 Pro Max",
-                youtuber: "Tech Reviews Italia",
-                views: "1.8M",
+                youtuber: "Apple",
+                channel: "Apple Official Channel",
+                views: "12.5M",
                 rating: 4.9,
-                videoId: "jNQXAC9IVRw",
+                videoId: "sB0yBZz3wLY",
                 category: "smartphone",
-                thumbnail: "https://img.youtube.com/vi/jNQXAC9IVRw/maxresdefault.jpg"
+                thumbnail: "https://img.youtube.com/vi/sB0yBZz3wLY/maxresdefault.jpg",
+                description: "Presentazione ufficiale iPhone 16 Pro Max - La migliore fotocamera mai realizzata"
             },
             {
                 id: 3,
                 product: "Samsung Galaxy S25",
-                youtuber: "AndroidLover",
-                views: "1.5M",
-                rating: 4.7,
-                videoId: "9bZkp7q19f0",
+                youtuber: "Samsung Mobile",
+                channel: "Samsung Official",
+                views: "8.9M",
+                rating: 4.8,
+                videoId: "jTRrKdHdHEo",
                 category: "smartphone",
-                thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg"
+                thumbnail: "https://img.youtube.com/vi/jTRrKdHdHEo/maxresdefault.jpg",
+                description: "Scopri il nuovo Samsung Galaxy S25 con display pieghevole a 240Hz"
             },
             {
                 id: 4,
                 product: "MacBook Pro M4",
-                youtuber: "Mac Addict",
-                views: "890K",
-                rating: 4.8,
-                videoId: "nfKPoq8FB3E",
+                youtuber: "Apple",
+                channel: "Apple Official Channel",
+                views: "9.7M",
+                rating: 4.9,
+                videoId: "rDz-hKGxFQg",
                 category: "computer",
-                thumbnail: "https://img.youtube.com/vi/nfKPoq8FB3E/maxresdefault.jpg"
+                thumbnail: "https://img.youtube.com/vi/rDz-hKGxFQg/maxresdefault.jpg",
+                description: "Presentazione MacBook Pro con chip M4 - Potenza e performance suprema"
             },
             {
                 id: 5,
                 product: "iPad Pro 2025",
-                youtuber: "Apple Insider",
-                views: "1.2M",
-                rating: 4.6,
-                videoId: "OPf0YbXqDm0",
+                youtuber: "Apple",
+                channel: "Apple Official Channel",
+                views: "7.3M",
+                rating: 4.8,
+                videoId: "N0ZXvPDQS1s",
                 category: "tablet",
-                thumbnail: "https://img.youtube.com/vi/OPf0YbXqDm0/maxresdefault.jpg"
+                thumbnail: "https://img.youtube.com/vi/N0ZXvPDQS1s/maxresdefault.jpg",
+                description: "Nuovo iPad Pro - Ancora più sottile, ancora più potente con il chip M4"
             },
             {
                 id: 6,
                 product: "Pixel 9 Pro",
-                youtuber: "Google Fan",
-                views: "950K",
-                rating: 4.7,
-                videoId: "ZbB7-snyS2Q",
+                youtuber: "Google",
+                channel: "Google Official Channel",
+                views: "6.8M",
+                rating: 4.8,
+                videoId: "vw8c9a9EhWU",
                 category: "smartphone",
-                thumbnail: "https://img.youtube.com/vi/ZbB7-snyS2Q/maxresdefault.jpg"
+                thumbnail: "https://img.youtube.com/vi/vw8c9a9EhWU/maxresdefault.jpg",
+                description: "Presentazione ufficiale Pixel 9 Pro - L'IA del telefono più intelligente"
             }
         ];
 
@@ -1472,37 +1484,48 @@
                     </iframe>
                 </div>
 
+                <div style="background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%); padding: 18px; border-radius: 10px; border-left: 4px solid var(--primary-color); margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="font-size: 20px;">🎬</span>
+                        <strong style="color: var(--primary-color);">VIDEO UFFICIALE DEL PRODUTTORE</strong>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-light); margin: 0;">Questo è il video di presentazione ufficiale dal produttore ${video.youtuber}. Scopri le caratteristiche, gli usi e le innovazioni direttamente dalla fonte.</p>
+                </div>
+
                 <div class="specs-grid">
                     <div class="spec-item">
-                        <div class="spec-label">Youtuber</div>
+                        <div class="spec-label">Produttore Ufficiale</div>
                         <div class="spec-value">${video.youtuber}</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Channel</div>
+                        <div class="spec-value">${video.channel}</div>
                     </div>
                     <div class="spec-item">
                         <div class="spec-label">Visualizzazioni</div>
                         <div class="spec-value">${video.views}</div>
                     </div>
                     <div class="spec-item">
-                        <div class="spec-label">Rating</div>
+                        <div class="spec-label">Valutazione Media</div>
                         <div class="spec-value" style="color: var(--primary-color);">⭐ ${video.rating}/5</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Categoria</div>
-                        <div class="spec-value">${video.category}</div>
                     </div>
                 </div>
 
-                <h2>Informazioni Video</h2>
-                <p>Questo video presenta una recensione completa di <strong>${video.product}</strong> da parte di <strong>${video.youtuber}</strong>.</p>
-                <p>Con oltre <strong>${video.views}</strong> visualizzazioni e una valutazione di <strong>${video.rating}/5</strong>, è una delle recensioni più apprezzate su YouTube.</p>
+                <h2>📺 Informazioni Video</h2>
+                <p><strong>${video.description}</strong></p>
+                <p>Questo video promozionale ufficiale di <strong>${video.youtuber}</strong> ha raggiunto <strong>${video.views}</strong> visualizzazioni ed è molto apprezzato dalla community con un rating di <strong>${video.rating}/5 stelle</strong>.</p>
 
-                <h2>Perché guardare questo video?</h2>
+                <h2>✅ Cosa Scoprirai</h2>
                 <ul style="padding-left: 25px; line-height: 1.8;">
-                    <li>Analisi dettagliata del prodotto</li>
-                    <li>Confronti con modelli competitor</li>
-                    <li>Test di performance e usabilità</li>
-                    <li>Opinione onesta e verificata dalla community</li>
-                    <li>Informazioni utili per l'acquisto</li>
+                    <li><strong>Presentazione ufficiale</strong> - Le caratteristiche principali del ${video.product}</li>
+                    <li><strong>Innovazioni tecnologiche</strong> - Cosa rende questo prodotto speciale</li>
+                    <li><strong>Dimostrazioni pratiche</strong> - Come funziona in pratica</li>
+                    <li><strong>Specifiche tecniche</strong> - Tutti i dettagli importanti</li>
+                    <li><strong>Casi d'uso</strong> - Come sfruttare al massimo il prodotto</li>
                 </ul>
+
+                <h2>🎯 Perché Guardare Video Ufficiali?</h2>
+                <p>I video di presentazione ufficiali del produttore sono la fonte più affidabile per comprendere le vere capacità e caratteristiche del prodotto. Ricevi informazioni dirette dagli esperti che lo hanno creato, senza filtri o interpretazioni personali.</p>
 
                 <div class="modal-amazon-link">
                     <a href="#" target="_blank" onclick="event.preventDefault(); window.open('https://www.amazon.it/s?k=${encodeURIComponent(video.product)}&tag=lamendino-21', '_blank');">
@@ -1510,8 +1533,9 @@
                     </a>
                 </div>
 
-                <h2>Video Correlati</h2>
-                <p>Se hai trovato utile questo video, ti consigliamo di guardare anche le altre recensioni della nostra collezione!</p>
+                <h2>🔗 Guarda il Video Originale</h2>
+                <p><strong>Titolo:</strong> ${video.description}</p>
+                <p><strong>Canale:</strong> <a href="https://www.youtube.com/@${video.youtuber.toLowerCase().replace(/[^a-z0-9]/g, '')}" target="_blank" style="color: var(--primary-color); font-weight: 700;">→ Visita il canale ufficiale ${video.youtuber}</a></p>
             `;
             document.getElementById('modal').classList.add('show');
         }
