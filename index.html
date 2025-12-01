@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deals Aggregator - Offerte Giornaliere</title>
+    <title>Le Offerte di LamenDino - Migliori Sconti Giornalieri</title>
     <style>
         :root {
             --primary-color: #2196F3;
@@ -53,6 +53,18 @@
         body.dark-mode .tab-button.active {
             border-bottom-color: var(--primary-color);
             color: var(--primary-color);
+        }
+
+        body.dark-mode .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+
+        body.dark-mode .hero-text {
+            color: #ffffff;
+        }
+
+        body.dark-mode .hero-description {
+            color: #aaa;
         }
 
         /* Header */
@@ -111,6 +123,33 @@
 
         .btn-small:active {
             transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
         }
 
         /* Container */
@@ -242,6 +281,8 @@
             color: white;
             position: relative;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
         }
 
         .product-image::after {
@@ -609,6 +650,10 @@
                 justify-content: center;
             }
 
+            .hero-text {
+                font-size: 24px;
+            }
+
             .tabs {
                 gap: 5px;
             }
@@ -631,6 +676,14 @@
         @media (max-width: 480px) {
             .header-title {
                 font-size: 18px;
+            }
+
+            .hero-text {
+                font-size: 20px;
+            }
+
+            .hero-description {
+                font-size: 14px;
             }
 
             .tab-button {
@@ -658,7 +711,7 @@
         <div class="header-content">
             <div class="header-title">
                 <span>🎁</span>
-                <span>Deals Aggregator</span>
+                <span>Le Offerte di LamenDino</span>
             </div>
             <div class="header-controls">
                 <button class="btn-small" id="themeToggle" title="Cambia tema">
@@ -667,6 +720,14 @@
             </div>
         </div>
     </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="hero-text">Le Migliori Offerte Giornaliere</h1>
+            <p class="hero-description">Scopri i migliori sconti su Amazon aggiornati ogni giorno. Prodotti selezionati da LamenDino con i migliori prezzi e le più grandi riduzioni di prezzo del mercato.</p>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <div class="container">
@@ -777,8 +838,7 @@
 
             grid.innerHTML = filtered.map(deal => `
                 <div class="card product-card" onclick="openProductModal(${deal.id})">
-                    <div class="product-image">
-                        ${getCategoryIcon(deal.category)}
+                    <div class="product-image" style="background-image: url('${deal.image}');">
                         <div class="discount-badge">-${deal.discount}%</div>
                         <div class="category-badge">${deal.category}</div>
                     </div>
@@ -845,8 +905,8 @@
             const modal = document.getElementById('modal');
             document.getElementById('modalTitle').textContent = deal.title;
             document.getElementById('modalBody').innerHTML = `
-                <div style="text-align: center; margin-bottom: 20px; font-size: 48px;">
-                    ${getCategoryIcon(deal.category)}
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="${deal.image}" style="max-width: 300px; max-height: 300px; border-radius: 8px; object-fit: cover;">
                 </div>
                 <p><strong>Categoria:</strong> ${deal.category}</p>
                 <p><strong>Descrizione:</strong> ${deal.description}</p>
