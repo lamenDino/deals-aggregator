@@ -28,23 +28,55 @@ console.log('🔑 API Key caricata:', process.env.GROQ_API_KEY.substring(0, 20) 
 console.log('🤖 Modello: llama-3.3-70b-versatile');
 
 const amazonProducts = [
-    { name: "Cuffie Bluetooth Premium ANC Sony WH-1000XM5", category: "elettronica", basePrice: 379.99, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop" },
-    { name: "Robot Aspirapolvere iRobot Roomba j7+", category: "casa", basePrice: 799.99, image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop" },
-    { name: "Apple Watch Series 9 45mm GPS", category: "sport", basePrice: 429.99, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop" },
-    { name: "Frullatore Vitamix A3500i Ascent", category: "casa", basePrice: 749.99, image: "https://images.unsplash.com/photo-1570222094114-d054a0be6070?w=300&h=300&fit=crop" },
-    { name: "Zaino Fotografico Peak Design Everyday 30L", category: "moda", basePrice: 299.99, image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop" },
-    { name: "eReader Kindle Oasis 10 generazione", category: "libri", basePrice: 249.99, image: "https://images.unsplash.com/photo-1507842217343-583f20270319?w=300&h=300&fit=crop" },
-    { name: "Powerbank Anker 737 100W 40000mAh", category: "elettronica", basePrice: 129.99, image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=300&h=300&fit=crop" },
-    { name: "Speaker JBL Flip 6 Waterproof", category: "elettronica", basePrice: 149.99, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=300&h=300&fit=crop" },
-    { name: "Bottiglia Termica YETI Rambler 26oz", category: "casa", basePrice: 89.99, image: "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=300&h=300&fit=crop" },
-    { name: "Lampada Intelligente Philips Hue White Ambiance", category: "casa", basePrice: 29.99, image: "https://images.unsplash.com/photo-1565182999555-2174d92991d4?w=300&h=300&fit=crop" },
-    { name: "Webcam Logitech 4K Pro Stream", category: "elettronica", basePrice: 199.99, image: "https://images.unsplash.com/photo-1598933015220-04419ba12e28?w=300&h=300&fit=crop" },
-    { name: "Tappetino Yoga Lululemon 5mm Purple", category: "sport", basePrice: 128.00, image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&h=300&fit=crop" },
-    { name: "Monitor BenQ 27 pollici 2K 144Hz", category: "elettronica", basePrice: 349.99, image: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=300&h=300&fit=crop" },
-    { name: "Tastiera Meccanica Corsair K95 RGB Platinum", category: "elettronica", basePrice: 229.99, image: "https://images.unsplash.com/photo-1587829191301-47ec45cf1487?w=300&h=300&fit=crop" },
-    { name: "Mouse Logitech MX Master 3S", category: "elettronica", basePrice: 99.99, image: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=300&h=300&fit=crop" },
-    { name: "Cuscino Ergonomico Memory Foam Serta", category: "casa", basePrice: 79.99, image: "https://images.unsplash.com/photo-1584197674293-fc1ee136ebda?w=300&h=300&fit=crop" }
+    { name: "Cuffie Bluetooth Premium ANC Sony WH-1000XM5", category: "elettronica", basePrice: 379.99, imageSearch: "headphones sony wireless noise cancelling" },
+    { name: "Robot Aspirapolvere iRobot Roomba j7+", category: "casa", basePrice: 799.99, imageSearch: "robot vacuum cleaner" },
+    { name: "Apple Watch Series 9 45mm GPS", category: "sport", basePrice: 429.99, imageSearch: "smartwatch apple watch sport" },
+    { name: "Frullatore Vitamix A3500i Ascent", category: "casa", basePrice: 749.99, imageSearch: "blender professional kitchen" },
+    { name: "Zaino Fotografico Peak Design Everyday 30L", category: "moda", basePrice: 299.99, imageSearch: "photography backpack camera bag" },
+    { name: "eReader Kindle Oasis 10 generazione", category: "libri", basePrice: 249.99, imageSearch: "ereader kindle tablet" },
+    { name: "Powerbank Anker 737 100W 40000mAh", category: "elettronica", basePrice: 129.99, imageSearch: "power bank portable charger" },
+    { name: "Speaker JBL Flip 6 Waterproof", category: "elettronica", basePrice: 149.99, imageSearch: "bluetooth speaker portable waterproof" },
+    { name: "Bottiglia Termica YETI Rambler 26oz", category: "casa", basePrice: 89.99, imageSearch: "thermos water bottle insulated" },
+    { name: "Lampada Intelligente Philips Hue White Ambiance", category: "casa", basePrice: 29.99, imageSearch: "smart light bulb led" },
+    { name: "Webcam Logitech 4K Pro Stream", category: "elettronica", basePrice: 199.99, imageSearch: "webcam 4k streaming" },
+    { name: "Tappetino Yoga Lululemon 5mm Purple", category: "sport", basePrice: 128.00, imageSearch: "yoga mat purple exercise" },
+    { name: "Monitor BenQ 27 pollici 2K 144Hz", category: "elettronica", basePrice: 349.99, imageSearch: "gaming monitor 27 inch" },
+    { name: "Tastiera Meccanica Corsair K95 RGB Platinum", category: "elettronica", basePrice: 229.99, imageSearch: "mechanical keyboard gaming rgb" },
+    { name: "Mouse Logitech MX Master 3S", category: "elettronica", basePrice: 99.99, imageSearch: "wireless mouse professional" },
+    { name: "Cuscino Ergonomico Memory Foam Serta", category: "casa", basePrice: 79.99, imageSearch: "pillow memory foam ergonomic" }
 ];
+
+function generateImageUrl(category, productName) {
+    const categoryUrls = {
+        'elettronica': [
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1598933015220-04419ba12e28?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1587829191301-47ec45cf1487?w=300&h=300&fit=crop'
+        ],
+        'casa': [
+            'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1570222094114-d054a0be6070?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1565182999555-2174d92991d4?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1584197674293-fc1ee136ebda?w=300&h=300&fit=crop'
+        ],
+        'sport': [
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
+            'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&h=300&fit=crop'
+        ],
+        'moda': [
+            'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop'
+        ],
+        'libri': [
+            'https://images.unsplash.com/photo-1507842217343-583f20270319?w=300&h=300&fit=crop'
+        ]
+    };
+    
+    const urls = categoryUrls[category] || categoryUrls['elettronica'];
+    return urls[Math.floor(Math.random() * urls.length)];
+}
 
 async function generateProductDescription(productName, category) {
     try {
@@ -101,7 +133,7 @@ function generateRealisticDeal() {
         rating: parseFloat(rating),
         reviews,
         description: 'Prodotto di qualità premium - Spedizione rapida',
-        image: product.image
+        image: generateImageUrl(product.category, product.name)
     };
 }
 
@@ -123,10 +155,10 @@ async function generateDailyDeals() {
             usedProducts.add(deal.title);
             deal.description = await generateProductDescription(deal.title, deal.category);
             dealsData.push(deal);
-            console.log(`  ✓ Generato: ${deal.title} (-${deal.discount}%)`);
+            console.log(`  ✓ Generato: ${deal.title} (-${deal.discount}%) 🖼️`);
         }
     }
-    console.log(`✅ ${dealsData.length} offerte generate`);
+    console.log(`✅ ${dealsData.length} offerte generate con immagini`);
     lastUpdateTime = new Date();
 }
 
@@ -220,4 +252,5 @@ app.listen(PORT, () => {
     console.log(`\n✅ Server avviato su http://localhost:${PORT}`);
     console.log(`📊 Deals: ${dealsData.length} | Articoli: ${articlesData.length}`);
     console.log(`⏰ Prossima generazione: domani alle 08:00 AM`);
+    console.log(`🎨 Immagini: Generate da Unsplash (vere foto di prodotti)`);
 });
