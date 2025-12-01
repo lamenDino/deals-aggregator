@@ -852,6 +852,7 @@
                 <a class="nav-link" onclick="switchPage('articles')">📰 Articoli</a>
                 <a class="nav-link" onclick="switchPage('reviews')">⭐ Recensioni</a>
                 <a class="nav-link" onclick="switchPage('videos')">📹 Video</a>
+                <a class="nav-link" onclick="switchPage('converter')">🔗 Converti Link</a>
                 <a class="nav-link" onclick="switchPage('news')">🔔 Tech News</a>
                 <button class="btn-small" onclick="toggleTheme()">🌙</button>
             </nav>
@@ -946,6 +947,114 @@
                 <button class="news-filter" data-filter="audio" onclick="filterVideos('audio')">Audio</button>
             </div>
             <div id="videosGrid" class="news-grid"></div>
+        </div>
+
+        <!-- Converter Page -->
+        <div id="converter-page" class="page" style="display: none;">
+            <h2 style="font-size: 28px; margin-bottom: 30px;">🔗 Convertitore Link Affiliato</h2>
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div class="card" style="padding: 30px; cursor: auto; margin-bottom: 30px;">
+                    <div style="background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary-color); margin-bottom: 25px;">
+                        <p style="margin: 0; font-size: 15px;">
+                            📋 <strong>Incolla il link di un prodotto Amazon</strong> e riceverai automaticamente:
+                        </p>
+                        <ul style="margin: 10px 0 0 0; padding-left: 25px; font-size: 14px;">
+                            <li>✅ Link affiliato con tag <code style="background: var(--light-bg); padding: 2px 6px;">lamendino-21</code></li>
+                            <li>✅ Link accorciato via YOURLS</li>
+                            <li>✅ Informazioni prodotto (titolo, prezzo, rating, immagine)</li>
+                            <li>✅ Rilevamento automatico prodotto nuovo/usato</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 10px; color: var(--primary-color);">🔗 Incolla URL Amazon:</label>
+                        <input 
+                            type="text" 
+                            id="amazonUrlInput" 
+                            placeholder="https://www.amazon.it/dp/B0123456789..." 
+                            style="width: 100%; padding: 14px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 14px; font-family: monospace; background: var(--card-bg); color: var(--text-dark);"
+                        />
+                        <small style="display: block; margin-top: 8px; color: var(--text-light);">
+                            Supportati: amazon.it, amazon.com, amzn.to, ecc.
+                        </small>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1;">
+                            <input type="checkbox" id="shortenCheckbox" checked style="cursor: pointer;">
+                            <span style="font-weight: 500;">🔗 Accorcia link (YOURLS)</span>
+                        </label>
+                    </div>
+
+                    <button 
+                        onclick="convertAmazonLink()" 
+                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s ease;"
+                        onmouseover="this.style.transform='scale(1.02)'"
+                        onmouseout="this.style.transform='scale(1)'"
+                        id="convertBtn"
+                    >
+                        ⚡ Converti Link
+                    </button>
+
+                    <div id="converterResult" style="display: none; margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%); border-radius: 10px; border-left: 4px solid var(--success-color);">
+                        <h3 style="color: var(--success-color); margin-top: 0;">✅ Link Convertito!</h3>
+                        
+                        <div id="productInfo" style="margin: 20px 0;"></div>
+
+                        <div class="specs-grid" style="margin: 20px 0;">
+                            <div class="spec-item">
+                                <div class="spec-label">URL Originale</div>
+                                <div class="spec-value" style="font-size: 13px; word-break: break-all; font-family: monospace;" id="resultOriginal"></div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">URL Affiliato</div>
+                                <div class="spec-value" style="font-size: 13px; word-break: break-all; font-family: monospace; color: var(--primary-color);" id="resultAffiliate"></div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">URL Accorciato</div>
+                                <div class="spec-value" style="font-size: 13px; word-break: break-all; font-family: monospace; color: var(--success-color);" id="resultShort"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button 
+                                onclick="copyToClipboard('resultShort')" 
+                                style="flex: 1; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;"
+                                onmouseover="this.style.backgroundColor='#1565C0'"
+                                onmouseout="this.style.backgroundColor='var(--primary-color)'"
+                            >
+                                📋 Copia Link Accorciato
+                            </button>
+                            <button 
+                                onclick="copyToClipboard('resultAffiliate')" 
+                                style="flex: 1; padding: 12px; background: var(--secondary-color); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;"
+                                onmouseover="this.style.backgroundColor='#F57C00'"
+                                onmouseout="this.style.backgroundColor='var(--secondary-color)'"
+                            >
+                                🔗 Copia Link Affiliato
+                            </button>
+                            <button 
+                                onclick="openInAmazon('resultShort')" 
+                                style="flex: 1; padding: 12px; background: #FF9800; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;"
+                                onmouseover="this.style.backgroundColor='#F57C00'"
+                                onmouseout="this.style.backgroundColor='#FF9800'"
+                            >
+                                🛒 Apri su Amazon
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="converterError" style="display: none; margin-top: 25px; padding: 20px; background: linear-gradient(135deg, rgba(244, 67, 54, 0.1) 0%, rgba(244, 67, 54, 0.05) 100%); border-radius: 10px; border-left: 4px solid var(--danger-color);">
+                        <h3 style="color: var(--danger-color); margin-top: 0;">❌ Errore</h3>
+                        <p id="errorMsg" style="margin: 10px 0 0 0; color: var(--text-dark);"></p>
+                    </div>
+
+                    <div id="converterLoading" style="display: none; margin-top: 25px; padding: 20px; text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
+                        <p style="margin: 0; color: var(--text-light);">Elaborazione in corso...</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1571,6 +1680,141 @@
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-mode');
             }
+        }
+
+        // ============ CONVERTER FUNCTIONS ============
+        
+        async function convertAmazonLink() {
+            const urlInput = document.getElementById('amazonUrlInput').value.trim();
+            const shouldShorten = document.getElementById('shortenCheckbox').checked;
+            
+            const resultDiv = document.getElementById('converterResult');
+            const errorDiv = document.getElementById('converterError');
+            const loadingDiv = document.getElementById('converterLoading');
+            const convertBtn = document.getElementById('convertBtn');
+            
+            // Reset
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            loadingDiv.style.display = 'block';
+            convertBtn.disabled = true;
+            convertBtn.style.opacity = '0.6';
+            
+            if (!urlInput) {
+                showError('Per favore, incolla un URL Amazon');
+                loadingDiv.style.display = 'none';
+                convertBtn.disabled = false;
+                convertBtn.style.opacity = '1';
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/convert-link', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        url: urlInput,
+                        shorten: shouldShorten
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    showError(data.error || 'Errore durante la conversione');
+                } else {
+                    showResult(data);
+                }
+            } catch (error) {
+                showError(`Errore: ${error.message}`);
+            } finally {
+                loadingDiv.style.display = 'none';
+                convertBtn.disabled = false;
+                convertBtn.style.opacity = '1';
+            }
+        }
+        
+        function showResult(data) {
+            const resultDiv = document.getElementById('converterResult');
+            const errorDiv = document.getElementById('converterError');
+            const productInfo = document.getElementById('productInfo');
+            
+            errorDiv.style.display = 'none';
+            
+            // Mostra info prodotto
+            let productHtml = '';
+            if (data.product.image) {
+                productHtml += `<div style="text-align: center; margin-bottom: 20px;"><img src="${data.product.image}" style="max-width: 200px; max-height: 200px; border-radius: 8px; object-fit: cover;"></div>`;
+            }
+            
+            productHtml += `
+                <div class="specs-grid" style="margin-bottom: 20px;">
+                    <div class="spec-item">
+                        <div class="spec-label">Titolo Prodotto</div>
+                        <div class="spec-value" style="font-size: 14px;">${data.product.title}</div>
+                    </div>
+                    ${data.product.price ? `
+                    <div class="spec-item">
+                        <div class="spec-label">Prezzo</div>
+                        <div class="spec-value" style="color: var(--success-color);">${data.product.price}</div>
+                    </div>
+                    ` : ''}
+                    ${data.product.rating ? `
+                    <div class="spec-item">
+                        <div class="spec-label">Valutazione</div>
+                        <div class="spec-value">⭐ ${data.product.rating}/5</div>
+                    </div>
+                    ` : ''}
+                    ${data.product.condition ? `
+                    <div class="spec-item">
+                        <div class="spec-label">Stato</div>
+                        <div class="spec-value">${data.product.condition}</div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            productInfo.innerHTML = productHtml;
+            
+            // Mostra URL
+            document.getElementById('resultOriginal').textContent = data.original_url;
+            document.getElementById('resultAffiliate').textContent = data.affiliate_url;
+            document.getElementById('resultShort').textContent = data.short_url;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('converterError');
+            const resultDiv = document.getElementById('converterResult');
+            
+            resultDiv.style.display = 'none';
+            document.getElementById('errorMsg').textContent = message;
+            errorDiv.style.display = 'block';
+        }
+        
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copiato!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            }).catch(() => {
+                alert('Errore nella copia del testo');
+            });
+        }
+        
+        function openInAmazon(elementId) {
+            const element = document.getElementById(elementId);
+            const url = element.textContent;
+            window.open(url, '_blank');
         }
     </script>
 </body>
