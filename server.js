@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import OpenAI from 'openai';
+import Groq from 'groq-sdk';
 import cron from 'node-cron';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -16,9 +16,9 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Inizializza OpenAI con la tua API key
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+// Inizializza Groq con la tua API key
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY
 });
 
 // Dati in memoria
@@ -26,26 +26,23 @@ let dealsData = [];
 let articlesData = [];
 let lastUpdateTime = new Date();
 
-console.log('✅ OpenAI API inizializzata');
-console.log('🔑 API Key caricata:', process.env.OPENAI_API_KEY.substring(0, 20) + '...');
+console.log('✅ Groq API inizializzata');
+console.log('🔑 API Key caricata:', process.env.GROQ_API_KEY.substring(0, 20) + '...');
 
-// === FUNZIONI PER GENERARE CONTENUTI CON OPENAI ===
+// === FUNZIONI PER GENERARE CONTENUTI CON GROQ ===
 
 async function generateProductDescription(productName, category) {
     try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
+        const response = await groq.chat.completions.create({
+            model: "mixtral-8x7b-32768",
             messages: [
                 {
-                    role: "system",
-                    content: "Sei un esperto di e-commerce. Scrivi descrizioni di prodotti brevi, accattivanti e persuasive in italiano. Massimo 150 caratteri."
-                },
-                {
                     role: "user",
-                    content: `Scrivi una descrizione accattivante per: ${productName} (Categoria: ${category})`
+                    content: `Scrivi una descrizione breve (100 caratteri max) e accattivante per: ${productName} (${category})`
                 }
             ],
-            max_tokens: 150
+            max_tokens: 100,
+            temperature: 0.7
         });
         return response.choices[0].message.content;
     } catch (error) {
@@ -56,19 +53,16 @@ async function generateProductDescription(productName, category) {
 
 async function generateArticle(topic, category) {
     try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
+        const response = await groq.chat.completions.create({
+            model: "mixtral-8x7b-32768",
             messages: [
                 {
-                    role: "system",
-                    content: "Sei un giornalista esperto di tecnologia e shopping. Scrivi articoli interessanti, ben strutturati e informativi in italiano. Usa un tono professionale ma accessibile. Formato: Titolo | Estratto (50 parole)"
-                },
-                {
                     role: "user",
-                    content: `Scrivi un articolo breve su: ${topic}. Categoria: ${category}. Separa il titolo dall'estratto con un "|"`
+                    content: `Scrivi un breve articolo su: "${topic}" (Categoria: ${category}). Formato: Titolo | Estratto (80 parole). Separa con |`
                 }
             ],
-            max_tokens: 300
+            max_tokens: 250,
+            temperature: 0.8
         });
         return response.choices[0].message.content;
     } catch (error) {
