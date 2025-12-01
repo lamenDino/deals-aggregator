@@ -362,6 +362,9 @@
             font-size: 14px;
             transition: all 0.3s ease;
             width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-primary:hover {
@@ -658,9 +661,6 @@
                 <span>Deals Aggregator</span>
             </div>
             <div class="header-controls">
-                <button class="btn-small" id="refreshBtn" title="Rigenera offerte">
-                    <span>🔄</span> Rigenera
-                </button>
                 <button class="btn-small" id="themeToggle" title="Cambia tema">
                     <span>🌙</span> Tema
                 </button>
@@ -721,9 +721,6 @@
 
             // Theme Toggle
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-
-            // Refresh Button
-            document.getElementById('refreshBtn').addEventListener('click', refreshData);
 
             // Modal Close
             document.querySelector('.modal-close').addEventListener('click', closeModal);
@@ -797,7 +794,7 @@
                             <span class="price-original">€${deal.originalPrice.toFixed(2)}</span>
                             <span class="price-current">€${deal.discountPrice.toFixed(2)}</span>
                         </div>
-                        <button class="btn-primary" onclick="event.stopPropagation()">Visualizza Offerta</button>
+                        <a href="#" class="btn-primary" target="_blank" onclick="openAmazonLink(event)">Visualizza su Amazon</a>
                     </div>
                 </div>
             `).join('');
@@ -857,9 +854,6 @@
                 <p><strong>Prezzo Originale:</strong> €${deal.originalPrice.toFixed(2)}</p>
                 <p><strong>Prezzo Scontato:</strong> <span style="color: var(--success-color); font-weight: bold;">€${deal.discountPrice.toFixed(2)}</span></p>
                 <p><strong>Sconto:</strong> -${deal.discount}%</p>
-                <p style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                    <em>Questa è un'offerta generata casualmente a scopo dimostrativo.</em>
-                </p>
             `;
             modal.classList.add('show');
         }
@@ -878,9 +872,6 @@
                     <strong>Pubblicato:</strong> ${article.date} | <strong>Tempo di lettura:</strong> ${article.readTime}
                 </div>
                 <p>${article.excerpt}</p>
-                <p style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                    <em>Questo è un articolo generato con IA a scopo dimostrativo.</em>
-                </p>
             `;
             modal.classList.add('show');
         }
@@ -895,6 +886,15 @@
             }
         }
 
+        // Amazon Link Function
+        function openAmazonLink(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const modalTitle = document.getElementById('modalTitle').textContent;
+            const searchQuery = encodeURIComponent(modalTitle);
+            window.open(`https://www.amazon.it/s?k=${searchQuery}`, '_blank');
+        }
+
         // Theme Toggle
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -905,28 +905,6 @@
             const theme = localStorage.getItem('theme');
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
-            }
-        }
-
-        // Refresh Data
-        async function refreshData() {
-            const btn = document.getElementById('refreshBtn');
-            btn.disabled = true;
-            btn.style.opacity = '0.5';
-
-            try {
-                const response = await fetch('/api/regenerate', { method: 'POST' });
-                const result = await response.json();
-                if (result.success) {
-                    loadData();
-                    alert('✅ Offerte e articoli rigenerati con successo!');
-                }
-            } catch (error) {
-                console.error('Errore:', error);
-                alert('❌ Errore nella rigenerazione');
-            } finally {
-                btn.disabled = false;
-                btn.style.opacity = '1';
             }
         }
 
