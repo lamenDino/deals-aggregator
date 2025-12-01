@@ -417,6 +417,32 @@
             transform: scale(0.98);
         }
 
+        .btn-secondary {
+            padding: 10px 16px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #F57C00;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+
         /* Article Card */
         .article-card {
             display: flex;
@@ -924,6 +950,16 @@
 
             const modal = document.getElementById('modal');
             document.getElementById('modalTitle').textContent = article.title;
+            
+            // Determina la categoria per il link Amazon
+            const categoryKeywords = {
+                'Tecnologia': 'elettronica',
+                'Casa': 'casa',
+                'Sporttech': 'sport',
+                'Lifestyle': 'moda'
+            };
+            const amazonCategory = categoryKeywords[article.category] || 'elettronica';
+            
             document.getElementById('modalBody').innerHTML = `
                 <div style="margin-bottom: 20px;">
                     <span class="article-category">${article.category}</span>
@@ -932,6 +968,7 @@
                     <strong>Pubblicato:</strong> ${article.date} | <strong>Tempo di lettura:</strong> ${article.readTime}
                 </div>
                 <p>${article.excerpt}</p>
+                <a href="#" class="btn-secondary" target="_blank" onclick="openArticleAmazonLink(event, '${amazonCategory}')">🔗 Scopri prodotti su Amazon</a>
             `;
             modal.classList.add('show');
         }
@@ -946,13 +983,29 @@
             }
         }
 
-        // Amazon Link Function
+        // Amazon Link Functions
         function openAmazonLink(event) {
             event.preventDefault();
             event.stopPropagation();
             const modalTitle = document.getElementById('modalTitle').textContent;
             const searchQuery = encodeURIComponent(modalTitle);
-            window.open(`https://www.amazon.it/s?k=${searchQuery}`, '_blank');
+            window.open(`https://www.amazon.it/s?k=${searchQuery}&tag=lamendino-21`, '_blank');
+        }
+
+        function openArticleAmazonLink(event, category) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Mappa category a keywords Amazon
+            const categoryLinks = {
+                'elettronica': 'https://www.amazon.it/s?k=elettronica&tag=lamendino-21',
+                'casa': 'https://www.amazon.it/s?k=casa+smart&tag=lamendino-21',
+                'sport': 'https://www.amazon.it/s?k=sport+fitness&tag=lamendino-21',
+                'moda': 'https://www.amazon.it/s?k=moda+accessori&tag=lamendino-21'
+            };
+            
+            const link = categoryLinks[category] || categoryLinks['elettronica'];
+            window.open(link, '_blank');
         }
 
         // Theme Toggle
