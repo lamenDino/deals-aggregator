@@ -342,7 +342,6 @@ app.get('/api/deals', (req, res) => {
      })
    
     });
-});
 
 app.post('/api/regenerate', async (req, res) => {
     try {
