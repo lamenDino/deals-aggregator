@@ -369,7 +369,6 @@ app.get('/health', (req, res) => {
         articles: articlesData.length,
         lastUpdate: lastUpdateTime
     });
-});
 
 app.use(express.static(__dirname));
 
