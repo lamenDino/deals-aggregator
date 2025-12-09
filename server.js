@@ -22,6 +22,8 @@ const groq = new Groq({
 
 let dealsData = [];
 let articlesData = [];
+let reviewsData = [];
+let videosData = [];
 let lastUpdateTime = new Date();
 let dealsArchive = []; // Archivio storico offerte
 let articlesArchive = []; // Archivio storico articoli
@@ -270,6 +272,39 @@ async function generateDailyArticles() {
             });
             console.log(`  ✓ Generato: ${title}`);
         }
+
+        async function generateDailyReviews() {
+ console.log('\n\ud83d\udcd1 Generando recensioni del giorno...');
+ reviewsData = dealsData.slice(0, 6).map((deal, idx) => ({
+ id: idx + 1,
+ title: deal.title,
+ rating: deal.rating,
+ reviews: Math.floor(Math.random() * (500 - 50 + 1)) + 50,
+ description: `Recensione completa del prodotto: ${deal.title}`,
+ category: deal.category,
+ date: new Date().toISOString().split('T')[0]
+ }));
+ addToArchive([], [], reviewsData, []);
+ console.log(`✅ ${reviewsData.length} recensioni generate`);
+}
+
+async function generateDailyVideos() {
+ console.log('\n🎥 Generando video del giorno...');
+ videosData = dealsData.slice(0, 6).map((deal, idx) => ({
+ id: idx + 1,
+ product: deal.title,
+ youtuber: ['TechReviewer', 'UnboxingPro', 'ProductTest', 'ReviewHub'][Math.floor(Math.random() * 4)],
+ channel: 'Channel Ufficiale',
+ views: Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000,
+ rating: (Math.random() * 0.5 + 4.5).toFixed(1),
+ videoId: 'dQw4w9WgXcQ',
+ category: deal.category,
+ thumbnail: deal.image,
+ description: `Video review ufficiale: ${deal.title}`
+ }));
+ addToArchive([], [], [], videosData);
+ console.log(`✅ ${videosData.length} video generati`);
+}
     }
     console.log(`✅ ${articlesData.length} articoli generati`);
      addToArchive([], articlesData, [], []);
@@ -279,12 +314,16 @@ cron.schedule('0 8 * * *', async () => {
     console.log('\n⏰ Task schedulato: Generazione giornaliera');
     await generateDailyDeals();
     await generateDailyArticles();
+    			await generateDailyReviews();
+    			await generateDailyVideos();
 });
 
 console.log('\n🚀 Generazione iniziale al startup...');
 loadArchive();
 await generateDailyDeals();
 await generateDailyArticles();
+await generateDailyReviews();
+await generateDailyVideos();
 
 app.get('/api/deals', (req, res) => {
     res.json({
