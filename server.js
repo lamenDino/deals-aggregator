@@ -5,6 +5,7 @@ import cron from 'node-cron';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -22,10 +23,86 @@ const groq = new Groq({
 let dealsData = [];
 let articlesData = [];
 let lastUpdateTime = new Date();
+let dealsArchive = []; // Archivio storico offerte
+let articlesArchive = []; // Archivio storico articoli
+let reviewsArchive = []; // Archivio storico recensioni
+let videosArchive = []; // Archivio storico video
+const ARCHIVE_FILE = path.join(__dirname, 'data-archive.json');
+const ARCHIVE_MAX_DAYS = 30; // Mantieni i dati degli ultimi 30 giorni
 
 console.log('✅ Groq API inizializzata');
 console.log('🔑 API Key caricata:', process.env.GROQ_API_KEY.substring(0, 20) + '...');
 console.log('🤖 Modello: llama-3.3-70b-versatile');
+
+// ===================== FUNZIONI DI ARCHIVIO =====================
+
+function loadArchive() {
+ try {
+   if (fs.existsSync(ARCHIVE_FILE)) {
+     const data = fs.readFileSync(ARCHIVE_FILE, 'utf-8');
+     const archive = JSON.parse(data);
+     dealsArchive = archive.dealsArchive || [];
+     articlesArchive = archive.articlesArchive || [];
+     reviewsArchive = archive.reviewsArchive || [];
+     videosArchive = archive.videosArchive || [];
+     console.log('\ud83d\udcc1 Archivio caricato:', {
+       deals: dealsArchive.length,
+       articles: articlesArchive.length,
+       reviews: reviewsArchive.length,
+       videos: videosArchive.length
+     });
+   } else {
+     console.log('\ud83d\udccb Nessun archivio trovato - Creazione nuovo');
+   }
+ } catch (error) {
+   console.error('\u274c Errore nel caricamento archivio:', error.message);
+ }
+}
+
+function saveArchive() {
+ try {
+   const archive = {
+     dealsArchive,
+     articlesArchive,
+     reviewsArchive,
+     videosArchive,
+     lastSaved: new Date().toISOString()
+   };
+   fs.writeFileSync(ARCHIVE_FILE, JSON.stringify(archive, null, 2));
+   console.log('\ud83d\udcd1 Archivio salvato con successo');
+ } catch (error) {
+   console.error('\u274c Errore nel salvataggio archivio:', error.message);
+ }
+}
+
+function addToArchive(newDeals, newArticles, newReviews, newVideos) {
+ const now = new Date();
+ const dateKey = now.toISOString().split('T')[0];
+
+ const dealsWithDate = newDeals.map(d => ({...d, addedDate: dateKey, timestamp: now.getTime()}));
+ const articlesWithDate = newArticles.map(a => ({...a, addedDate: dateKey, timestamp: now.getTime()}));
+ const reviewsWithDate = newReviews.map(r => ({...r, addedDate: dateKey, timestamp: now.getTime()}));
+ const videosWithDate = newVideos.map(v => ({...v, addedDate: dateKey, timestamp: now.getTime()}));
+
+ dealsArchive.unshift(...dealsWithDate);
+ articlesArchive.unshift(...articlesWithDate);
+ reviewsArchive.unshift(...reviewsWithDate);
+ videosArchive.unshift(...videosWithDate);
+
+ const cutoffTime = now.getTime() - (ARCHIVE_MAX_DAYS * 24 * 60 * 60 * 1000);
+ dealsArchive = dealsArchive.filter(d => d.timestamp > cutoffTime);
+ articlesArchive = articlesArchive.filter(a => a.timestamp > cutoffTime);
+ reviewsArchive = reviewsArchive.filter(r => r.timestamp > cutoffTime);
+ videosArchive = videosArchive.filter(v => v.timestamp > cutoffTime);
+
+ const MAX_ARCHIVE_SIZE = 500;
+ dealsArchive = dealsArchive.slice(0, MAX_ARCHIVE_SIZE);
+ articlesArchive = articlesArchive.slice(0, MAX_ARCHIVE_SIZE);
+ reviewsArchive = reviewsArchive.slice(0, MAX_ARCHIVE_SIZE);
+ videosArchive = videosArchive.slice(0, MAX_ARCHIVE_SIZE);
+
+ saveArchive();
+}
 
 const amazonProducts = [
     { name: "Cuffie Bluetooth Premium ANC Sony WH-1000XM5", category: "elettronica", basePrice: 379.99, imageSearch: "headphones sony wireless noise cancelling" },
@@ -160,6 +237,7 @@ async function generateDailyDeals() {
     }
     console.log(`✅ ${dealsData.length} offerte generate con immagini`);
     lastUpdateTime = new Date();
+     addToArchive(dealsData, [], [], []);
 }
 
 async function generateDailyArticles() {
@@ -194,6 +272,7 @@ async function generateDailyArticles() {
         }
     }
     console.log(`✅ ${articlesData.length} articoli generati`);
+     addToArchive([], articlesData, [], []);
 }
 
 cron.schedule('0 8 * * *', async () => {
@@ -203,14 +282,24 @@ cron.schedule('0 8 * * *', async () => {
 });
 
 console.log('\n🚀 Generazione iniziale al startup...');
+loadArchive();
 await generateDailyDeals();
 await generateDailyArticles();
 
 app.get('/api/deals', (req, res) => {
     res.json({
         deals: dealsData,
-        articles: articlesData,
-        lastUpdate: lastUpdateTime
+     articles: articlesData,
+     reviews: reviewsData || [],
+     videos: videosData || [],
+     lastUpdate: lastUpdateTime,
+     ...(req.query.includeArchive === 'true' && {
+       dealsArchive: dealsArchive.slice(0, 50),
+       articlesArchive: articlesArchive.slice(0, 50),
+       reviewsArchive: reviewsArchive.slice(0, 50),
+       videosArchive: videosArchive.slice(0, 50)
+     })
+   
     });
 });
 
