@@ -849,6 +849,7 @@
             <nav class="nav-menu">
                 <a class="nav-link" onclick="switchPage('home')">🏠 Home</a>
                 <a class="nav-link" onclick="switchPage('deals')">🛍️ Offerte</a>
+                 <a class="nav-link" onclick="switchPage('deals-history')">📅 Storico</a>
                 <a class="nav-link" onclick="switchPage('articles')">📰 Articoli</a>
                 <a class="nav-link" onclick="switchPage('reviews')">⭐ Recensioni</a>
                 <a class="nav-link" onclick="switchPage('videos')">📹 Video</a>
@@ -909,6 +910,16 @@
             <h2 style="font-size: 28px; margin-bottom: 30px;">🛍️ Offerte Giornaliere</h2>
             <div id="dealsGrid" class="grid"></div>
         </div>
+        
+ <!-- STORICO OFFERTE -->
+ <div id="deals-history-page" class="page" style="display: none;">
+   <h2 style="font-size: 28px; margin-bottom: 30px;">📅 Storico Offerte (Ultimi 30 Giorni)</h2>
+   <div style="margin-bottom: 20px; padding: 15px; background: rgba(33, 150, 243, 0.1); border-radius: 8px;">
+     <p style="margin: 0; color: var(--primary-color);">📚 Visualizza tutte le offerte degli ultimi 30 giorni</p>
+   </div>
+   <div id="dealsHistoryGrid" class="grid"></div>
+ </div>
+
 
         <!-- Articles Page -->
         <div id="articles-page" class="page" style="display: none;">
@@ -1245,6 +1256,7 @@
 
         function renderDeals() {
             const grid = document.getElementById('dealsGrid');
+             if (page === 'deals-history') { loadAndDisplayHistory(); }
             grid.innerHTML = dealsData.map(deal => `
                 <div class="card product-card" onclick="openProductModal(${deal.id})">
                     <div class="product-image" style="background-image: url('${deal.image}');">
@@ -1816,6 +1828,56 @@
             const url = element.textContent;
             window.open(url, '_blank');
         }
+
+         // ===================== FUNZIONI PER STORICO =====================
+
+ async function loadAndDisplayHistory() {
+   try {
+     const response = await fetch('/api/deals?includeArchive=true');
+     const data = await response.json();
+     if (data.dealsArchive) {
+       renderDealsHistory(data.dealsArchive);
+     }
+   } catch (error) {
+     console.error('Errore caricamento storico:', error);
+   }
+ }
+
+ function renderDealsHistory(archiveDeals) {
+   const grid = document.getElementById('dealsHistoryGrid');
+   
+   const byDate = {};
+   archiveDeals.forEach(deal => {
+     if (!byDate[deal.addedDate]) byDate[deal.addedDate] = [];
+     byDate[deal.addedDate].push(deal);
+   });
+   
+   let html = '';
+   Object.keys(byDate).sort().reverse().forEach(date => {
+     html += `<div style="grid-column: 1 / -1; margin: 20px 0;">
+       <h3 style="color: var(--primary-color);">\ud83d\udcc5 ${date}</h3>
+       <div class="grid" style="margin-top: 15px;">
+         ${byDate[date].map(deal => `
+           <div class="card" onclick="openProductModal(${deal.id})">
+             <div class="product-image" style="background-image: url('${deal.image}');">
+               <div class="discount-badge">-${deal.discount}%</div>
+             </div>
+             <div class="card-content">
+               <h3 class="product-title">${deal.title}</h3>
+               <div class="price-section">
+                 <span class="price-original">\u20ac${deal.originalPrice.toFixed(2)}</span>
+                 <span class="price-current">\u20ac${deal.discountPrice.toFixed(2)}</span>
+               </div>
+             </div>
+           </div>
+         `).join('')}
+       </div>
+     </div>`;
+   });
+   
+   grid.innerHTML = html;
+ }
+
     </script>
 </body>
 </html>
