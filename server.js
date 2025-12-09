@@ -274,7 +274,7 @@ async function generateDailyArticles() {
         }
      console.log(`✅ ${articlesData.length} articoli generati`);
      addToArchive([], articlesData, [], []);
-    }
+        }
 
         async function generateDailyReviews() {
  console.log('\n\ud83d\udcd1 Generando recensioni del giorno...');
