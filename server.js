@@ -318,12 +318,14 @@ cron.schedule('0 8 * * *', async () => {
     			await generateDailyVideos();
 });
 
+(async () => {
 console.log('\n🚀 Generazione iniziale al startup...');
 loadArchive();
 await generateDailyDeals();
 await generateDailyArticles();
 await generateDailyReviews();
 await generateDailyVideos();
+    })();
 
 app.get('/api/deals', (req, res) => {
     res.json({
