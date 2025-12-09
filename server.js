@@ -272,6 +272,10 @@ async function generateDailyArticles() {
             });
             console.log(`  ✓ Generato: ${title}`);
         }
+         }
+     console.log(`✅ ${articlesData.length} articoli generati`);
+     addToArchive([], articlesData, [], []);
+    }
 
         async function generateDailyReviews() {
  console.log('\n\ud83d\udcd1 Generando recensioni del giorno...');
@@ -304,10 +308,6 @@ async function generateDailyVideos() {
  }));
  addToArchive([], [], [], videosData);
  console.log(`✅ ${videosData.length} video generati`);
-}
-    }
-    console.log(`✅ ${articlesData.length} articoli generati`);
-     addToArchive([], articlesData, [], []);
 }
 
 cron.schedule('0 8 * * *', async () => {
