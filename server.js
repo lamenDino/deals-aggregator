@@ -272,7 +272,6 @@ async function generateDailyArticles() {
             });
             console.log(`  ✓ Generato: ${title}`);
         }
-         }
      console.log(`✅ ${articlesData.length} articoli generati`);
      addToArchive([], articlesData, [], []);
     }
