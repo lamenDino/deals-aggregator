@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Offerte di LamenDino - Migliori Sconti e Recensioni su Amazon</title>
+    <title>LamenDino - Offerte, News e Video Recensioni</title>
     <style>
         :root {
             --primary-color: #2196F3;
@@ -29,7 +29,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--light-bg);
             color: var(--text-dark);
             line-height: 1.6;
@@ -70,14 +70,11 @@
         .header-title {
             font-size: 28px;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .nav-menu {
             display: flex;
-            gap: 25px;
+            gap: 15px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -87,14 +84,13 @@
             text-decoration: none;
             font-weight: 500;
             cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
             transition: all 0.3s ease;
-            padding: 8px 0;
-            border-bottom: 2px solid transparent;
         }
 
         .nav-link:hover {
-            border-bottom-color: white;
-            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .btn-small {
@@ -113,7 +109,6 @@
             background-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Loader */
         .loader {
             display: inline-block;
             width: 20px;
@@ -121,7 +116,7 @@
             border: 3px solid rgba(255,255,255,.3);
             border-radius: 50%;
             border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
@@ -149,8 +144,7 @@
 
         .hero-description {
             font-size: 18px;
-            color: rgba(255, 255, 255, 0.95);
-            line-height: 1.8;
+            opacity: 0.95;
         }
 
         /* Container */
@@ -166,13 +160,6 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
-            }
         }
 
         /* Card */
@@ -207,22 +194,6 @@
             background-position: center;
         }
 
-        .product-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
         .discount-badge {
             position: absolute;
             top: 10px;
@@ -249,19 +220,6 @@
             z-index: 10;
         }
 
-        .new-badge {
-            position: absolute;
-            top: 50px;
-            left: 10px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            z-index: 10;
-        }
-
         .card-content {
             padding: 20px;
             flex-grow: 1;
@@ -274,18 +232,12 @@
             font-weight: 700;
             margin-bottom: 10px;
             line-height: 1.4;
-            color: var(--text-dark);
-        }
-
-        body.dark-mode .product-title {
-            color: #ffffff;
         }
 
         .product-description {
             font-size: 14px;
             color: var(--text-light);
             margin-bottom: 12px;
-            line-height: 1.5;
             flex-grow: 1;
         }
 
@@ -298,8 +250,6 @@
         }
 
         .stars {
-            display: flex;
-            gap: 1px;
             color: #FFD700;
         }
 
@@ -324,20 +274,17 @@
 
         /* Buttons */
         .btn-primary {
-            padding: 14px 20px;
+            padding: 12px 20px;
             background-color: var(--primary-color);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.3s ease;
             width: 100%;
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 10px;
         }
 
         .btn-primary:hover {
@@ -345,182 +292,7 @@
             transform: scale(1.03);
         }
 
-        .btn-amazon {
-            padding: 16px 20px;
-            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-amazon:hover {
-            transform: scale(1.04);
-            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4);
-        }
-
-        /* Status */
-        .status {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            background-color: rgba(76, 175, 80, 0.15);
-            color: #4CAF50;
-            border: 1px solid rgba(76, 175, 80, 0.3);
-            margin-bottom: 10px;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.show {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background-color: var(--card-bg);
-            margin: 30px auto;
-            padding: 0;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 85vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        body.dark-mode .modal-content {
-            background-color: #2a2a2a;
-            color: #ffffff;
-        }
-
-        .modal-header {
-            padding: 25px;
-            border-bottom: 2px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        body.dark-mode .modal-header {
-            border-bottom-color: #444;
-        }
-
-        .modal-title {
-            font-size: 28px;
-            font-weight: bold;
-            flex-grow: 1;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 32px;
-            cursor: pointer;
-            color: var(--text-light);
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background-color: var(--light-bg);
-            color: var(--text-dark);
-        }
-
-        body.dark-mode .modal-close:hover {
-            background-color: #444;
-            color: #ffffff;
-        }
-
-        .modal-body {
-            padding: 30px 25px;
-        }
-
-        .modal-body h2 {
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 22px;
-            color: var(--primary-color);
-        }
-
-        .modal-body p {
-            line-height: 1.9;
-            margin-bottom: 16px;
-            font-size: 15px;
-        }
-
-        .history-section {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid var(--border-color);
-        }
-
-        .history-item {
-            padding: 15px;
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        body.dark-mode .history-item {
-            background-color: #333;
-        }
-
-        .history-date {
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 14px;
-        }
-
-        .history-content {
-            font-size: 13px;
-            color: var(--text-light);
-            margin-top: 5px;
-        }
-
-        /* Hidden pages */
+        /* Pages */
         .page {
             display: none;
         }
@@ -545,10 +317,203 @@
             font-weight: 600;
         }
 
-        .loading-message {
-            text-align: center;
-            padding: 40px 20px;
+        .news-card {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        body.dark-mode .news-card {
+            border-bottom-color: #444;
+        }
+
+        .news-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .news-category {
+            display: inline-block;
+            background-color: #9C27B0;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .news-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            font-size: 14px;
             color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-light);
+            padding: 15px 0 0 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Video */
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: #000;
+            margin-bottom: 15px;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 0, 0, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            z-index: 5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 30px auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom-color: #444;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: bold;
+            flex-grow: 1;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background-color: var(--light-bg);
+        }
+
+        body.dark-mode .modal-close:hover {
+            background-color: #444;
+        }
+
+        .modal-body {
+            padding: 30px 25px;
+        }
+
+        .modal-body h2 {
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 22px;
+            color: var(--primary-color);
+        }
+
+        .modal-body p {
+            line-height: 1.9;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .youtube-embed {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            margin-bottom: 25px;
+        }
+
+        .youtube-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
         }
 
         @media (max-width: 768px) {
@@ -560,7 +525,7 @@
             .nav-menu {
                 width: 100%;
                 justify-content: center;
-                gap: 15px;
+                gap: 10px;
             }
 
             .hero-text {
@@ -571,8 +536,14 @@
                 font-size: 16px;
             }
 
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
             .modal-content {
                 width: 95%;
+                margin: 50px auto;
             }
         }
     </style>
@@ -584,10 +555,11 @@
             <div class="header-title">🎁 LamenDino</div>
             <nav class="nav-menu">
                 <a class="nav-link" onclick="switchPage('home')">Home</a>
-                <a class="nav-link" onclick="switchPage('deals')">Offerte</a>
-                <a class="nav-link" onclick="switchPage('articles')">Articoli</a>
-                <a class="nav-link" onclick="switchPage('news')">News</a>
-                <a class="nav-link" onclick="switchPage('history')">Cronologia</a>
+                <a class="nav-link" onclick="switchPage('deals')">💰 Offerte</a>
+                <a class="nav-link" onclick="switchPage('articles')">📰 Articoli</a>
+                <a class="nav-link" onclick="switchPage('news')">📱 News</a>
+                <a class="nav-link" onclick="switchPage('videos')">🎬 Video</a>
+                <a class="nav-link" onclick="switchPage('history')">📚 Cronologia</a>
                 <button class="btn-small" onclick="toggleTheme()">🌙 Tema</button>
             </nav>
         </div>
@@ -597,7 +569,7 @@
     <div class="hero">
         <div class="hero-content">
             <h1 class="hero-text">Le Migliori Offerte su Amazon</h1>
-            <p class="hero-description">Scopri i migliori prodotti selezionati con sconti esclusivi e articoli approfonditi. Aggiornamenti ogni 24 ore!</p>
+            <p class="hero-description">Scopri offerte esclusive, articoli dettagliati, ultime notizie e video recensioni. Aggiornamenti ogni 24 ore!</p>
         </div>
     </div>
 
@@ -605,34 +577,34 @@
     <div class="container">
         <!-- Home Page -->
         <div id="home-page" class="page active">
-            <h2 style="font-size: 28px; margin-bottom: 30px; text-align: center;">Benvenuto su LamenDino</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px;">
+            <h2 style="text-align: center;">Benvenuto su LamenDino</h2>
+            <div class="grid">
                 <div class="card" onclick="switchPage('deals')" style="cursor: pointer;">
-                    <div style="padding: 30px; text-align: center; color: var(--primary-color);">
+                    <div style="padding: 30px; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 15px;">💰</div>
-                        <h3 style="margin-bottom: 10px;">Migliori Offerte</h3>
-                        <p style="color: var(--text-light);">Sconti giornalieri selezionati per te</p>
+                        <h3>Migliori Offerte</h3>
+                        <p style="color: var(--text-light);">Sconti giornalieri selezionati</p>
                     </div>
                 </div>
                 <div class="card" onclick="switchPage('articles')" style="cursor: pointer;">
-                    <div style="padding: 30px; text-align: center; color: var(--secondary-color);">
+                    <div style="padding: 30px; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 15px;">📰</div>
-                        <h3 style="margin-bottom: 10px;">Articoli Dettagliati</h3>
+                        <h3>Articoli Dettagliati</h3>
                         <p style="color: var(--text-light);">Guide e review approfonditi</p>
                     </div>
                 </div>
                 <div class="card" onclick="switchPage('news')" style="cursor: pointer;">
-                    <div style="padding: 30px; text-align: center; color: #9C27B0;">
+                    <div style="padding: 30px; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 15px;">📱</div>
-                        <h3 style="margin-bottom: 10px;">Tech News</h3>
+                        <h3>Tech News</h3>
                         <p style="color: var(--text-light);">Ultime notizie dalla tecnologia</p>
                     </div>
                 </div>
-                <div class="card" onclick="switchPage('history')" style="cursor: pointer;">
-                    <div style="padding: 30px; text-align: center; color: #00BCD4;">
-                        <div style="font-size: 48px; margin-bottom: 15px;">📚</div>
-                        <h3 style="margin-bottom: 10px;">Cronologia</h3>
-                        <p style="color: var(--text-light);">Tutte le offerte dei giorni precedenti</p>
+                <div class="card" onclick="switchPage('videos')" style="cursor: pointer;">
+                    <div style="padding: 30px; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🎬</div>
+                        <h3>Video Recensioni</h3>
+                        <p style="color: var(--text-light);">Presentazioni ufficiali da YouTube</p>
                     </div>
                 </div>
             </div>
@@ -640,43 +612,45 @@
 
         <!-- Deals Page -->
         <div id="deals-page" class="page">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">🎁 Offerte Giornaliere</h2>
+            <h2>💰 Offerte Giornaliere</h2>
             <div class="last-update" id="lastUpdateDeals"></div>
             <div id="dealsGrid" class="grid">
-                <div class="loading-message">
-                    <div class="loader"></div> Caricamento offerte...
-                </div>
+                <div style="text-align: center; padding: 40px;"><div class="loader"></div> Caricamento...</div>
             </div>
         </div>
 
         <!-- Articles Page -->
         <div id="articles-page" class="page">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">📝 Articoli e Guide</h2>
+            <h2>📰 Articoli e Guide</h2>
             <div class="last-update" id="lastUpdateArticles"></div>
             <div id="articlesGrid" class="grid">
-                <div class="loading-message">
-                    <div class="loader"></div> Caricamento articoli...
-                </div>
+                <div style="text-align: center; padding: 40px;"><div class="loader"></div> Caricamento...</div>
             </div>
         </div>
 
         <!-- News Page -->
         <div id="news-page" class="page">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">📰 Tech News Quotidiane</h2>
+            <h2>📱 Tech News Quotidiane</h2>
+            <div class="last-update" id="lastUpdateNews"></div>
             <div id="newsGrid" class="grid">
-                <div class="loading-message">
-                    <div class="loader"></div> Caricamento notizie...
-                </div>
+                <div style="text-align: center; padding: 40px;"><div class="loader"></div> Caricamento...</div>
+            </div>
+        </div>
+
+        <!-- Videos Page -->
+        <div id="videos-page" class="page">
+            <h2>🎬 Video Recensioni da YouTube</h2>
+            <div class="last-update" id="lastUpdateVideos"></div>
+            <div id="videosGrid" class="grid">
+                <div style="text-align: center; padding: 40px;"><div class="loader"></div> Caricamento...</div>
             </div>
         </div>
 
         <!-- History Page -->
         <div id="history-page" class="page">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">📚 Cronologia Offerte</h2>
+            <h2>📚 Cronologia Offerte</h2>
             <div id="historyGrid">
-                <div class="loading-message">
-                    <div class="loader"></div> Caricamento cronologia...
-                </div>
+                <div style="text-align: center; padding: 40px;"><div class="loader"></div> Caricamento...</div>
             </div>
         </div>
     </div>
@@ -695,30 +669,32 @@
     <script>
         let dealsData = [];
         let articlesData = [];
+        let newsData = [];
+        let videosData = [];
         let historyData = [];
-        let currentPage = 'home';
 
-        // Load data from backend
         async function loadData() {
             try {
-                console.log('📡 Caricamento dati dal server...');
+                console.log('📡 Caricamento dati...');
                 const response = await fetch('/api/deals');
                 const data = await response.json();
                 
                 dealsData = data.deals || [];
                 articlesData = data.articles || [];
+                newsData = data.news || [];
+                videosData = data.videos || [];
                 historyData = data.history || [];
                 
-                console.log(`✅ Dati caricati: ${dealsData.length} offerte, ${articlesData.length} articoli`);
+                console.log(`✅ Caricati: ${dealsData.length} offerte, ${articlesData.length} articoli, ${newsData.length} news, ${videosData.length} video`);
                 
                 renderDeals();
                 renderArticles();
                 renderNews();
+                renderVideos();
                 renderHistory();
                 updateLastUpdateTime(data.lastUpdate);
             } catch (error) {
-                console.error('Errore caricamento:', error);
-                document.getElementById('dealsGrid').innerHTML = '<p style="color: red;">Errore nel caricamento dei dati. Ricarica la pagina.</p>';
+                console.error('Errore:', error);
             }
         }
 
@@ -728,10 +704,11 @@
             const html = `📅 Ultimo aggiornamento: ${formatted}`;
             document.getElementById('lastUpdateDeals').textContent = html;
             document.getElementById('lastUpdateArticles').textContent = html;
+            document.getElementById('lastUpdateNews').textContent = html;
+            document.getElementById('lastUpdateVideos').textContent = html;
         }
 
         function switchPage(page) {
-            currentPage = page;
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(page + '-page').classList.add('active');
             window.scrollTo(0, 0);
@@ -739,30 +716,25 @@
 
         function renderDeals() {
             const grid = document.getElementById('dealsGrid');
-            if (dealsData.length === 0) {
-                grid.innerHTML = '<p>Nessuna offerta disponibile. Riprova più tardi.</p>';
+            if (!dealsData.length) {
+                grid.innerHTML = '<p>Caricamento...</p>';
                 return;
             }
-
             grid.innerHTML = dealsData.map(deal => `
-                <div class="card product-card" onclick="openProductModal(${deal.id})">
+                <div class="card" onclick="openDealModal(${deal.id})">
                     <div class="product-image" style="background-image: url(${deal.image})">
                         <div class="discount-badge">-${deal.discount}%</div>
                         <div class="category-badge">${deal.category}</div>
-                        <div class="new-badge">NUOVO</div>
                     </div>
                     <div class="card-content">
                         <h3 class="product-title">${deal.title}</h3>
                         <p class="product-description">${deal.description}</p>
-                        <div class="rating">
-                            <div class="stars">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</div>
-                            <span>${deal.rating}/5 (${deal.reviews} recensioni)</span>
-                        </div>
+                        <div class="rating"><span class="stars">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</span> ${deal.rating}/5</div>
                         <div class="price-section">
                             <span class="price-original">€${deal.originalPrice.toFixed(2)}</span>
                             <span class="price-current">€${deal.discountPrice.toFixed(2)}</span>
                         </div>
-                        <button class="btn-primary" onclick="event.stopPropagation(); openAmazonLink(event, '${deal.title}')">Visualizza Offerta</button>
+                        <button class="btn-primary" onclick="event.stopPropagation(); openAmazonLink('${deal.title}')">Visualizza</button>
                     </div>
                 </div>
             `).join('');
@@ -770,19 +742,18 @@
 
         function renderArticles() {
             const grid = document.getElementById('articlesGrid');
-            if (articlesData.length === 0) {
-                grid.innerHTML = '<p>Nessun articolo disponibile.</p>';
+            if (!articlesData.length) {
+                grid.innerHTML = '<p>Caricamento...</p>';
                 return;
             }
-
             grid.innerHTML = articlesData.map(article => `
                 <div class="card" onclick="openArticleModal(${article.id})">
-                    <div style="padding: 20px; border-bottom: 1px solid var(--border-color); flex-grow: 1;">
-                        <span class="status">${article.category}</span>
+                    <div class="card-content">
+                        <div style="display: inline-block; background-color: var(--primary-color); color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px;">${article.category}</div>
                         <h3 class="product-title">${article.title}</h3>
                         <p class="product-description">${article.excerpt}</p>
                     </div>
-                    <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); background-color: var(--light-bg); display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light);">
+                    <div style="padding: 15px; border-top: 1px solid var(--border-color); background-color: var(--light-bg); display: flex; justify-content: space-between; font-size: 12px;">
                         <span>${article.date}</span>
                         <span>${article.readTime} min</span>
                     </div>
@@ -792,65 +763,84 @@
 
         function renderNews() {
             const grid = document.getElementById('newsGrid');
-            grid.innerHTML = '<p style="text-align: center; color: var(--text-light);">Le news vengono generate quotidianamente alle 08:00</p>';
+            if (!newsData.length) {
+                grid.innerHTML = '<p>Caricamento...</p>';
+                return;
+            }
+            grid.innerHTML = newsData.map(news => `
+                <div class="card" onclick="openNewsModal(${news.id})">
+                    <div class="news-card">
+                        <div class="news-icon">${news.icon}</div>
+                        <div class="news-category">${news.category}</div>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-excerpt">${news.excerpt}</p>
+                    </div>
+                    <div class="news-meta">
+                        <span>${news.author}</span>
+                        <span>${news.date}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderVideos() {
+            const grid = document.getElementById('videosGrid');
+            if (!videosData.length) {
+                grid.innerHTML = '<p>Caricamento...</p>';
+                return;
+            }
+            grid.innerHTML = videosData.map(video => `
+                <div class="card" onclick="openVideoModal(${video.id})">
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.product}">
+                        <div class="play-button">▶</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="product-title">${video.product}</h3>
+                        <p class="product-description">da ${video.youtuber}</p>
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light); margin-top: auto;">
+                            <span>👁️ ${video.views}</span>
+                            <span>⭐ ${video.rating}/5</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function renderHistory() {
             const grid = document.getElementById('historyGrid');
-            if (historyData.length === 0) {
-                grid.innerHTML = '<p>Nessuna cronologia disponibile. I dati verranno salvati dopo il primo aggiornamento.</p>';
+            if (!historyData.length) {
+                grid.innerHTML = '<p>Nessuna cronologia disponibile</p>';
                 return;
             }
-
-            grid.innerHTML = `<div class="history-section">` + historyData.map((entry, idx) => `
-                <div class="history-item">
-                    <div class="history-date">📅 ${new Date(entry.date).toLocaleDateString('it-IT')}</div>
-                    <div class="history-content">
-                        ${entry.type === 'deals' ? `✅ ${entry.deals.length} offerte salvate` : `✅ ${entry.articles.length} articoli salvati`}
+            grid.innerHTML = historyData.map(entry => `
+                <div style="padding: 15px; background-color: rgba(33, 150, 243, 0.1); border-radius: 8px; margin-bottom: 15px; border-left: 4px solid var(--primary-color);">
+                    <div style="font-weight: 700; color: var(--primary-color);">📅 ${new Date(entry.date).toLocaleDateString('it-IT')}</div>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 5px;">
+                        ✅ ${entry.type === 'deals' ? entry.deals.length + ' offerte' : entry.articles.length + ' articoli'} salvati
                     </div>
                 </div>
-            `).join('') + `</div>`;
+            `).join('');
         }
 
-        function openProductModal(dealId) {
+        function openDealModal(dealId) {
             const deal = dealsData.find(d => d.id === dealId);
             if (!deal) return;
-
+            
             document.getElementById('modalTitle').textContent = deal.title;
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align: center; margin-bottom: 25px;">
-                    <img src="${deal.image}" style="max-width: 400px; max-height: 400px; border-radius: 12px; object-fit: cover;">
+                    <img src="${deal.image}" style="max-width: 400px; border-radius: 12px;">
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
-                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
-                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Categoria</div>
-                        <div style="font-size: 16px; font-weight: 600;">${deal.category}</div>
-                    </div>
-                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
-                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Prezzo Originale</div>
-                        <div style="font-size: 16px; font-weight: 600;">€${deal.originalPrice.toFixed(2)}</div>
-                    </div>
-                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
-                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Prezzo Scontato</div>
-                        <div style="font-size: 16px; font-weight: 600; color: var(--success-color);">€${deal.discountPrice.toFixed(2)}</div>
-                    </div>
-                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
-                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Sconto</div>
-                        <div style="font-size: 16px; font-weight: 600; color: var(--danger-color);">-${deal.discount}%</div>
-                    </div>
-                </div>
-                <h2>Descrizione Prodotto</h2>
-                <p>${deal.description}</p>
-                <h2>Valutazione</h2>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <div class="stars" style="font-size: 20px;">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</div>
-                    <span style="font-size: 16px; font-weight: 700;">${deal.rating}/5 - ${deal.reviews} recensioni</span>
-                </div>
-                <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(245, 124, 0, 0.1) 100%); border-radius: 10px; border-left: 4px solid var(--secondary-color);">
-                    <a href="https://www.amazon.it/s?k=${encodeURIComponent(deal.title)}&tag=lamendino-21" target="_blank" style="display: block; padding: 16px; background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                        🛒 ACQUISTA SU AMAZON - €${deal.discountPrice.toFixed(2)}
-                    </a>
-                </div>
+                <h2>Informazioni Prodotto</h2>
+                <p><strong>Categoria:</strong> ${deal.category}</p>
+                <p><strong>Prezzo Originale:</strong> €${deal.originalPrice.toFixed(2)}</p>
+                <p><strong>Prezzo Scontato:</strong> €${deal.discountPrice.toFixed(2)}</p>
+                <p><strong>Sconto:</strong> -${deal.discount}%</p>
+                <p><strong>Valutazione:</strong> ${deal.rating}/5 (${deal.reviews} recensioni)</p>
+                <p style="margin-top: 20px; padding: 15px; background-color: rgba(33, 150, 243, 0.1); border-radius: 8px;">
+                    <a href="https://www.amazon.it/s?k=${encodeURIComponent(deal.title)}&tag=lamendino-21" target="_blank" style="color: var(--primary-color); font-weight: 700;">🛒 ACQUISTA SU AMAZON</a>
+                </p>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -858,32 +848,55 @@
         function openArticleModal(articleId) {
             const article = articlesData.find(a => a.id === articleId);
             if (!article) return;
-
+            
             document.getElementById('modalTitle').textContent = article.title;
             document.getElementById('modalBody').innerHTML = `
-                <p style="color: var(--text-light); font-size: 14px; margin-top: 15px;">
-                    <strong>Pubblicato:</strong> ${article.date} | 
-                    <strong>Tempo di lettura:</strong> ${article.readTime} min
-                </p>
+                <p><strong>Categoria:</strong> ${article.category} | <strong>Data:</strong> ${article.date}</p>
                 <h2>Introduzione</h2>
                 <p>${article.excerpt}</p>
-                <h2>Argomento Principale</h2>
-                <p>Questo articolo approfondisce la categoria "${article.category}" con consigli pratici e analisi dettagliate.</p>
-                <h2>Cosa Troverai</h2>
-                <ul style="padding-left: 25px; line-height: 1.8;">
-                    <li>Analisi dei migliori prodotti disponibili</li>
-                    <li>Comparazioni qualità-prezzo</li>
-                    <li>Consigli per l'acquisto</li>
-                    <li>Link diretti ai prodotti su Amazon</li>
-                </ul>
-                <h2>Conclusione</h2>
-                <p>Speriamo che questo articolo ti abbia aiutato a comprendere meglio il settore. Clicca sui nostri link per scoprire tutte le offerte disponibili su Amazon.</p>
+                <h2>Contenuto</h2>
+                <p>Questo articolo approfondisce i migliori prodotti e consigli per la categoria ${article.category}.</p>
             `;
             document.getElementById('modal').classList.add('show');
         }
 
-        function openAmazonLink(event, productName) {
-            event.preventDefault();
+        function openNewsModal(newsId) {
+            const news = newsData.find(n => n.id === newsId);
+            if (!news) return;
+            
+            document.getElementById('modalTitle').textContent = news.title;
+            document.getElementById('modalBody').innerHTML = `
+                <div style="text-align: center; font-size: 72px; margin-bottom: 20px;">${news.icon}</div>
+                <p><strong>Categoria:</strong> ${news.category} | <strong>Data:</strong> ${news.date}</p>
+                <p><strong>Autore:</strong> ${news.author}</p>
+                <h2>Descrizione</h2>
+                <p>${news.content}</p>
+            `;
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function openVideoModal(videoId) {
+            const video = videosData.find(v => v.id === videoId);
+            if (!video) return;
+            
+            document.getElementById('modalTitle').textContent = video.product;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="youtube-embed">
+                    <iframe src="https://www.youtube.com/embed/${video.videoId}" title="${video.product}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <h2>Informazioni Video</h2>
+                <p><strong>Prodotto:</strong> ${video.product}</p>
+                <p><strong>Youtuber:</strong> ${video.youtuber}</p>
+                <p><strong>Canale:</strong> ${video.channel}</p>
+                <p><strong>Visualizzazioni:</strong> ${video.views}</p>
+                <p><strong>Rating:</strong> ${video.rating}/5</p>
+                <h2>Descrizione</h2>
+                <p>${video.description}</p>
+            `;
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function openAmazonLink(productName) {
             window.open(`https://www.amazon.it/s?k=${encodeURIComponent(productName)}&tag=lamendino-21`, 'blank');
         }
 
@@ -914,7 +927,7 @@
             loadData();
         });
 
-        // Refresh data every 5 minutes
+        // Refresh every 5 minutes
         setInterval(loadData, 5 * 60 * 1000);
     </script>
 </body>
