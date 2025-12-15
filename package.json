@@ -1,7 +1,7 @@
 {
   "name": "deals-aggregator",
   "version": "1.0.0",
-  "description": "Deals Aggregator with Groq Integration",
+  "description": "Deals Aggregator with Groq Integration - Data Persistence",
   "main": "server.js",
   "type": "module",
   "scripts": {

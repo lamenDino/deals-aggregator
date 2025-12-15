@@ -16,8 +16,6 @@
             --text-dark: #333333;
             --text-light: #666666;
             --border-color: #e0e0e0;
-            --accent-purple: #9C27B0;
-            --accent-green: #00BCD4;
         }
 
         * {
@@ -47,10 +45,6 @@
             color: #ffffff;
         }
 
-        body.dark-mode .header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-        }
-
         /* Header */
         .header {
             background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
@@ -70,6 +64,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 30px;
+            flex-wrap: wrap;
         }
 
         .header-title {
@@ -116,6 +111,21 @@
 
         .btn-small:hover {
             background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Hero */
@@ -239,6 +249,19 @@
             z-index: 10;
         }
 
+        .new-badge {
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 10;
+        }
+
         .card-content {
             padding: 20px;
             flex-grow: 1;
@@ -343,193 +366,17 @@
             box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4);
         }
 
-        /* Article Card */
-        .article-card {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .article-header {
-            padding: 22px;
-            border-bottom: 1px solid var(--border-color);
-            flex-grow: 1;
-        }
-
-        body.dark-mode .article-header {
-            border-bottom-color: #444;
-        }
-
-        .article-category {
+        /* Status */
+        .status {
             display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .article-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            color: var(--text-dark);
-        }
-
-        body.dark-mode .article-title {
-            color: #ffffff;
-        }
-
-        .article-excerpt {
-            font-size: 14px;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: var(--text-light);
-            padding: 16px 22px;
-            border-top: 1px solid var(--border-color);
-            background-color: #fafafa;
-        }
-
-        body.dark-mode .article-meta {
-            border-top-color: #444;
-            background-color: #1f1f1f;
-        }
-
-        /* News Grid */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .news-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .news-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            flex-grow: 1;
-        }
-
-        body.dark-mode .news-header {
-            border-bottom-color: #444;
-        }
-
-        .news-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-
-        .news-category-badge {
-            display: inline-block;
-            background-color: var(--accent-purple);
-            color: white;
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .news-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            color: var(--text-dark);
-        }
-
-        body.dark-mode .news-title {
-            color: #ffffff;
-        }
-
-        .news-excerpt {
-            font-size: 14px;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-
-        .news-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             font-size: 12px;
-            color: var(--text-light);
-            padding: 15px 20px;
-            border-top: 1px solid var(--border-color);
-            background-color: #fafafa;
-        }
-
-        body.dark-mode .news-meta {
-            border-top-color: #444;
-            background-color: #1f1f1f;
-        }
-
-        .news-author {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .news-date {
             font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .news-filter {
-            padding: 10px 18px;
-            border: 2px solid var(--border-color);
-            background-color: var(--card-bg);
-            color: var(--text-dark);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .news-filter:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .news-filter.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        body.dark-mode .news-filter {
-            border-color: #444;
-            background-color: #333;
-            color: #ffffff;
+            background-color: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            margin-bottom: 10px;
         }
 
         /* Modal */
@@ -550,6 +397,11 @@
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .modal-content {
             background-color: var(--card-bg);
             margin: 30px auto;
@@ -562,11 +414,6 @@
             animation: slideUp 0.3s ease;
         }
 
-        body.dark-mode .modal-content {
-            background-color: #2a2a2a;
-            color: #ffffff;
-        }
-
         @keyframes slideUp {
             from {
                 transform: translateY(50px);
@@ -576,6 +423,11 @@
                 transform: translateY(0);
                 opacity: 1;
             }
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #2a2a2a;
+            color: #ffffff;
         }
 
         .modal-header {
@@ -638,171 +490,64 @@
             font-size: 15px;
         }
 
-        .modal-amazon-link {
-            display: flex;
-            gap: 15px;
-            margin: 30px 0;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(245, 124, 0, 0.1) 100%);
-            border-radius: 10px;
-            border: 2px solid var(--secondary-color);
+        .history-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--border-color);
         }
 
-        .modal-amazon-link a {
-            flex: 1;
-            padding: 16px;
-            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            display: inline-block;
-        }
-
-        .modal-amazon-link a:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.5);
-        }
-
-        /* Specifications */
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .spec-item {
-            background-color: var(--light-bg);
+        .history-item {
             padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid var(--primary-color);
-        }
-
-        body.dark-mode .spec-item {
-            background-color: #333;
-        }
-
-        .spec-label {
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--text-light);
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .spec-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        body.dark-mode .spec-value {
-            color: #ffffff;
-        }
-
-        .pros-cons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .pros, .cons {
-            padding: 18px;
-            border-radius: 8px;
-        }
-
-        .pros {
-            background-color: rgba(76, 175, 80, 0.1);
-            border-left: 4px solid var(--success-color);
-        }
-
-        .cons {
-            background-color: rgba(244, 67, 54, 0.1);
-            border-left: 4px solid var(--danger-color);
-        }
-
-        .pros h3, .cons h3 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .pros h3 {
-            color: var(--success-color);
-        }
-
-        .cons h3 {
-            color: var(--danger-color);
-        }
-
-        .pros ul, .cons ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .pros li, .cons li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .pros li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--success-color);
-            font-weight: bold;
-        }
-
-        .cons li::before {
-            content: '✗';
-            position: absolute;
-            left: 0;
-            color: var(--danger-color);
-            font-weight: bold;
-        }
-
-        .review-section {
             background-color: var(--light-bg);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 25px 0;
-        }
-
-        body.dark-mode .review-section {
-            background-color: #333;
-        }
-
-        .review-item {
-            background-color: var(--card-bg);
-            padding: 18px;
             border-radius: 8px;
             margin-bottom: 15px;
             border-left: 4px solid var(--primary-color);
         }
 
-        body.dark-mode .review-item {
-            background-color: #2a2a2a;
+        body.dark-mode .history-item {
+            background-color: #333;
         }
 
-        .review-author {
+        .history-date {
             font-weight: 700;
             color: var(--primary-color);
-            margin-bottom: 8px;
+            font-size: 14px;
         }
 
-        .review-text {
+        .history-content {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* Hidden pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .last-update {
+            text-align: center;
+            padding: 15px;
+            background-color: rgba(33, 150, 243, 0.1);
+            border-radius: 8px;
+            margin-bottom: 30px;
             font-size: 14px;
-            line-height: 1.6;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 40px 20px;
             color: var(--text-light);
         }
 
@@ -816,7 +561,6 @@
                 width: 100%;
                 justify-content: center;
                 gap: 15px;
-                flex-wrap: wrap;
             }
 
             .hero-text {
@@ -830,14 +574,6 @@
             .modal-content {
                 width: 95%;
             }
-
-            .pros-cons {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-amazon-link {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
@@ -847,14 +583,12 @@
         <div class="header-content">
             <div class="header-title">🎁 LamenDino</div>
             <nav class="nav-menu">
-                <a class="nav-link" onclick="switchPage('home')">🏠 Home</a>
-                <a class="nav-link" onclick="switchPage('deals')">🛍️ Offerte</a>
-                <a class="nav-link" onclick="switchPage('articles')">📰 Articoli</a>
-                <a class="nav-link" onclick="switchPage('reviews')">⭐ Recensioni</a>
-                <a class="nav-link" onclick="switchPage('videos')">📹 Video</a>
-                <a class="nav-link" onclick="switchPage('converter')">🔗 Converti Link</a>
-                <a class="nav-link" onclick="switchPage('news')">🔔 Tech News</a>
-                <button class="btn-small" onclick="toggleTheme()">🌙</button>
+                <a class="nav-link" onclick="switchPage('home')">Home</a>
+                <a class="nav-link" onclick="switchPage('deals')">Offerte</a>
+                <a class="nav-link" onclick="switchPage('articles')">Articoli</a>
+                <a class="nav-link" onclick="switchPage('news')">News</a>
+                <a class="nav-link" onclick="switchPage('history')">Cronologia</a>
+                <button class="btn-small" onclick="toggleTheme()">🌙 Tema</button>
             </nav>
         </div>
     </header>
@@ -863,196 +597,85 @@
     <div class="hero">
         <div class="hero-content">
             <h1 class="hero-text">Le Migliori Offerte su Amazon</h1>
-            <p class="hero-description">Scopri i migliori prodotti selezionati da LamenDino con sconti esclusivi, recensioni dettagliate, ultime notizie dalla tecnologia e link affiliati diretti ad Amazon.it</p>
+            <p class="hero-description">Scopri i migliori prodotti selezionati con sconti esclusivi e articoli approfonditi. Aggiornamenti ogni 24 ore!</p>
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="container">
         <!-- Home Page -->
-        <div id="home-page" class="page">
+        <div id="home-page" class="page active">
             <h2 style="font-size: 28px; margin-bottom: 30px; text-align: center;">Benvenuto su LamenDino</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px;">
                 <div class="card" onclick="switchPage('deals')" style="cursor: pointer;">
                     <div style="padding: 30px; text-align: center; color: var(--primary-color);">
-                        <div style="font-size: 48px; margin-bottom: 15px;">🎁</div>
+                        <div style="font-size: 48px; margin-bottom: 15px;">💰</div>
                         <h3 style="margin-bottom: 10px;">Migliori Offerte</h3>
-                        <p style="color: var(--text-light);">Selezionati quotidianamente per te gli sconti più convenienti</p>
+                        <p style="color: var(--text-light);">Sconti giornalieri selezionati per te</p>
                     </div>
                 </div>
-                <div class="card" onclick="switchPage('reviews')" style="cursor: pointer;">
+                <div class="card" onclick="switchPage('articles')" style="cursor: pointer;">
                     <div style="padding: 30px; text-align: center; color: var(--secondary-color);">
-                        <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
-                        <h3 style="margin-bottom: 10px;">Recensioni Dettagliate</h3>
-                        <p style="color: var(--text-light);">Analisi complete con pro e contro di ogni prodotto</p>
-                    </div>
-                </div>
-                <div class="card" onclick="switchPage('videos')" style="cursor: pointer;">
-                    <div style="padding: 30px; text-align: center; color: var(--success-color);">
-                        <div style="font-size: 48px; margin-bottom: 15px;">📹</div>
-                        <h3 style="margin-bottom: 10px;">Video Recensioni</h3>
-                        <p style="color: var(--text-light);">Le migliori video recensioni da YouTube</p>
+                        <div style="font-size: 48px; margin-bottom: 15px;">📰</div>
+                        <h3 style="margin-bottom: 10px;">Articoli Dettagliati</h3>
+                        <p style="color: var(--text-light);">Guide e review approfonditi</p>
                     </div>
                 </div>
                 <div class="card" onclick="switchPage('news')" style="cursor: pointer;">
-                    <div style="padding: 30px; text-align: center; color: var(--accent-purple);">
-                        <div style="font-size: 48px; margin-bottom: 15px;">🔔</div>
+                    <div style="padding: 30px; text-align: center; color: #9C27B0;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">📱</div>
                         <h3 style="margin-bottom: 10px;">Tech News</h3>
-                        <p style="color: var(--text-light);">Ultime notizie dal mondo della tecnologia</p>
+                        <p style="color: var(--text-light);">Ultime notizie dalla tecnologia</p>
+                    </div>
+                </div>
+                <div class="card" onclick="switchPage('history')" style="cursor: pointer;">
+                    <div style="padding: 30px; text-align: center; color: #00BCD4;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">📚</div>
+                        <h3 style="margin-bottom: 10px;">Cronologia</h3>
+                        <p style="color: var(--text-light);">Tutte le offerte dei giorni precedenti</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Deals Page -->
-        <div id="deals-page" class="page" style="display: none;">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">🛍️ Offerte Giornaliere</h2>
-            <div id="dealsGrid" class="grid"></div>
+        <div id="deals-page" class="page">
+            <h2 style="font-size: 28px; margin-bottom: 30px;">🎁 Offerte Giornaliere</h2>
+            <div class="last-update" id="lastUpdateDeals"></div>
+            <div id="dealsGrid" class="grid">
+                <div class="loading-message">
+                    <div class="loader"></div> Caricamento offerte...
+                </div>
+            </div>
         </div>
 
         <!-- Articles Page -->
-        <div id="articles-page" class="page" style="display: none;">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">📰 Articoli e Guida all'Acquisto</h2>
-            <div id="articlesGrid" class="grid"></div>
-        </div>
-
-        <!-- Reviews Page -->
-        <div id="reviews-page" class="page" style="display: none;">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">⭐ Recensioni Dettagliate</h2>
-            <div id="reviewsGrid" class="grid"></div>
+        <div id="articles-page" class="page">
+            <h2 style="font-size: 28px; margin-bottom: 30px;">📝 Articoli e Guide</h2>
+            <div class="last-update" id="lastUpdateArticles"></div>
+            <div id="articlesGrid" class="grid">
+                <div class="loading-message">
+                    <div class="loader"></div> Caricamento articoli...
+                </div>
+            </div>
         </div>
 
         <!-- News Page -->
-        <div id="news-page" class="page" style="display: none;">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">🔔 Ultime Notizie dal Mondo della Tecnologia</h2>
-            <div style="margin-bottom: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="news-filter active" data-filter="all" onclick="filterNews('all')">Tutte</button>
-                <button class="news-filter" data-filter="apple" onclick="filterNews('apple')">Apple</button>
-                <button class="news-filter" data-filter="android" onclick="filterNews('android')">Android</button>
-                <button class="news-filter" data-filter="google" onclick="filterNews('google')">Google</button>
-                <button class="news-filter" data-filter="vr/ar" onclick="filterNews('vr/ar')">VR/AR</button>
-                <button class="news-filter" data-filter="hardware" onclick="filterNews('hardware')">Hardware</button>
+        <div id="news-page" class="page">
+            <h2 style="font-size: 28px; margin-bottom: 30px;">📰 Tech News Quotidiane</h2>
+            <div id="newsGrid" class="grid">
+                <div class="loading-message">
+                    <div class="loader"></div> Caricamento notizie...
+                </div>
             </div>
-            <div id="newsGrid" class="news-grid"></div>
         </div>
 
-        <!-- Videos Page -->
-        <div id="videos-page" class="page" style="display: none;">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">📹 Video Recensioni da YouTube</h2>
-            <div style="margin-bottom: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="news-filter active" data-filter="all" onclick="filterVideos('all')">Tutti</button>
-                <button class="news-filter" data-filter="smartphone" onclick="filterVideos('smartphone')">Smartphone</button>
-                <button class="news-filter" data-filter="computer" onclick="filterVideos('computer')">Computer</button>
-                <button class="news-filter" data-filter="tablet" onclick="filterVideos('tablet')">Tablet</button>
-                <button class="news-filter" data-filter="audio" onclick="filterVideos('audio')">Audio</button>
-            </div>
-            <div id="videosGrid" class="news-grid"></div>
-        </div>
-
-        <!-- Converter Page -->
-        <div id="converter-page" class="page" style="display: none;">
-            <h2 style="font-size: 28px; margin-bottom: 30px;">🔗 Convertitore Link Affiliato</h2>
-            <div style="max-width: 900px; margin: 0 auto;">
-                <div class="card" style="padding: 30px; cursor: auto; margin-bottom: 30px;">
-                    <div style="background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary-color); margin-bottom: 25px;">
-                        <p style="margin: 0; font-size: 15px;">
-                            📋 <strong>Incolla il link di un prodotto Amazon</strong> e riceverai automaticamente:
-                        </p>
-                        <ul style="margin: 10px 0 0 0; padding-left: 25px; font-size: 14px;">
-                            <li>✅ Link affiliato con tag <code style="background: var(--light-bg); padding: 2px 6px;">lamendino-21</code></li>
-                            <li>✅ Link accorciato via YOURLS</li>
-                            <li>✅ Informazioni prodotto (titolo, prezzo, rating, immagine)</li>
-                            <li>✅ Rilevamento automatico prodotto nuovo/usato</li>
-                        </ul>
-                    </div>
-
-                    <div style="margin-bottom: 25px;">
-                        <label style="display: block; font-weight: 700; margin-bottom: 10px; color: var(--primary-color);">🔗 Incolla URL Amazon:</label>
-                        <input 
-                            type="text" 
-                            id="amazonUrlInput" 
-                            placeholder="https://www.amazon.it/dp/B0123456789..." 
-                            style="width: 100%; padding: 14px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 14px; font-family: monospace; background: var(--card-bg); color: var(--text-dark);"
-                        />
-                        <small style="display: block; margin-top: 8px; color: var(--text-light);">
-                            Supportati: amazon.it, amazon.com, amzn.to, ecc.
-                        </small>
-                    </div>
-
-                    <div style="display: flex; gap: 10px; margin-bottom: 25px;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1;">
-                            <input type="checkbox" id="shortenCheckbox" checked style="cursor: pointer;">
-                            <span style="font-weight: 500;">🔗 Accorcia link (YOURLS)</span>
-                        </label>
-                    </div>
-
-                    <button 
-                        onclick="convertAmazonLink()" 
-                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s ease;"
-                        onmouseover="this.style.transform='scale(1.02)'"
-                        onmouseout="this.style.transform='scale(1)'"
-                        id="convertBtn"
-                    >
-                        ⚡ Converti Link
-                    </button>
-
-                    <div id="converterResult" style="display: none; margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%); border-radius: 10px; border-left: 4px solid var(--success-color);">
-                        <h3 style="color: var(--success-color); margin-top: 0;">✅ Link Convertito!</h3>
-                        
-                        <div id="productInfo" style="margin: 20px 0;"></div>
-
-                        <div class="specs-grid" style="margin: 20px 0;">
-                            <div class="spec-item">
-                                <div class="spec-label">URL Originale</div>
-                                <div class="spec-value" style="font-size: 13px; word-break: break-all; font-family: monospace;" id="resultOriginal"></div>
-                            </div>
-                            <div class="spec-item">
-                                <div class="spec-label">URL Affiliato</div>
-                                <div class="spec-value" style="font-size: 13px; word-break: break-all; font-family: monospace; color: var(--primary-color);" id="resultAffiliate"></div>
-                            </div>
-                            <div class="spec-item">
-                                <div class="spec-label">URL Accorciato</div>
-                                <div class="spec-value" style="font-size: 13px; word-break: break-all; font-family: monospace; color: var(--success-color);" id="resultShort"></div>
-                            </div>
-                        </div>
-
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button 
-                                onclick="copyToClipboard('resultShort')" 
-                                style="flex: 1; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;"
-                                onmouseover="this.style.backgroundColor='#1565C0'"
-                                onmouseout="this.style.backgroundColor='var(--primary-color)'"
-                            >
-                                📋 Copia Link Accorciato
-                            </button>
-                            <button 
-                                onclick="copyToClipboard('resultAffiliate')" 
-                                style="flex: 1; padding: 12px; background: var(--secondary-color); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;"
-                                onmouseover="this.style.backgroundColor='#F57C00'"
-                                onmouseout="this.style.backgroundColor='var(--secondary-color)'"
-                            >
-                                🔗 Copia Link Affiliato
-                            </button>
-                            <button 
-                                onclick="openInAmazon('resultShort')" 
-                                style="flex: 1; padding: 12px; background: #FF9800; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;"
-                                onmouseover="this.style.backgroundColor='#F57C00'"
-                                onmouseout="this.style.backgroundColor='#FF9800'"
-                            >
-                                🛒 Apri su Amazon
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="converterError" style="display: none; margin-top: 25px; padding: 20px; background: linear-gradient(135deg, rgba(244, 67, 54, 0.1) 0%, rgba(244, 67, 54, 0.05) 100%); border-radius: 10px; border-left: 4px solid var(--danger-color);">
-                        <h3 style="color: var(--danger-color); margin-top: 0;">❌ Errore</h3>
-                        <p id="errorMsg" style="margin: 10px 0 0 0; color: var(--text-dark);"></p>
-                    </div>
-
-                    <div id="converterLoading" style="display: none; margin-top: 25px; padding: 20px; text-align: center;">
-                        <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
-                        <p style="margin: 0; color: var(--text-light);">Elaborazione in corso...</p>
-                    </div>
+        <!-- History Page -->
+        <div id="history-page" class="page">
+            <h2 style="font-size: 28px; margin-bottom: 30px;">📚 Cronologia Offerte</h2>
+            <div id="historyGrid">
+                <div class="loading-message">
+                    <div class="loader"></div> Caricamento cronologia...
                 </div>
             </div>
         </div>
@@ -1063,7 +686,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h2 class="modal-title" id="modalTitle"></h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" onclick="closeModal()">✕</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
         </div>
@@ -1072,191 +695,68 @@
     <script>
         let dealsData = [];
         let articlesData = [];
+        let historyData = [];
         let currentPage = 'home';
 
-        // Video Reviews Data - Video Ufficiali dei Produttori e Channel Promozionali
-        const videosData = [
-            {
-                id: 1,
-                product: "Sony WH-1000XM5",
-                youtuber: "Sony Official",
-                channel: "Sony Music Entertainment",
-                views: "5.2M",
-                rating: 4.9,
-                videoId: "w_wUIUKZ7D8",
-                category: "audio",
-                thumbnail: "https://img.youtube.com/vi/w_wUIUKZ7D8/maxresdefault.jpg",
-                description: "Video ufficiale di presentazione delle cuffie Sony WH-1000XM5 con cancellazione del rumore avanzata"
-            },
-            {
-                id: 2,
-                product: "iPhone 16 Pro Max",
-                youtuber: "Apple",
-                channel: "Apple Official Channel",
-                views: "12.5M",
-                rating: 4.9,
-                videoId: "sB0yBZz3wLY",
-                category: "smartphone",
-                thumbnail: "https://img.youtube.com/vi/sB0yBZz3wLY/maxresdefault.jpg",
-                description: "Presentazione ufficiale iPhone 16 Pro Max - La migliore fotocamera mai realizzata"
-            },
-            {
-                id: 3,
-                product: "Samsung Galaxy S25",
-                youtuber: "Samsung Mobile",
-                channel: "Samsung Official",
-                views: "8.9M",
-                rating: 4.8,
-                videoId: "jTRrKdHdHEo",
-                category: "smartphone",
-                thumbnail: "https://img.youtube.com/vi/jTRrKdHdHEo/maxresdefault.jpg",
-                description: "Scopri il nuovo Samsung Galaxy S25 con display pieghevole a 240Hz"
-            },
-            {
-                id: 4,
-                product: "MacBook Pro M4",
-                youtuber: "Apple",
-                channel: "Apple Official Channel",
-                views: "9.7M",
-                rating: 4.9,
-                videoId: "rDz-hKGxFQg",
-                category: "computer",
-                thumbnail: "https://img.youtube.com/vi/rDz-hKGxFQg/maxresdefault.jpg",
-                description: "Presentazione MacBook Pro con chip M4 - Potenza e performance suprema"
-            },
-            {
-                id: 5,
-                product: "iPad Pro 2025",
-                youtuber: "Apple",
-                channel: "Apple Official Channel",
-                views: "7.3M",
-                rating: 4.8,
-                videoId: "N0ZXvPDQS1s",
-                category: "tablet",
-                thumbnail: "https://img.youtube.com/vi/N0ZXvPDQS1s/maxresdefault.jpg",
-                description: "Nuovo iPad Pro - Ancora più sottile, ancora più potente con il chip M4"
-            },
-            {
-                id: 6,
-                product: "Pixel 9 Pro",
-                youtuber: "Google",
-                channel: "Google Official Channel",
-                views: "6.8M",
-                rating: 4.8,
-                videoId: "vw8c9a9EhWU",
-                category: "smartphone",
-                thumbnail: "https://img.youtube.com/vi/vw8c9a9EhWU/maxresdefault.jpg",
-                description: "Presentazione ufficiale Pixel 9 Pro - L'IA del telefono più intelligente"
-            }
-        ];
-
-        // News Data
-        const newsData = [
-            {
-                id: 1,
-                title: "Apple annuncia iPhone 16 Pro Max con chip A18 Pro",
-                category: "apple",
-                date: "2024-12-01",
-                author: "Marco Rossi",
-                icon: "📱",
-                excerpt: "Ufficialmente presentato il nuovo iPhone 16 Pro Max con processore A18 Pro e autonomia batteria fino a 48 ore. Fotocamera periscope con zoom 10x.",
-                content: "CUPERTINO - Apple ha ufficialmente annunciato l'iPhone 16 Pro Max durante il suo evento di lancio di dicembre, confermando le indiscrezioni degli ultimi mesi.\n\nIl nuovo flagship si distingue per il processore A18 Pro, realizzato con tecnologia 3nm+ che garantisce performance superiori del 15% rispetto al modello precedente. La novità più rilevante è l'autonomia della batteria che raggiunge le 48 ore grazie alla nuova configurazione energetica.\n\nLa fotocamera principale mantiene i 48MP ma introduce una lente periscope con zoom ottico 10x, permettendo foto in alta qualità anche da grande distanza.\n\nDisponibile dal 15 dicembre nelle colorazioni: nero grafite, argento, oro naturale e bronzo."
-            },
-            {
-                id: 2,
-                title: "Samsung Galaxy S25 Ultra: primo smartphone con schermo a 240Hz",
-                category: "android",
-                date: "2024-11-28",
-                author: "Laura Chen",
-                icon: "🎮",
-                excerpt: "Samsung svela il Galaxy S25 Ultra con display pieghevole a 240Hz, processore Snapdragon 8 Elite e fotocamera 200MP. Debutto il 20 gennaio 2025.",
-                content: "SEOUL - Samsung Electronics ha annunciato il tanto atteso Galaxy S25 Ultra, il primo smartphone al mondo dotato di display AMOLED a 240Hz.\n\nIl dispositivo rappresenta un salto tecnologico significativo nel settore mobile, combinando un form factor pieghevole innovativo con specifiche hardware di altissimo livello.\n\nIl display principale da 7,3 pollici supporta una frequenza di aggiornamento massima di 240Hz, offrendo fluidità senza precedenti nei movimenti e nei giochi.\n\nSotto la scocca troviamo il processore Snapdragon 8 Elite, affiancato da 12GB di RAM LPDDR5X. La fotocamera principale sale a 200MP con tecnologia di fusione per foto ancora più dettagliate.\n\nPrezzo da €1.299 (256GB) - Disponibile dal 20 gennaio 2025"
-            },
-            {
-                id: 3,
-                title: "Google Pixel 9 Pro Fold: il pieghevole più sottile del mercato",
-                category: "google",
-                date: "2024-11-25",
-                author: "Giuseppe Ferrara",
-                icon: "🔍",
-                excerpt: "Google rilascia il Pixel 9 Pro Fold con spessore di soli 5,2mm quando chiuso. Gemini AI integrata direttamente nel chip Tensor G5.",
-                content: "MOUNTAIN VIEW - Google ha ufficialmente presentato il Pixel 9 Pro Fold, portando innovazioni significative nel segmento degli smartphone pieghevoli.\n\nLo smartphone rappresenta il modello più sottile della categoria con uno spessore di soli 5,2mm quando completamente piegato. Mantiene comunque una struttura robusta con schermo interno da 8 pollici e schermo esterno da 5,8 pollici.\n\nElemento distintivo è l'integrazione completa dell'assistente Gemini nel processore Tensor G5, permettendo operazioni di AI on-device senza necessità di connessione cloud.\n\nLa fotocamera principale mantiene i 50MP ma introduce un nuovo sensore da 12MP per la visione macro, con messa a fuoco a 2cm.\n\nPrezzo: €1.899 (base) - Disponibile: 15 novembre 2024"
-            },
-            {
-                id: 4,
-                title: "Nvidia RTX 6000 Ada: la GPU più potente per creator professionali",
-                category: "hardware",
-                date: "2024-11-22",
-                author: "Andrea Benedetti",
-                icon: "🖥️",
-                excerpt: "Nvidia annuncia la RTX 6000 Ada con 48GB di VRAM e prestazioni fino a 912 TFLOPS. Ideale per rendering, IA e video editing professionale.",
-                content: "SANTA CLARA - Nvidia ha annunciato il lancio della RTX 6000 Ada, la GPU più performante della linea professionale per creative professionals.\n\nLa GPU rappresenta l'apice della tecnologia di rendering hardware, integrando 18.176 core CUDA e 48GB di memoria GDDR6 a banda ultra-larga di 960 GB/s.\n\nLe prestazioni raggiungono i 912 TFLOPS di precisione in doppia, permettendo rendering real-time di scene complesse che normalmente richiederebbero ore di elaborazione.\n\nParticolarmente vantaggiosa per rendering 3D (cinema VFX), processamento dati IA, editing video 8K in tempo reale e simulazioni scientifiche.\n\nPrezzo: €10.999 (MSRP) - Disponibilità: Gennaio 2025"
-            },
-            {
-                id: 5,
-                title: "Meta Quest 4: headset VR con processore Snapdragon XR2 Gen 2 Elite",
-                category: "vr/ar",
-                date: "2024-11-20",
-                author: "Sofia Riccardi",
-                icon: "🥽",
-                excerpt: "Meta annuncia Quest 4 con occhiali più leggeri (180g) e display 4K per occhio. Eye tracking e hand tracking di generazione nuova.",
-                content: "MENLO PARK - Meta ha ufficialmente presentato il Meta Quest 4, la nuova generazione del suo popolare headset VR autonomo.\n\nIl Quest 4 segna un progresso significativo nel design e nelle prestazioni, con un peso ridotto a soli 180 grammi mantenendo una struttura robusta.\n\nIl display OLED rappresenta un'evoluzione sostanziale con risoluzione 4K per occhio (2560x2560 per lato), colori più vibranti e contrasto infinito. La frequenza di aggiornamento raggiunge i 120Hz per movimenti fluidi.\n\nSotto la scocca, il processore Snapdragon XR2 Gen 2 Elite offre prestazioni paragonabili a un flagship smartphone. La RAM sale a 12GB, permettendo esperienze immersive senza lag.\n\nBatteria da 4.400 mAh con autonomia 3-4 ore. Prezzo: €549 (128GB) - Disponibilità: 15 dicembre 2024"
-            },
-            {
-                id: 6,
-                title: "Intel Xeon W9-3595X: processore da 60 core per workstation professionali",
-                category: "hardware",
-                date: "2024-11-18",
-                author: "Marco Vitali",
-                icon: "⚙️",
-                excerpt: "Intel annuncia il Xeon W9-3595X con 60 core, 5.8GHz boost e 450W TDP. Perfetto per rendering, CAD, simulazioni.",
-                content: "SANTA CLARA - Intel ha rilasciato il Xeon W9-3595X, il processore più potente della linea Xeon W9 dedicato a workstation professionali.\n\nIl processore implementa 60 core fisici (120 thread) basati su architettura Emerald Rapids, permettendo un parallelismo incredibile per applicazioni multi-threaded complesse.\n\nLe frequenze raggiungono i 5.8GHz in boost, offrendo velocità eccezionali anche nei workload single-threaded. La cache L3 sale a 300MB, minimizzando la latenza di accesso alla memoria.\n\nIdeale per rendering 3D (Cinema 4D, 3ds Max), processamento dati scientifico, virtualizzazione e datacenter edge.\n\nPrezzo MSRP: €12.999 - Disponibilità: Gennaio 2025"
-            }
-        ];
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            loadTheme();
-        });
-
+        // Load data from backend
         async function loadData() {
             try {
+                console.log('📡 Caricamento dati dal server...');
                 const response = await fetch('/api/deals');
                 const data = await response.json();
-                dealsData = data.deals;
-                articlesData = data.articles;
+                
+                dealsData = data.deals || [];
+                articlesData = data.articles || [];
+                historyData = data.history || [];
+                
+                console.log(`✅ Dati caricati: ${dealsData.length} offerte, ${articlesData.length} articoli`);
+                
                 renderDeals();
                 renderArticles();
-                renderReviews();
                 renderNews();
-                renderVideos();
+                renderHistory();
+                updateLastUpdateTime(data.lastUpdate);
             } catch (error) {
-                console.error('Errore:', error);
+                console.error('Errore caricamento:', error);
+                document.getElementById('dealsGrid').innerHTML = '<p style="color: red;">Errore nel caricamento dei dati. Ricarica la pagina.</p>';
             }
+        }
+
+        function updateLastUpdateTime(lastUpdate) {
+            const date = new Date(lastUpdate);
+            const formatted = date.toLocaleString('it-IT');
+            const html = `📅 Ultimo aggiornamento: ${formatted}`;
+            document.getElementById('lastUpdateDeals').textContent = html;
+            document.getElementById('lastUpdateArticles').textContent = html;
         }
 
         function switchPage(page) {
             currentPage = page;
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById(page + '-page').style.display = 'block';
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(page + '-page').classList.add('active');
             window.scrollTo(0, 0);
         }
 
         function renderDeals() {
             const grid = document.getElementById('dealsGrid');
+            if (dealsData.length === 0) {
+                grid.innerHTML = '<p>Nessuna offerta disponibile. Riprova più tardi.</p>';
+                return;
+            }
+
             grid.innerHTML = dealsData.map(deal => `
                 <div class="card product-card" onclick="openProductModal(${deal.id})">
-                    <div class="product-image" style="background-image: url('${deal.image}');">
+                    <div class="product-image" style="background-image: url(${deal.image})">
                         <div class="discount-badge">-${deal.discount}%</div>
                         <div class="category-badge">${deal.category}</div>
+                        <div class="new-badge">NUOVO</div>
                     </div>
                     <div class="card-content">
                         <h3 class="product-title">${deal.title}</h3>
                         <p class="product-description">${deal.description}</p>
                         <div class="rating">
                             <div class="stars">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</div>
-                            <span>${deal.rating} (${deal.reviews})</span>
+                            <span>${deal.rating}/5 (${deal.reviews} recensioni)</span>
                         </div>
                         <div class="price-section">
                             <span class="price-original">€${deal.originalPrice.toFixed(2)}</span>
@@ -1270,168 +770,86 @@
 
         function renderArticles() {
             const grid = document.getElementById('articlesGrid');
+            if (articlesData.length === 0) {
+                grid.innerHTML = '<p>Nessun articolo disponibile.</p>';
+                return;
+            }
+
             grid.innerHTML = articlesData.map(article => `
-                <div class="card article-card" onclick="openArticleModal(${article.id})">
-                    <div class="article-header">
-                        <div class="article-category">${article.category}</div>
-                        <h3 class="article-title">${article.title}</h3>
-                        <p class="article-excerpt">${article.excerpt}</p>
+                <div class="card" onclick="openArticleModal(${article.id})">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border-color); flex-grow: 1;">
+                        <span class="status">${article.category}</span>
+                        <h3 class="product-title">${article.title}</h3>
+                        <p class="product-description">${article.excerpt}</p>
                     </div>
-                    <div class="article-meta">
+                    <div style="padding: 15px 20px; border-top: 1px solid var(--border-color); background-color: var(--light-bg); display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light);">
                         <span>${article.date}</span>
-                        <span>📖 ${article.readTime}</span>
+                        <span>${article.readTime} min</span>
                     </div>
                 </div>
             `).join('');
         }
 
-        function renderReviews() {
-            const grid = document.getElementById('reviewsGrid');
-            grid.innerHTML = dealsData.slice(0, 6).map(deal => `
-                <div class="card article-card" onclick="openProductReview(${deal.id})">
-                    <div class="product-image" style="background-image: url('${deal.image}'); height: 150px;"></div>
-                    <div class="article-header">
-                        <h3 class="article-title">${deal.title}</h3>
-                        <div class="rating" style="margin-bottom: 15px;">
-                            <div class="stars">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</div>
-                            <span>${deal.rating}</span>
-                        </div>
-                        <p class="article-excerpt">Leggi la recensione completa con pro e contro</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderNews(filter = 'all') {
+        function renderNews() {
             const grid = document.getElementById('newsGrid');
-            const filtered = filter === 'all' ? newsData : newsData.filter(n => n.category === filter);
-            
-            grid.innerHTML = filtered.map(news => `
-                <div class="card news-card" onclick="openNewsModal(${news.id})">
-                    <div class="news-header">
-                        <div class="news-icon">${news.icon}</div>
-                        <div class="news-category-badge">${news.category}</div>
-                        <h3 class="news-title">${news.title}</h3>
-                        <p class="news-excerpt">${news.excerpt}</p>
-                    </div>
-                    <div class="news-meta">
-                        <span class="news-author">📝 ${news.author}</span>
-                        <span class="news-date">${news.date}</span>
+            grid.innerHTML = '<p style="text-align: center; color: var(--text-light);">Le news vengono generate quotidianamente alle 08:00</p>';
+        }
+
+        function renderHistory() {
+            const grid = document.getElementById('historyGrid');
+            if (historyData.length === 0) {
+                grid.innerHTML = '<p>Nessuna cronologia disponibile. I dati verranno salvati dopo il primo aggiornamento.</p>';
+                return;
+            }
+
+            grid.innerHTML = `<div class="history-section">` + historyData.map((entry, idx) => `
+                <div class="history-item">
+                    <div class="history-date">📅 ${new Date(entry.date).toLocaleDateString('it-IT')}</div>
+                    <div class="history-content">
+                        ${entry.type === 'deals' ? `✅ ${entry.deals.length} offerte salvate` : `✅ ${entry.articles.length} articoli salvati`}
                     </div>
                 </div>
-            `).join('');
+            `).join('') + `</div>`;
         }
 
         function openProductModal(dealId) {
             const deal = dealsData.find(d => d.id === dealId);
             if (!deal) return;
 
-            const categoryKeywords = {
-                'elettronica': 'elettronica+smartphone+laptop',
-                'casa': 'casa+smart+home+automation',
-                'sport': 'sport+fitness+palestra+yoga',
-                'moda': 'moda+accessori+zaini',
-                'libri': 'libri+ebook+kindle',
-                'tecnologia': 'tecnologia+gadget'
-            };
-
-            const categoryLink = categoryKeywords[deal.category] || 'elettronica';
-
             document.getElementById('modalTitle').textContent = deal.title;
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align: center; margin-bottom: 25px;">
                     <img src="${deal.image}" style="max-width: 400px; max-height: 400px; border-radius: 12px; object-fit: cover;">
                 </div>
-
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <div class="spec-label">Categoria</div>
-                        <div class="spec-value">${deal.category}</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Categoria</div>
+                        <div style="font-size: 16px; font-weight: 600;">${deal.category}</div>
                     </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Prezzo Originale</div>
-                        <div class="spec-value">€${deal.originalPrice.toFixed(2)}</div>
+                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Prezzo Originale</div>
+                        <div style="font-size: 16px; font-weight: 600;">€${deal.originalPrice.toFixed(2)}</div>
                     </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Prezzo Scontato</div>
-                        <div class="spec-value" style="color: var(--success-color);">€${deal.discountPrice.toFixed(2)}</div>
+                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Prezzo Scontato</div>
+                        <div style="font-size: 16px; font-weight: 600; color: var(--success-color);">€${deal.discountPrice.toFixed(2)}</div>
                     </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Sconto</div>
-                        <div class="spec-value" style="color: var(--danger-color);">-${deal.discount}%</div>
+                    <div style="background-color: var(--light-bg); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 700; font-size: 13px; color: var(--text-light); text-transform: uppercase; margin-bottom: 6px;">Sconto</div>
+                        <div style="font-size: 16px; font-weight: 600; color: var(--danger-color);">-${deal.discount}%</div>
                     </div>
                 </div>
-
                 <h2>Descrizione Prodotto</h2>
                 <p>${deal.description}</p>
-
                 <h2>Valutazione</h2>
-                <div class="rating">
-                    <div class="stars">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="stars" style="font-size: 20px;">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</div>
                     <span style="font-size: 16px; font-weight: 700;">${deal.rating}/5 - ${deal.reviews} recensioni</span>
                 </div>
-
-                <h2>Specifiche Tecniche</h2>
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <div class="spec-label">Marca</div>
-                        <div class="spec-value">Premium Quality</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Garanzia</div>
-                        <div class="spec-value">2 Anni</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Spedizione</div>
-                        <div class="spec-value">Rapida</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Disponibilità</div>
-                        <div class="spec-value">In Stock</div>
-                    </div>
-                </div>
-
-                <h2>Vantaggi e Svantaggi</h2>
-                <div class="pros-cons">
-                    <div class="pros">
-                        <h3>✓ Vantaggi</h3>
-                        <ul>
-                            <li>Qualità eccellente e duratura</li>
-                            <li>Ottimo rapporto qualità/prezzo</li>
-                            <li>Spedizione veloce garantita</li>
-                            <li>Garanzia completa</li>
-                        </ul>
-                    </div>
-                    <div class="cons">
-                        <h3>✗ Considerazioni</h3>
-                        <ul>
-                            <li>Disponibilità limitata</li>
-                            <li>Colori stock limitati</li>
-                            <li>Possibile ritardo su ordini bulk</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="modal-amazon-link">
-                    <a href="#" target="_blank" onclick="event.preventDefault(); window.open('https://www.amazon.it/s?k=${encodeURIComponent(deal.title)}&tag=lamendino-21', '_blank');">
+                <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(245, 124, 0, 0.1) 100%); border-radius: 10px; border-left: 4px solid var(--secondary-color);">
+                    <a href="https://www.amazon.it/s?k=${encodeURIComponent(deal.title)}&tag=lamendino-21" target="_blank" style="display: block; padding: 16px; background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                         🛒 ACQUISTA SU AMAZON - €${deal.discountPrice.toFixed(2)}
                     </a>
-                </div>
-
-                <h2>Cosa Ne Pensano i Clienti</h2>
-                <div class="review-section">
-                    <div class="review-item">
-                        <div class="review-author">⭐⭐⭐⭐⭐ Marco R.</div>
-                        <div class="review-text">Prodotto fantastico! Arrivato subito e bene imballato. Lo consiglio vivamente!</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-author">⭐⭐⭐⭐⭐ Elena M.</div>
-                        <div class="review-text">Perfetto per le mie esigenze, qualità superiore al prezzo. Molto contenta!</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-author">⭐⭐⭐⭐ Giovanni T.</div>
-                        <div class="review-text">Buon prodotto, il prezzo è giusto. Spedizione veloce come sempre.</div>
-                    </div>
                 </div>
             `;
             document.getElementById('modal').classList.add('show');
@@ -1441,224 +859,32 @@
             const article = articlesData.find(a => a.id === articleId);
             if (!article) return;
 
-            const categoryKeywords = {
-                'Tecnologia': 'tecnologia+gadget',
-                'Casa': 'casa+smart+home+automation',
-                'Sporttech': 'sport+fitness+palestra+yoga',
-                'Lifestyle': 'moda+accessori+zaini'
-            };
-            const categoryLink = categoryKeywords[article.category] || 'tecnologia+gadget';
-
             document.getElementById('modalTitle').textContent = article.title;
             document.getElementById('modalBody').innerHTML = `
-                <div style="margin-bottom: 20px;">
-                    <div class="article-category">${article.category}</div>
-                    <p style="color: var(--text-light); font-size: 14px; margin-top: 15px;">
-                        <strong>Pubblicato:</strong> ${article.date} | <strong>Tempo di lettura:</strong> ${article.readTime}
-                    </p>
-                </div>
-
+                <p style="color: var(--text-light); font-size: 14px; margin-top: 15px;">
+                    <strong>Pubblicato:</strong> ${article.date} | 
+                    <strong>Tempo di lettura:</strong> ${article.readTime} min
+                </p>
                 <h2>Introduzione</h2>
                 <p>${article.excerpt}</p>
-
-                <h2>Contenuti Principali</h2>
-                <p>In questo articolo approfondiremo i migliori prodotti della categoria ${article.category.toLowerCase()}, le loro caratteristiche distintive e come scegliere quello più adatto alle tue esigenze.</p>
-
-                <h2>Criteri di Selezione</h2>
+                <h2>Argomento Principale</h2>
+                <p>Questo articolo approfondisce la categoria "${article.category}" con consigli pratici e analisi dettagliate.</p>
+                <h2>Cosa Troverai</h2>
                 <ul style="padding-left: 25px; line-height: 1.8;">
-                    <li><strong>Qualità:</strong> Abbiamo selezionato solo prodotti con recensioni eccellenti</li>
-                    <li><strong>Prezzo:</strong> Miglior rapporto qualità/prezzo disponibile</li>
-                    <li><strong>Affidabilità:</strong> Marche riconosciute e certificate</li>
-                    <li><strong>Disponibilità:</strong> Prodotti in stock immediato su Amazon</li>
+                    <li>Analisi dei migliori prodotti disponibili</li>
+                    <li>Comparazioni qualità-prezzo</li>
+                    <li>Consigli per l'acquisto</li>
+                    <li>Link diretti ai prodotti su Amazon</li>
                 </ul>
-
-                <h2>Come Scegliere il Prodotto Migliore</h2>
-                <p>Quando si sceglie un prodotto della categoria ${article.category.toLowerCase()}, è importante considerare:</p>
-                <ul style="padding-left: 25px; line-height: 1.8;">
-                    <li>Le tue esigenze specifiche e l'uso previsto</li>
-                    <li>Il budget disponibile</li>
-                    <li>Le recensioni degli utenti verificati</li>
-                    <li>La disponibilità di garanzia e assistenza</li>
-                    <li>Il servizio di spedizione e reso</li>
-                </ul>
-
-                <h2>Opinione dei Nostri Esperti</h2>
-                <div class="review-section">
-                    <p><strong>Luca, Esperto di ${article.category}:</strong></p>
-                    <p>"Negli ultimi mesi abbiamo notato un incremento significativo della qualità dei prodotti in questa categoria. I prezzi sono diventati più accessibili pur mantenendo standard eccellenti."</p>
-                </div>
-
-                <h2>Domande Frequenti</h2>
-                <div style="margin: 20px 0;">
-                    <div style="margin-bottom: 15px; padding: 15px; background-color: var(--light-bg); border-radius: 8px;">
-                        <strong style="color: var(--primary-color);">D: Quali sono i vantaggi di acquistare ora?</strong>
-                        <p style="margin-top: 8px; color: var(--text-light);">R: I prezzi sono al loro minimo storico e la disponibilità è garantita. Inoltre, con i nostri link affiliati, supporti il nostro lavoro.</p>
-                    </div>
-                    <div style="margin-bottom: 15px; padding: 15px; background-color: var(--light-bg); border-radius: 8px;">
-                        <strong style="color: var(--primary-color);">D: C'è una garanzia?</strong>
-                        <p style="margin-top: 8px; color: var(--text-light);">R: Sì, tutti i prodotti hanno la garanzia Amazon standard. Puoi restituire entro 30 giorni se non soddisfatto.</p>
-                    </div>
-                </div>
-
-                <div class="modal-amazon-link">
-                    <a href="#" target="_blank" onclick="event.preventDefault(); window.open('https://www.amazon.it/s?k=${encodeURIComponent(categoryLink)}&tag=lamendino-21', '_blank');">
-                        🔗 SCOPRI I PRODOTTI SU AMAZON
-                    </a>
-                </div>
-
                 <h2>Conclusione</h2>
-                <p>Speriamo che questo articolo ti abbia aiutato a comprendere meglio la categoria ${article.category.toLowerCase()} e a fare una scelta consapevole. Non esitare a cliccare sui nostri link per scoprire tutte le offerte disponibili su Amazon.it</p>
-            `;
-            document.getElementById('modal').classList.add('show');
-        }
-
-        function openProductReview(dealId) {
-            const deal = dealsData.find(d => d.id === dealId);
-            if (!deal) return;
-            openProductModal(dealId);
-        }
-
-        function openNewsModal(newsId) {
-            const news = newsData.find(n => n.id === newsId);
-            if (!news) return;
-
-            document.getElementById('modalTitle').textContent = news.title;
-            document.getElementById('modalBody').innerHTML = `
-                <div style="text-align: center; font-size: 72px; margin-bottom: 20px;">${news.icon}</div>
-                
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid var(--border-color);">
-                    <div>
-                        <span class="news-category-badge">${news.category.toUpperCase()}</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 13px; color: var(--text-light);">📝 ${news.author}</div>
-                        <div style="font-size: 13px; color: var(--primary-color); font-weight: 700;">${news.date}</div>
-                    </div>
-                </div>
-                
-                <div style="line-height: 1.9; font-size: 15px; margin-bottom: 30px; white-space: pre-wrap;">
-                    ${news.content}
-                </div>
-                
-                <div class="modal-amazon-link">
-                    <a href="#" target="_blank" onclick="event.preventDefault(); window.open('https://www.amazon.it/s?k=${encodeURIComponent(news.title.split(' ')[0])}&tag=lamendino-21', '_blank');">
-                        🔗 SCOPRI I PRODOTTI CORRELATI SU AMAZON
-                    </a>
-                </div>
+                <p>Speriamo che questo articolo ti abbia aiutato a comprendere meglio il settore. Clicca sui nostri link per scoprire tutte le offerte disponibili su Amazon.</p>
             `;
             document.getElementById('modal').classList.add('show');
         }
 
         function openAmazonLink(event, productName) {
             event.preventDefault();
-            window.open(`https://www.amazon.it/s?k=${encodeURIComponent(productName)}&tag=lamendino-21`, '_blank');
-        }
-
-        function renderVideos(filter = 'all') {
-            const grid = document.getElementById('videosGrid');
-            const filtered = filter === 'all' ? videosData : videosData.filter(v => v.category === filter);
-            
-            grid.innerHTML = filtered.map(video => `
-                <div class="card news-card" onclick="openVideoModal(${video.id})">
-                    <div style="position: relative; width: 100%; padding-bottom: 56.25%; background: #000;">
-                        <img src="${video.thumbnail}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,0,0,0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">▶</div>
-                    </div>
-                    <div class="news-header">
-                        <h3 class="news-title">${video.product}</h3>
-                        <p class="news-excerpt">da ${video.youtuber}</p>
-                    </div>
-                    <div class="news-meta">
-                        <span class="news-author">👁️ ${video.views}</span>
-                        <span style="color: var(--primary-color); font-weight: 700;">⭐ ${video.rating}/5</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openVideoModal(videoId) {
-            const video = videosData.find(v => v.id === videoId);
-            if (!video) return;
-
-            document.getElementById('modalTitle').textContent = video.product;
-            document.getElementById('modalBody').innerHTML = `
-                <div style="position: relative; width: 100%; padding-bottom: 56.25%; margin-bottom: 25px;">
-                    <iframe 
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;"
-                        src="https://www.youtube.com/embed/${video.videoId}"
-                        title="${video.product}"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-
-                <div style="background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%); padding: 18px; border-radius: 10px; border-left: 4px solid var(--primary-color); margin-bottom: 20px;">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                        <span style="font-size: 20px;">🎬</span>
-                        <strong style="color: var(--primary-color);">VIDEO UFFICIALE DEL PRODUTTORE</strong>
-                    </div>
-                    <p style="font-size: 14px; color: var(--text-light); margin: 0;">Questo è il video di presentazione ufficiale dal produttore ${video.youtuber}. Scopri le caratteristiche, gli usi e le innovazioni direttamente dalla fonte.</p>
-                </div>
-
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <div class="spec-label">Produttore Ufficiale</div>
-                        <div class="spec-value">${video.youtuber}</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Channel</div>
-                        <div class="spec-value">${video.channel}</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Visualizzazioni</div>
-                        <div class="spec-value">${video.views}</div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-label">Valutazione Media</div>
-                        <div class="spec-value" style="color: var(--primary-color);">⭐ ${video.rating}/5</div>
-                    </div>
-                </div>
-
-                <h2>📺 Informazioni Video</h2>
-                <p><strong>${video.description}</strong></p>
-                <p>Questo video promozionale ufficiale di <strong>${video.youtuber}</strong> ha raggiunto <strong>${video.views}</strong> visualizzazioni ed è molto apprezzato dalla community con un rating di <strong>${video.rating}/5 stelle</strong>.</p>
-
-                <h2>✅ Cosa Scoprirai</h2>
-                <ul style="padding-left: 25px; line-height: 1.8;">
-                    <li><strong>Presentazione ufficiale</strong> - Le caratteristiche principali del ${video.product}</li>
-                    <li><strong>Innovazioni tecnologiche</strong> - Cosa rende questo prodotto speciale</li>
-                    <li><strong>Dimostrazioni pratiche</strong> - Come funziona in pratica</li>
-                    <li><strong>Specifiche tecniche</strong> - Tutti i dettagli importanti</li>
-                    <li><strong>Casi d'uso</strong> - Come sfruttare al massimo il prodotto</li>
-                </ul>
-
-                <h2>🎯 Perché Guardare Video Ufficiali?</h2>
-                <p>I video di presentazione ufficiali del produttore sono la fonte più affidabile per comprendere le vere capacità e caratteristiche del prodotto. Ricevi informazioni dirette dagli esperti che lo hanno creato, senza filtri o interpretazioni personali.</p>
-
-                <div class="modal-amazon-link">
-                    <a href="#" target="_blank" onclick="event.preventDefault(); window.open('https://www.amazon.it/s?k=${encodeURIComponent(video.product)}&tag=lamendino-21', '_blank');">
-                        🛒 ACQUISTA SU AMAZON - ${video.product}
-                    </a>
-                </div>
-
-                <h2>🔗 Guarda il Video Originale</h2>
-                <p><strong>Titolo:</strong> ${video.description}</p>
-                <p><strong>Canale:</strong> <a href="https://www.youtube.com/@${video.youtuber.toLowerCase().replace(/[^a-z0-9]/g, '')}" target="_blank" style="color: var(--primary-color); font-weight: 700;">→ Visita il canale ufficiale ${video.youtuber}</a></p>
-            `;
-            document.getElementById('modal').classList.add('show');
-        }
-
-        function filterNews(category) {
-            document.querySelectorAll('.news-filter').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            renderNews(category);
-        }
-
-        function filterVideos(category) {
-            document.querySelectorAll('.news-filter').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            renderVideos(category);
+            window.open(`https://www.amazon.it/s?k=${encodeURIComponent(productName)}&tag=lamendino-21`, 'blank');
         }
 
         function closeModal() {
@@ -1666,7 +892,7 @@
         }
 
         function closeModalOnBackdrop(event) {
-            if (event.target.id === 'modal') {
+            if (event.target === document.getElementById('modal')) {
                 closeModal();
             }
         }
@@ -1682,140 +908,14 @@
             }
         }
 
-        // ============ CONVERTER FUNCTIONS ============
-        
-        async function convertAmazonLink() {
-            const urlInput = document.getElementById('amazonUrlInput').value.trim();
-            const shouldShorten = document.getElementById('shortenCheckbox').checked;
-            
-            const resultDiv = document.getElementById('converterResult');
-            const errorDiv = document.getElementById('converterError');
-            const loadingDiv = document.getElementById('converterLoading');
-            const convertBtn = document.getElementById('convertBtn');
-            
-            // Reset
-            resultDiv.style.display = 'none';
-            errorDiv.style.display = 'none';
-            loadingDiv.style.display = 'block';
-            convertBtn.disabled = true;
-            convertBtn.style.opacity = '0.6';
-            
-            if (!urlInput) {
-                showError('Per favore, incolla un URL Amazon');
-                loadingDiv.style.display = 'none';
-                convertBtn.disabled = false;
-                convertBtn.style.opacity = '1';
-                return;
-            }
-            
-            try {
-                const response = await fetch('/api/convert-link', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        url: urlInput,
-                        shorten: shouldShorten
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (!data.success) {
-                    showError(data.error || 'Errore durante la conversione');
-                } else {
-                    showResult(data);
-                }
-            } catch (error) {
-                showError(`Errore: ${error.message}`);
-            } finally {
-                loadingDiv.style.display = 'none';
-                convertBtn.disabled = false;
-                convertBtn.style.opacity = '1';
-            }
-        }
-        
-        function showResult(data) {
-            const resultDiv = document.getElementById('converterResult');
-            const errorDiv = document.getElementById('converterError');
-            const productInfo = document.getElementById('productInfo');
-            
-            errorDiv.style.display = 'none';
-            
-            // Mostra info prodotto
-            let productHtml = '';
-            if (data.product.image) {
-                productHtml += `<div style="text-align: center; margin-bottom: 20px;"><img src="${data.product.image}" style="max-width: 200px; max-height: 200px; border-radius: 8px; object-fit: cover;"></div>`;
-            }
-            
-            productHtml += `
-                <div class="specs-grid" style="margin-bottom: 20px;">
-                    <div class="spec-item">
-                        <div class="spec-label">Titolo Prodotto</div>
-                        <div class="spec-value" style="font-size: 14px;">${data.product.title}</div>
-                    </div>
-                    ${data.product.price ? `
-                    <div class="spec-item">
-                        <div class="spec-label">Prezzo</div>
-                        <div class="spec-value" style="color: var(--success-color);">${data.product.price}</div>
-                    </div>
-                    ` : ''}
-                    ${data.product.rating ? `
-                    <div class="spec-item">
-                        <div class="spec-label">Valutazione</div>
-                        <div class="spec-value">⭐ ${data.product.rating}/5</div>
-                    </div>
-                    ` : ''}
-                    ${data.product.condition ? `
-                    <div class="spec-item">
-                        <div class="spec-label">Stato</div>
-                        <div class="spec-value">${data.product.condition}</div>
-                    </div>
-                    ` : ''}
-                </div>
-            `;
-            
-            productInfo.innerHTML = productHtml;
-            
-            // Mostra URL
-            document.getElementById('resultOriginal').textContent = data.original_url;
-            document.getElementById('resultAffiliate').textContent = data.affiliate_url;
-            document.getElementById('resultShort').textContent = data.short_url;
-            
-            resultDiv.style.display = 'block';
-        }
-        
-        function showError(message) {
-            const errorDiv = document.getElementById('converterError');
-            const resultDiv = document.getElementById('converterResult');
-            
-            resultDiv.style.display = 'none';
-            document.getElementById('errorMsg').textContent = message;
-            errorDiv.style.display = 'block';
-        }
-        
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copiato!';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                }, 2000);
-            }).catch(() => {
-                alert('Errore nella copia del testo');
-            });
-        }
-        
-        function openInAmazon(elementId) {
-            const element = document.getElementById(elementId);
-            const url = element.textContent;
-            window.open(url, '_blank');
-        }
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            loadData();
+        });
+
+        // Refresh data every 5 minutes
+        setInterval(loadData, 5 * 60 * 1000);
     </script>
 </body>
 </html>
