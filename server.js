@@ -5,7 +5,6 @@ import cron from 'node-cron';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fs from 'fs';
 
 dotenv.config();
 
@@ -13,103 +12,67 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
+  apiKey: process.env.GROQ_API_KEY
 });
 
-// Percorsi file per persistenza dati
-const DATA_DIR = path.join(dirname, 'data');
-const DEALS_FILE = path.join(DATA_DIR, 'deals.json');
-const ARTICLES_FILE = path.join(DATA_DIR, 'articles.json');
-const NEWS_FILE = path.join(DATA_DIR, 'news.json');
-const VIDEOS_FILE = path.join(DATA_DIR, 'videos.json');
-const HISTORY_FILE = path.join(DATA_DIR, 'history.json');
-
-// Assicurati che la directory data esista
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
-
-// Carica dati dai file
-function loadData(filepath, defaultValue = []) {
-  try {
-    if (fs.existsSync(filepath)) {
-      const data = fs.readFileSync(filepath, 'utf-8');
-      return JSON.parse(data);
-    }
-  } catch (error) {
-    console.error(`Errore caricamento ${filepath}:`, error.message);
-  }
-  return defaultValue;
-}
-
-// Salva dati nei file
-function saveData(filepath, data) {
-  try {
-    fs.writeFileSync(filepath, JSON.stringify(data, null, 2));
-    console.log(`✅ Dati salvati: ${filepath}`);
-  } catch (error) {
-    console.error(`❌ Errore salvataggio ${filepath}:`, error.message);
-  }
-}
-
-let dealsData = loadData(DEALS_FILE, []);
-let articlesData = loadData(ARTICLES_FILE, []);
-let newsData = loadData(NEWS_FILE, []);
-let videosData = loadData(VIDEOS_FILE, []);
-let historyData = loadData(HISTORY_FILE, []);
+let dealsData = [];
+let articlesData = [];
+let newsData = [];
+let videosData = [];
+let historyData = [];
 let lastUpdateTime = new Date();
 
-console.log('🚀 Groq API inizializzata');
-console.log(`📊 Dati caricati: ${dealsData.length} offerte, ${articlesData.length} articoli, ${newsData.length} news, ${videosData.length} video`);
+console.log('✅ Groq API inizializzata');
+console.log('🔑 API Key caricata:', process.env.GROQ_API_KEY?.substring(0, 20) + '...');
+console.log('🤖 Modello: llama-3.3-70b-versatile');
 
 const amazonProducts = [
-  { name: 'Cuffie Bluetooth Premium ANC Sony WH-1000XM5', category: 'elettronica', basePrice: 379.99 },
-  { name: 'Robot Aspirapolvere iRobot Roomba j7', category: 'casa', basePrice: 799.99 },
-  { name: 'Apple Watch Series 9 45mm GPS', category: 'sport', basePrice: 429.99 },
-  { name: 'Frullatore Vitamix A3500i Ascent', category: 'casa', basePrice: 749.99 },
-  { name: 'Zaino Fotografico Peak Design Everyday 30L', category: 'moda', basePrice: 299.99 },
+  { name: "Cuffie Bluetooth Premium ANC Sony WH-1000XM5", category: "elettronica", basePrice: 379.99 },
+  { name: "Robot Aspirapolvere iRobot Roomba j7+", category: "casa", basePrice: 799.99 },
+  { name: "Apple Watch Series 9 45mm GPS", category: "sport", basePrice: 429.99 },
+  { name: "Frullatore Vitamix A3500i Ascent", category: "casa", basePrice: 749.99 },
+  { name: "Zaino Fotografico Peak Design Everyday 30L", category: "moda", basePrice: 299.99 },
+  { name: "eReader Kindle Oasis 10 generazione", category: "libri", basePrice: 249.99 },
+  { name: "Powerbank Anker 737 100W 40000mAh", category: "elettronica", basePrice: 129.99 },
+  { name: "Speaker JBL Flip 6 Waterproof", category: "elettronica", basePrice: 149.99 },
+  { name: "Bottiglia Termica YETI Rambler 26oz", category: "casa", basePrice: 89.99 },
+  { name: "Lampada Intelligente Philips Hue White Ambiance", category: "casa", basePrice: 29.99 },
+  { name: "Webcam Logitech 4K Pro Stream", category: "elettronica", basePrice: 199.99 },
+  { name: "Tappetino Yoga Lululemon 5mm Purple", category: "sport", basePrice: 128.00 }
 ];
 
-// Dati fissi per news e videos
-const newsCategories = ['apple', 'android', 'google', 'hardware', 'vrar'];
-const videoCategories = ['smartphone', 'computer', 'tablet', 'audio'];
+const youtubeVideos = [
+  { product: "Apple Vision Pro - Hands On", youtuber: "MKBHD", channel: "MKBHD", videoId: "kTwBLy8nnLs" },
+  { product: "iPhone 15 Pro Max Review", youtuber: "Unbox Therapy", channel: "Unbox Therapy", videoId: "GhpLv0lH7EU" },
+  { product: "PS5 Game Highlight", youtuber: "PlayStation", channel: "PlayStation Official", videoId: "G3DTTPLy1Vc" },
+  { product: "Samsung Galaxy Z Fold 5", youtuber: "Dave2D", channel: "Dave2D", videoId: "v4pGZR6TZC4" },
+  { product: "MacBook Pro M3 Review", youtuber: "Linus Tech Tips", channel: "Linus Tech Tips", videoId: "7n-qBpMM8Gg" }
+];
 
 function generateImageUrl(category) {
-  const urls = {
-    elettronica: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
-    casa: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop',
-    sport: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
+  const categoryUrls = {
+    'elettronica': ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop'],
+    'casa': ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop'],
+    'sport': ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop'],
+    'moda': ['https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop'],
+    'libri': ['https://images.unsplash.com/photo-1507842217343-583f20270319?w=300&h=300&fit=crop']
   };
-  return urls[category] || urls.elettronica;
-}
-
-async function generateProductDescription(productName, category) {
-  try {
-    const response = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{
-        role: 'user',
-        content: `Scrivi una descrizione breve (60 caratteri max) per "${productName}". Solo testo.`,
-      }],
-      max_tokens: 80,
-      temperature: 0.7,
-    });
-    return response.choices[0].message.content.trim().substring(0, 60);
-  } catch (error) {
-    return 'Prodotto premium di qualità superiore';
-  }
+  const urls = categoryUrls[category] || categoryUrls['elettronica'];
+  return urls[Math.floor(Math.random() * urls.length)];
 }
 
 function generateRealisticDeal() {
   const product = amazonProducts[Math.floor(Math.random() * amazonProducts.length)];
-  const discount = Math.floor((Math.random() * 45 - 10) + 10);
+  const discount = Math.floor(Math.random() * (45 - 10 + 1)) + 10;
   const discountPrice = product.basePrice * (1 - discount / 100);
-  const rating = (Math.random() * 0.8 + 4.2).toFixed(1);
-  const reviews = Math.floor(Math.random() * (8000 - 400) + 400);
+  const baseRating = 4.2;
+  const variance = (Math.random() - 0.5) * 0.8;
+  const rating = Math.max(3.5, Math.min(4.9, baseRating + variance)).toFixed(1);
+  const reviews = Math.floor(Math.random() * (8000 - 400 + 1)) + 400;
 
   return {
     id: Math.floor(Math.random() * 1000000),
@@ -117,158 +80,141 @@ function generateRealisticDeal() {
     category: product.category,
     originalPrice: parseFloat(product.basePrice.toFixed(2)),
     discountPrice: parseFloat(discountPrice.toFixed(2)),
-    discount: discount,
+    discount,
     rating: parseFloat(rating),
-    reviews: reviews,
+    reviews,
     description: 'Prodotto di qualità premium - Spedizione rapida',
-    image: generateImageUrl(product.category),
-    addedAt: new Date().toISOString(),
+    image: generateImageUrl(product.category)
   };
 }
 
 async function generateDailyDeals() {
-  console.log('🔄 Generando offerte giornaliere...');
-  const newDeals = [];
-  const usedProducts = new Set();
+  console.log('\\n🔄 Generando offerte giornaliere...');
+  dealsData = [];
+  const dealsCount = 12;
 
-  for (let i = 0; i < 12; i++) {
-    let deal;
-    let attempts = 0;
-    do {
-      deal = generateRealisticDeal();
-      attempts++;
-    } while (usedProducts.has(deal.title) && attempts < 5);
-
-    if (!usedProducts.has(deal.title)) {
-      usedProducts.add(deal.title);
-      deal.description = await generateProductDescription(deal.title, deal.category);
-      newDeals.push(deal);
-      console.log(`✅ ${deal.title} - ${deal.discount}%`);
-    }
+  for (let i = 0; i < dealsCount; i++) {
+    const deal = generateRealisticDeal();
+    dealsData.push(deal);
+    console.log(` ✓ Generato: ${deal.title} (-${deal.discount}%)`);
   }
 
-  if (dealsData.length > 0) {
-    historyData.push({
-      date: new Date().toISOString(),
-      deals: dealsData,
-      type: 'deals',
-    });
-  }
-
-  dealsData = newDeals;
-  saveData(DEALS_FILE, dealsData);
-  saveData(HISTORY_FILE, historyData);
+  console.log(`✅ ${dealsData.length} offerte generate`);
+  lastUpdateTime = new Date();
 }
 
 async function generateDailyArticles() {
-  console.log('📝 Generando articoli del giorno...');
-  const newArticles = [];
+  console.log('\\n📝 Generando articoli del giorno...');
+  
   const topics = [
-    'Migliori cuffie wireless con cancellazione del rumore',
-    'Come scegliere il robot aspirapolvere ideale',
-    'Smartwatch: Guida completa all\'acquisto',
-    'Accessori smart home più convenienti',
+    "Migliori cuffie wireless con cancellazione del rumore 2024",
+    "Come scegliere il robot aspirapolvere ideale per casa",
+    "Smartwatch: Guida completa all'acquisto e confronto modelli",
+    "Accessori smart home più convenienti per automatizzare"
   ];
 
-  for (let i = 0; i < 3; i++) {
-    const topic = topics[Math.floor(Math.random() * topics.length)];
-    newArticles.push({
+  articlesData = [];
+
+  for (let i = 0; i < topics.length; i++) {
+    const topic = topics[i];
+    const categories = ["Tecnologia", "Casa", "Sporttech", "Lifestyle"];
+    
+    articlesData.push({
       id: i + 1,
       title: topic,
-      excerpt: `Scopri i migliori prodotti e consigli per ${topic.toLowerCase()}`,
-      category: 'Tecnologia',
+      excerpt: topic.substring(0, 100),
+      content: `Analisi approfondita su ${topic}. Scopri le migliori soluzioni disponibili su Amazon con rapporto qualità-prezzo eccezionale. Leggi le recensioni verificate dei clienti e scegli il prodotto più adatto alle tue esigenze.`,
+      conclusion: `In conclusione, ${topic.toLowerCase()} è un'area con molte opzioni valide. Considera le tue priorità e scegli in base alle tue esigenze specifiche.`,
+      category: categories[i % categories.length],
       date: new Date().toISOString().split('T')[0],
-      readTime: Math.floor(Math.random() * 5 + 3),
-      addedAt: new Date().toISOString(),
+      readTime: '5'
     });
-    console.log(`✅ ${topic}`);
+    console.log(` ✓ Generato: ${topic}`);
   }
 
-  if (articlesData.length > 0) {
-    historyData.push({
-      date: new Date().toISOString(),
-      articles: articlesData,
-      type: 'articles',
+  console.log(`✅ ${articlesData.length} articoli generati`);
+}
+
+async function generateDailyNews() {
+  console.log('\\n⚡ Generando tech news...');
+  
+  const newsTopics = [
+    { title: "Apple rilascia iOS 18 con nuove feature AI", icon: "🍎", category: "Apple", author: "Tech News" },
+    { title: "Google presenta Pixel 9 con fotocamera rivoluzionaria", icon: "🔍", category: "Google", author: "Tech Daily" },
+    { title: "Samsung Galaxy S25 Ultra confermato per gennaio 2025", icon: "📱", category: "Samsung", author: "Mobile News" },
+    { title: "Meta lancerà nuovi occhiali AR entro il 2025", icon: "👓", category: "Meta", author: "AR Tech" },
+    { title: "Intel annuncia nuovi processori Core Ultra con IA integrata", icon: "⚙️", category: "Intel", author: "Hardware News" }
+  ];
+
+  newsData = [];
+
+  for (let i = 0; i < newsTopics.length; i++) {
+    const news = newsTopics[i];
+    newsData.push({
+      id: i + 1,
+      title: news.title,
+      excerpt: news.title.substring(0, 80),
+      content: `${news.title}. Questa è una notizia importante nel settore della tecnologia. Gli esperti prevedono un grande impatto sul mercato nei prossimi mesi. Continua a seguire gli aggiornamenti per rimanere informato sugli ultimi sviluppi.`,
+      icon: news.icon,
+      category: news.category,
+      author: news.author,
+      date: new Date().toISOString().split('T')[0]
     });
+    console.log(` ✓ Generata news: ${news.title}`);
   }
 
-  articlesData = newArticles;
-  saveData(ARTICLES_FILE, articlesData);
-  saveData(HISTORY_FILE, historyData);
+  console.log(`✅ ${newsData.length} news generate`);
 }
 
-function generateDailyNews() {
-  console.log('📰 Generando news quotidiane...');
-  const newsTemplates = [
-    { title: 'Apple annuncia nuovi prodotti con AI integrata', category: 'apple', icon: '🍎' },
-    { title: 'Samsung Galaxy S25 con display innovativo', category: 'android', icon: '📱' },
-    { title: 'Google Pixel 9 Pro Fold il pieghevole sottile', category: 'google', icon: '🔍' },
-    { title: 'Nvidia RTX 6000 Ada la GPU più potente', category: 'hardware', icon: '💻' },
-    { title: 'Meta Quest 4 headset VR di nuova generazione', category: 'vrar', icon: '🥽' },
-  ];
+async function generateDailyVideos() {
+  console.log('\\n🎬 Generando video reviews...');
 
-  const newNews = newsTemplates.map((item, idx) => ({
-    id: idx + 1,
-    title: item.title,
-    excerpt: `Scopri le ultime novità su ${item.title.toLowerCase()}`,
-    category: item.category,
-    date: new Date().toISOString().split('T')[0],
-    author: 'LamenDino News',
-    icon: item.icon,
-    content: `${item.title} - Ultimo aggiornamento: ${new Date().toLocaleDateString('it-IT')}`,
-    addedAt: new Date().toISOString(),
-  }));
+  videosData = [];
 
-  newsData = newNews;
-  saveData(NEWS_FILE, newsData);
-  console.log(`📰 ${newsData.length} news generate`);
+  for (let i = 0; i < 5; i++) {
+    const video = youtubeVideos[i % youtubeVideos.length];
+    const thumbnailId = video.videoId;
+    
+    videosData.push({
+      id: i + 1,
+      product: video.product,
+      youtuber: video.youtuber,
+      channel: video.channel,
+      videoId: video.videoId,
+      thumbnail: `https://img.youtube.com/vi/${thumbnailId}/maxresdefault.jpg`,
+      views: Math.floor(Math.random() * 5000000).toLocaleString('it-IT'),
+      rating: (Math.random() * 2 + 3).toFixed(1),
+      description: `Review completo e dettagliato di ${video.product}. ${video.youtuber} analizza tutte le caratteristiche, i pro e i contro di questo prodotto. Perfetto per chi sta considerando l'acquisto. Guarda il video completo per scoprire tutte le informazioni tecniche.`
+    });
+    console.log(` ✓ Generato video: ${video.product}`);
+  }
+
+  console.log(`✅ ${videosData.length} video generati`);
 }
 
-function generateDailyVideos() {
-  console.log('🎬 Generando video giornalieri...');
-  const videoTemplates = [
-    { product: 'Sony WH-1000XM5', youtuber: 'Sony Official', videoId: 'wwUIUKZ7D8', category: 'audio', views: '5.2M' },
-    { product: 'iPhone 16 Pro Max', youtuber: 'Apple', videoId: 'sB0yBZz3wLY', category: 'smartphone', views: '12.5M' },
-    { product: 'Samsung Galaxy S25', youtuber: 'Samsung Mobile', videoId: 'jTRrKdHdHEo', category: 'smartphone', views: '8.9M' },
-    { product: 'MacBook Pro M4', youtuber: 'Apple', videoId: 'rDz-hKGxFQg', category: 'computer', views: '9.7M' },
-    { product: 'iPad Pro 2025', youtuber: 'Apple', videoId: 'N0ZXvPDQS1s', category: 'tablet', views: '7.3M' },
-  ];
-
-  const newVideos = videoTemplates.map((item, idx) => ({
-    id: idx + 1,
-    product: item.product,
-    youtuber: item.youtuber,
-    channel: `${item.youtuber} Official Channel`,
-    views: item.views,
-    rating: (Math.random() * 0.5 + 4.5).toFixed(1),
-    videoId: item.videoId,
-    category: item.category,
-    thumbnail: `https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`,
-    description: `Presentazione ufficiale di ${item.product}`,
-    addedAt: new Date().toISOString(),
-  }));
-
-  videosData = newVideos;
-  saveData(VIDEOS_FILE, videosData);
-  console.log(`🎬 ${videosData.length} video generate`);
-}
-
-// Scheduling: ogni giorno alle 08:00
-cron.schedule('0 8 * * *', async () => {
-  console.log('⏰ Task schedulato - Generazione giornaliera');
-  await generateDailyDeals();
-  await generateDailyArticles();
-  generateDailyNews();
-  generateDailyVideos();
-  lastUpdateTime = new Date();
-});
-
-// Generazione iniziale
-console.log('🚀 Generazione iniziale al startup...');
+// Genera i dati al startup
+console.log('\\n🚀 Generazione iniziale al startup...');
 await generateDailyDeals();
 await generateDailyArticles();
-generateDailyNews();
-generateDailyVideos();
+await generateDailyNews();
+await generateDailyVideos();
+
+// Task schedulato ogni giorno alle 08:00 AM
+cron.schedule('0 8 * * *', async () => {
+  console.log('\\n⏰ Task schedulato: Generazione giornaliera');
+  await generateDailyDeals();
+  await generateDailyArticles();
+  await generateDailyNews();
+  await generateDailyVideos();
+  
+  // Salva la cronologia
+  historyData.push({
+    date: new Date(),
+    type: 'deals',
+    deals: dealsData,
+    articles: articlesData
+  });
+});
 
 // API Endpoints
 app.get('/api/deals', (req, res) => {
@@ -277,19 +223,19 @@ app.get('/api/deals', (req, res) => {
     articles: articlesData,
     news: newsData,
     videos: videosData,
-    lastUpdate: lastUpdateTime,
-    history: historyData.slice(-30),
+    history: historyData,
+    lastUpdate: lastUpdateTime
   });
 });
 
 app.post('/api/regenerate', async (req, res) => {
   try {
-    console.log('🔄 Rigenerazione manuale...');
+    console.log('\\n🔄 Rigenerazione manuale...');
     await generateDailyDeals();
     await generateDailyArticles();
-    generateDailyNews();
-    generateDailyVideos();
-    lastUpdateTime = new Date();
+    await generateDailyNews();
+    await generateDailyVideos();
+
     res.json({
       success: true,
       message: 'Tutti i dati rigenerati',
@@ -297,16 +243,12 @@ app.post('/api/regenerate', async (req, res) => {
       articles: articlesData.length,
       news: newsData.length,
       videos: videosData.length,
-      timestamp: new Date(),
+      timestamp: new Date()
     });
   } catch (error) {
-    console.error('Errore:', error.message);
+    console.error('❌ Errore:', error.message);
     res.status(500).json({ error: error.message });
   }
-});
-
-app.get('/api/history', (req, res) => {
-  res.json(historyData.slice(-60));
 });
 
 app.get('/health', (req, res) => {
@@ -316,19 +258,21 @@ app.get('/health', (req, res) => {
     articles: articlesData.length,
     news: newsData.length,
     videos: videosData.length,
-    lastUpdate: lastUpdateTime,
+    lastUpdate: lastUpdateTime
   });
 });
 
-app.use(express.static(dirname));
-
+// Serve static files
+app.use(express.static(__dirname));
 app.get('/', (req, res) => {
-  res.sendFile(path.join(dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`\n🌟 Server avviato su http://localhost:${PORT}`);
-  console.log(`📊 Deals: ${dealsData.length} | Articoli: ${articlesData.length} | News: ${newsData.length} | Video: ${videosData.length}`);
-  console.log('⏰ Prossima generazione domani alle 08:00 AM');
+  console.log(`\\n✅ Server avviato su http://localhost:${PORT}`);
+  console.log(`📊 Dati caricati: ${dealsData.length} offerte | ${articlesData.length} articoli | ${newsData.length} news | ${videosData.length} video`);
+  console.log(`⏰ Prossima generazione: domani alle 08:00 AM`);
+  console.log(`🌐 Accedi a http://localhost:${PORT}`);
 });
