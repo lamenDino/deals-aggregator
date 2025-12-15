@@ -691,69 +691,66 @@
     </style>
 </head>
 <body>
-    <div class=\"bg-animated\">
-        <div class=\"blob blob-1\"></div>
-        <div class=\"blob blob-2\"></div>
-        <div class=\"blob blob-3\"></div>
+    <div class="bg-animated">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
 
     <!-- Audio Toggle -->
-    <button class=\"audio-toggle\" onclick=\"toggleAudio()\" title=\"Attiva/disattiva musica\">🔊</button>
-    <audio id=\"bgAudio\" loop volume=\"0.3\">
-        <source src=\"https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3\" type=\"audio/mpeg\">
-    </audio>
+    <button class="audio-toggle" onclick="toggleAudio()" title="Attiva/disattiva musica">🔊</button>
 
     <!-- Header -->
-    <header class=\"header\">
-        <div class=\"header-content\">
-            <div class=\"header-title\" onclick=\"switchPage('home')\">🎁 LamenDino</div>
-            <nav class=\"nav-menu\">
-                <a class=\"nav-link\" onclick=\"switchPage('home')\">Home</a>
-                <a class=\"nav-link\" onclick=\"switchPage('deals')\">Offerte</a>
-                <a class=\"nav-link\" onclick=\"switchPage('articles')\">Articoli</a>
-                <a class=\"nav-link\" onclick=\"switchPage('news')\">News</a>
-                <a class=\"nav-link\" onclick=\"switchPage('videos')\">Video</a>
-                <a class=\"nav-link\" onclick=\"switchPage('history')\">Cronologia</a>
-                <button class=\"btn-small\" onclick=\"toggleTheme()\">🌙 Tema</button>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title" onclick="switchPage('home')">🎁 LamenDino</div>
+            <nav class="nav-menu">
+                <a class="nav-link" onclick="switchPage('home')">Home</a>
+                <a class="nav-link" onclick="switchPage('deals')">Offerte</a>
+                <a class="nav-link" onclick="switchPage('articles')">Articoli</a>
+                <a class="nav-link" onclick="switchPage('news')">News</a>
+                <a class="nav-link" onclick="switchPage('videos')">Video</a>
+                <a class="nav-link" onclick="switchPage('history')">Cronologia</a>
+                <button class="btn-small" onclick="toggleTheme()">🌙 Tema</button>
             </nav>
         </div>
     </header>
 
     <!-- Hero -->
-    <div class=\"hero\">
-        <div class=\"hero-content\">
-            <h1 class=\"hero-text\">Offerte che CAMBIANO il Gioco</h1>
-            <p class=\"hero-description\">Scopri prodotti esclusivi, articoli approfonditi e le ultime notizie tech. Aggiornamenti in tempo reale, ogni giorno.</p>
-            <div class=\"hero-buttons\">
-                <button class=\"btn-hero btn-primary\" onclick=\"switchPage('deals')\">🔥 Scopri Offerte</button>
-                <button class=\"btn-hero btn-primary\" onclick=\"switchPage('news')\" style=\"background: rgba(255, 107, 53, 0.2); color: var(--primary); border: 1px solid var(--primary);\">📱 Leggi News</button>
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="hero-text">Offerte che CAMBIANO il Gioco</h1>
+            <p class="hero-description">Scopri prodotti esclusivi, articoli approfonditi e le ultime notizie tech. Aggiornamenti in tempo reale, ogni giorno.</p>
+            <div class="hero-buttons">
+                <button class="btn-hero btn-primary" onclick="switchPage('deals')">🔥 Scopri Offerte</button>
+                <button class="btn-hero btn-primary" onclick="switchPage('news')" style="background: rgba(255, 107, 53, 0.2); color: var(--primary); border: 1px solid var(--primary);">📱 Leggi News</button>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class=\"container\">
+    <div class="container">
         <!-- Home Page -->
-        <div id=\"home-page\" class=\"page active\">
+        <div id="home-page" class="page active">
             <h2>Benvenuto su LamenDino</h2>
-            <div class=\"home-grid\">
-                <div class=\"home-card\" onclick=\"switchPage('deals')\">
-                    <div class=\"home-icon\">💰</div>
+            <div class="home-grid">
+                <div class="home-card" onclick="switchPage('deals')">
+                    <div class="home-icon">💰</div>
                     <h3>Offerte Esplosive</h3>
                     <p>Sconti fino al 70% selezionati quotidianamente</p>
                 </div>
-                <div class=\"home-card\" onclick=\"switchPage('articles')\">
-                    <div class=\"home-icon\">📚</div>
+                <div class="home-card" onclick="switchPage('articles')">
+                    <div class="home-icon">📚</div>
                     <h3>Guide Dettagliate</h3>
                     <p>Analisi approfondite e consigli esperti</p>
                 </div>
-                <div class=\"home-card\" onclick=\"switchPage('news')\">
-                    <div class=\"home-icon\">⚡</div>
+                <div class="home-card" onclick="switchPage('news')">
+                    <div class="home-icon">⚡</div>
                     <h3>Tech News Live</h3>
                     <p>Breaking news dal mondo della tecnologia</p>
                 </div>
-                <div class=\"home-card\" onclick=\"switchPage('videos')\">
-                    <div class=\"home-icon\">🎬</div>
+                <div class="home-card" onclick="switchPage('videos')">
+                    <div class="home-icon">🎬</div>
                     <h3>Video Esclusivi</h3>
                     <p>Review professionali direttamente da YouTube</p>
                 </div>
@@ -761,54 +758,54 @@
         </div>
 
         <!-- Deals Page -->
-        <div id=\"deals-page\" class=\"page\">
+        <div id="deals-page" class="page">
             <h2>💥 Offerte Esplosive del Giorno</h2>
-            <div id=\"dealsGrid\" class=\"grid\">
-                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento offerte...</div>
+            <div id="dealsGrid" class="grid">
+                <div style="text-align: center; grid-column: 1/-1; padding: 40px;">Caricamento offerte...</div>
             </div>
         </div>
 
         <!-- Articles Page -->
-        <div id=\"articles-page\" class=\"page\">
+        <div id="articles-page" class="page">
             <h2>📚 Articoli e Guide</h2>
-            <div id=\"articlesGrid\" class=\"grid\">
-                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento articoli...</div>
+            <div id="articlesGrid" class="grid">
+                <div style="text-align: center; grid-column: 1/-1; padding: 40px;">Caricamento articoli...</div>
             </div>
         </div>
 
         <!-- News Page -->
-        <div id=\"news-page\" class=\"page\">
+        <div id="news-page" class="page">
             <h2>⚡ Tech News Quotidiane</h2>
-            <div id=\"newsGrid\" class=\"grid\">
-                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento news...</div>
+            <div id="newsGrid" class="grid">
+                <div style="text-align: center; grid-column: 1/-1; padding: 40px;">Caricamento news...</div>
             </div>
         </div>
 
         <!-- Videos Page -->
-        <div id=\"videos-page\" class=\"page\">
+        <div id="videos-page" class="page">
             <h2>🎬 Video Recensioni</h2>
-            <div id=\"videosGrid\" class=\"grid\">
-                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento video...</div>
+            <div id="videosGrid" class="grid">
+                <div style="text-align: center; grid-column: 1/-1; padding: 40px;">Caricamento video...</div>
             </div>
         </div>
 
         <!-- History Page -->
-        <div id=\"history-page\" class=\"page\">
+        <div id="history-page" class="page">
             <h2>📝 Cronologia</h2>
-            <div id=\"historyGrid\">
-                <div style=\"text-align: center; padding: 40px;\">Caricamento cronologia...</div>
+            <div id="historyGrid">
+                <div style="text-align: center; padding: 40px;">Caricamento cronologia...</div>
             </div>
         </div>
     </div>
 
     <!-- Modal -->
-    <div id=\"modal\" class=\"modal\" onclick=\"closeModalOnBackdrop(event)\">
-        <div class=\"modal-content\" onclick=\"event.stopPropagation()\">
-            <div class=\"modal-header\">
-                <h2 class=\"modal-title\" id=\"modalTitle\"></h2>
-                <button class=\"modal-close\" onclick=\"closeModal()\">✕</button>
+    <div id="modal" class="modal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
             </div>
-            <div class=\"modal-body\" id=\"modalBody\"></div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
 
@@ -831,13 +828,15 @@
                 videosData = data.videos || [];
                 historyData = data.history || [];
                 
+                console.log('Dati caricati:', { dealsData, articlesData, newsData, videosData });
+                
                 renderDeals();
                 renderArticles();
                 renderNews();
                 renderVideos();
                 renderHistory();
             } catch (error) {
-                console.error('Errore:', error);
+                console.error('Errore caricamento:', error);
             }
         }
 
@@ -849,18 +848,21 @@
 
         function renderDeals() {
             const grid = document.getElementById('dealsGrid');
-            if (!dealsData.length) return;
+            if (!dealsData || dealsData.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 40px;">Nessuna offerta disponibile</div>';
+                return;
+            }
             grid.innerHTML = dealsData.map(deal => `
-                <div class=\"card\" onclick=\"openDealModal(${deal.id})\">
-                    <div class=\"card-image\" style=\"background-image: url(${deal.image}); background-size: cover; background-position: center;\">
-                        <div class=\"badge\">-${deal.discount}%</div>
+                <div class="card" onclick="openDealModal(${deal.id})">
+                    <div class="card-image" style="background-image: url(${deal.image}); background-size: cover; background-position: center;">
+                        <div class="badge">-${deal.discount}%</div>
                     </div>
-                    <div class=\"card-content\">
-                        <div class=\"card-title\">${deal.title}</div>
-                        <div class=\"card-description\">${deal.description}</div>
-                        <div class=\"card-footer\">
+                    <div class="card-content">
+                        <div class="card-title">${deal.title}</div>
+                        <div class="card-description">${deal.description}</div>
+                        <div class="card-footer">
                             <span>⭐ ${deal.rating}/5</span>
-                            <span class=\"price\">€${deal.discountPrice.toFixed(2)}</span>
+                            <span class="price">€${deal.discountPrice.toFixed(2)}</span>
                         </div>
                     </div>
                 </div>
@@ -869,14 +871,17 @@
 
         function renderArticles() {
             const grid = document.getElementById('articlesGrid');
-            if (!articlesData.length) return;
+            if (!articlesData || articlesData.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 40px;">Nessun articolo disponibile</div>';
+                return;
+            }
             grid.innerHTML = articlesData.map(article => `
-                <div class=\"card\" onclick=\"openArticleModal(${article.id})\">
-                    <div class=\"card-image\">📄</div>
-                    <div class=\"card-content\">
-                        <div class=\"card-title\">${article.title}</div>
-                        <div class=\"card-description\">${article.excerpt}</div>
-                        <div class=\"card-footer\">
+                <div class="card" onclick="openArticleModal(${article.id})">
+                    <div class="card-image">📄</div>
+                    <div class="card-content">
+                        <div class="card-title">${article.title}</div>
+                        <div class="card-description">${article.excerpt}</div>
+                        <div class="card-footer">
                             <span>${article.date}</span>
                             <span>${article.readTime} min</span>
                         </div>
@@ -887,14 +892,17 @@
 
         function renderNews() {
             const grid = document.getElementById('newsGrid');
-            if (!newsData.length) return;
+            if (!newsData || newsData.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 40px;">Nessuna news disponibile</div>';
+                return;
+            }
             grid.innerHTML = newsData.map(news => `
-                <div class=\"card\" onclick=\"openNewsModal(${news.id})\">
-                    <div class=\"card-image\" style=\"font-size: 80px;\">${news.icon}</div>
-                    <div class=\"card-content\">
-                        <div class=\"card-title\">${news.title}</div>
-                        <div class=\"card-description\">${news.excerpt}</div>
-                        <div class=\"card-footer\">
+                <div class="card" onclick="openNewsModal(${news.id})">
+                    <div class="card-image" style="font-size: 80px;">${news.icon}</div>
+                    <div class="card-content">
+                        <div class="card-title">${news.title}</div>
+                        <div class="card-description">${news.excerpt}</div>
+                        <div class="card-footer">
                             <span>${news.author}</span>
                             <span>${news.date}</span>
                         </div>
@@ -905,14 +913,17 @@
 
         function renderVideos() {
             const grid = document.getElementById('videosGrid');
-            if (!videosData.length) return;
+            if (!videosData || videosData.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 40px;">Nessun video disponibile</div>';
+                return;
+            }
             grid.innerHTML = videosData.map(video => `
-                <div class=\"card\" onclick=\"openVideoModal(${video.id})\">
-                    <div class=\"card-image\" style=\"background-image: url(${video.thumbnail}); background-size: cover; background-position: center; font-size: 50px; color: rgba(255,255,255,0.3);\">▶️</div>
-                    <div class=\"card-content\">
-                        <div class=\"card-title\">${video.product}</div>
-                        <div class=\"card-description\">da ${video.youtuber}</div>
-                        <div class=\"card-footer\">
+                <div class="card" onclick="openVideoModal(${video.id})">
+                    <div class="card-image" style="background-image: url(${video.thumbnail}); background-size: cover; background-position: center; font-size: 50px; color: rgba(255,255,255,0.3);">▶️</div>
+                    <div class="card-content">
+                        <div class="card-title">${video.product}</div>
+                        <div class="card-description">da ${video.youtuber}</div>
+                        <div class="card-footer">
                             <span>👁️ ${video.views}</span>
                             <span>⭐ ${video.rating}/5</span>
                         </div>
@@ -923,15 +934,15 @@
 
         function renderHistory() {
             const grid = document.getElementById('historyGrid');
-            if (!historyData.length) {
-                grid.innerHTML = '<p style=\"text-align: center;\">Nessuna cronologia</p>';
+            if (!historyData || historyData.length === 0) {
+                grid.innerHTML = '<p style="text-align: center;">Nessuna cronologia</p>';
                 return;
             }
             grid.innerHTML = historyData.map(entry => `
-                <div style=\"padding: 20px; background: var(--glassmorphism); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; backdrop-filter: blur(10px);\">
-                    <div style=\"font-weight: 700; color: var(--primary); font-size: 15px;\">📅 ${new Date(entry.date).toLocaleDateString('it-IT')}</div>
-                    <div style=\"font-size: 14px; color: var(--text-secondary); margin-top: 6px;\">
-                        ✅ ${entry.type === 'deals' ? entry.deals.length + ' offerte' : entry.articles.length + ' articoli'}
+                <div style="padding: 20px; background: var(--glassmorphism); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; backdrop-filter: blur(10px);">
+                    <div style="font-weight: 700; color: var(--primary); font-size: 15px;">📅 ${new Date(entry.date).toLocaleDateString('it-IT')}</div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-top: 6px;">
+                        ✅ ${entry.deals ? entry.deals.length + ' offerte' : entry.articles.length + ' articoli'}
                     </div>
                 </div>
             `).join('');
@@ -942,15 +953,15 @@
             if (!deal) return;
             document.getElementById('modalTitle').textContent = deal.title;
             document.getElementById('modalBody').innerHTML = `
-                <div style=\"text-align: center; margin-bottom: 28px;\">
-                    <img src=\"${deal.image}\" style=\"max-width: 400px; border-radius: 12px;\">
+                <div style="text-align: center; margin-bottom: 28px;">
+                    <img src="${deal.image}" style="max-width: 400px; border-radius: 12px;">
                 </div>
                 <h2>Dettagli Prodotto</h2>
                 <p><strong>Categoria:</strong> ${deal.category}</p>
-                <p><strong>Prezzo:</strong> <span style=\"color: var(--primary); font-weight: 700;\">€${deal.discountPrice.toFixed(2)}</span> <span style=\"text-decoration: line-through; color: var(--text-secondary);\">€${deal.originalPrice.toFixed(2)}</span></p>
-                <p><strong>Sconto:</strong> <span style=\"color: var(--success); font-weight: 700;\">-${deal.discount}%</span></p>
+                <p><strong>Prezzo:</strong> <span style="color: var(--primary); font-weight: 700;">€${deal.discountPrice.toFixed(2)}</span> <span style="text-decoration: line-through; color: var(--text-secondary);">€${deal.originalPrice.toFixed(2)}</span></p>
+                <p><strong>Sconto:</strong> <span style="color: var(--success); font-weight: 700;">-${deal.discount}%</span></p>
                 <p><strong>Valutazione:</strong> ${deal.rating}/5 (${deal.reviews} recensioni)</p>
-                <button class=\"btn-hero btn-primary\" onclick=\"openAmazonLink('${deal.title}')\" style=\"width: 100%; margin-top: 24px;\">🛒 ACQUISTA SU AMAZON</button>
+                <button class="btn-hero btn-primary" onclick="openAmazonLink('${deal.title}')" style="width: 100%; margin-top: 24px;">🛒 ACQUISTA SU AMAZON</button>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -960,7 +971,7 @@
             if (!article) return;
             document.getElementById('modalTitle').textContent = article.title;
             document.getElementById('modalBody').innerHTML = `
-                <p><strong style=\"color: var(--primary);\">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min</p>
+                <p><strong style="color: var(--primary);">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min</p>
                 <h2>Contenuto</h2>
                 <p>${article.excerpt}</p>
                 <h2>Approfondimento</h2>
@@ -974,8 +985,8 @@
             if (!news) return;
             document.getElementById('modalTitle').textContent = news.title;
             document.getElementById('modalBody').innerHTML = `
-                <div style=\"text-align: center; font-size: 72px; margin-bottom: 24px;\">${news.icon}</div>
-                <p><strong style=\"color: var(--primary);\">${news.category.toUpperCase()}</strong> • ${news.date}</p>
+                <div style="text-align: center; font-size: 72px; margin-bottom: 24px;">${news.icon}</div>
+                <p><strong style="color: var(--primary);">${news.category.toUpperCase()}</strong> • ${news.date}</p>
                 <p><strong>Autore:</strong> ${news.author}</p>
                 <h2>Descrizione</h2>
                 <p>${news.content}</p>
@@ -988,16 +999,16 @@
             if (!video) return;
             document.getElementById('modalTitle').textContent = video.product;
             document.getElementById('modalBody').innerHTML = `
-                <div class=\"youtube-embed\">
-                    <iframe src=\"https://www.youtube.com/embed/${video.videoId}\" title=\"${video.product}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>
+                <div class="youtube-embed">
+                    <iframe src="https://www.youtube.com/embed/${video.videoId}" title="${video.product}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <h2>📺 Info Video</h2>
-                <p><strong>Youtuber:</strong> <span style=\"color: var(--primary); font-weight: 700;\">${video.youtuber}</span></p>
+                <p><strong>Youtuber:</strong> <span style="color: var(--primary); font-weight: 700;">${video.youtuber}</span></p>
                 <p><strong>Canale:</strong> ${video.channel}</p>
                 <p><strong>Visualizzazioni:</strong> 👁️ ${video.views} | <strong>Rating:</strong> ⭐ ${video.rating}/5</p>
                 <h2>Descrizione</h2>
                 <p>${video.description}</p>
-                <button class=\"btn-hero btn-primary\" onclick=\"window.open('https://www.youtube.com/watch?v=${video.videoId}', '_blank')\" style=\"width: 100%; margin-top: 24px;\">🎬 GUARDA SU YOUTUBE</button>
+                <button class="btn-hero btn-primary" onclick="window.open('https://www.youtube.com/watch?v=${video.videoId}', '_blank')" style="width: 100%; margin-top: 24px;">🎬 GUARDA SU YOUTUBE</button>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -1015,17 +1026,12 @@
         }
 
         function toggleAudio() {
-            const audio = document.getElementById('bgAudio');
+            audioPlaying = !audioPlaying;
             const button = document.querySelector('.audio-toggle');
-            
             if (audioPlaying) {
-                audio.pause();
-                button.classList.remove('playing');
-                audioPlaying = false;
-            } else {
-                audio.play();
                 button.classList.add('playing');
-                audioPlaying = true;
+            } else {
+                button.classList.remove('playing');
             }
         }
 
