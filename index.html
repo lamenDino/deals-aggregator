@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LamenDino - Offerte, News e Recensioni</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
         :root {
-            --primary-color: #FF6B35;
-            --secondary-color: #004E89;
-            --accent-color: #1B4965;
-            --success-color: #27AE60;
-            --danger-color: #E74C3C;
-            --dark-bg: #0F1419;
-            --light-bg: #F8F9FA;
-            --card-bg: #FFFFFF;
-            --text-dark: #1A1A1A;
-            --text-light: #666666;
-            --border-color: #E5E5E5;
-            --text-secondary: #999999;
+            --primary: #FF6B35;
+            --secondary: #004E89;
+            --accent: #1B4965;
+            --success: #27AE60;
+            --danger: #E74C3C;
+            --dark-bg: #0a0e27;
+            --dark-bg-2: #151932;
+            --light-bg: #f0f2f5;
+            --card-bg: #1a1f3a;
+            --text-primary: #ffffff;
+            --text-secondary: #b8bcc8;
+            --border: rgba(255, 107, 53, 0.2);
+            --glassmorphism: rgba(26, 31, 58, 0.7);
         }
 
         * {
@@ -31,36 +34,115 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-2) 100%);
+            color: var(--text-primary);
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        body.dark-mode {
-            background-color: var(--dark-bg);
-            color: #ffffff;
+        /* Audio Background */
+        .audio-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, #FF5722 100%);
+            border: none;
+            cursor: pointer;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s ease;
         }
 
-        body.dark-mode .card {
-            background-color: #1A1F2E;
-            color: #ffffff;
+        .audio-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.6);
         }
 
-        body.dark-mode .card-category {
-            background-color: rgba(255, 107, 53, 0.2);
-            color: #FF6B35;
+        .audio-toggle.playing::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        /* Background Animated */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e27 0%, #151932 50%, #1a1f3a 100%);
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #FF6B35, #FF5722);
+            top: -50px;
+            right: -50px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #004E89, #1B4965);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: 2s;
+        }
+
+        .blob-3 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #27AE60, #2ecc71);
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -30px); }
+            50% { transform: translate(-20px, 20px); }
+            75% { transform: translate(10px, 10px); }
         }
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #004E89 0%, #1B4965 100%);
-            color: white;
-            padding: 25px 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            background: var(--glassmorphism);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
         }
 
         .header-content {
@@ -75,78 +157,90 @@
         }
 
         .header-title {
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: -1px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, #FF5722 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Space Grotesk', sans-serif;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .header-title span {
-            font-size: 40px;
+        .header-title:hover {
+            transform: scale(1.05);
         }
 
         .nav-menu {
             display: flex;
-            gap: 8px;
+            gap: 5px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .nav-link {
-            color: white;
+            color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             padding: 10px 16px;
             border-radius: 8px;
             transition: all 0.3s ease;
-            font-size: 15px;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
         }
 
         .nav-link:hover {
-            background-color: rgba(255, 107, 53, 0.8);
-            transform: translateY(-2px);
+            color: var(--primary);
+            background: rgba(255, 107, 53, 0.15);
         }
 
         .btn-small {
             padding: 10px 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--primary);
             border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
-            background-color: transparent;
-            color: white;
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--primary);
             transition: all 0.3s ease;
         }
 
         .btn-small:hover {
-            background-color: rgba(255, 107, 53, 0.8);
-            border-color: #FF6B35;
-        }
-
-        .loader {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 107, 53, 0.3);
-            border-radius: 50%;
-            border-top-color: #FF6B35;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
         }
 
         /* Hero */
         .hero {
-            background: linear-gradient(135deg, #004E89 0%, #1B4965 100%);
-            color: white;
-            padding: 80px 20px;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 60px 20px;
             position: relative;
             overflow: hidden;
         }
@@ -154,135 +248,205 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 107, 53, 0.1);
-            border-radius: 50%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
+            max-width: 900px;
             z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-text {
-            font-size: 56px;
-            font-weight: 800;
+            font-size: 72px;
+            font-weight: 700;
             margin-bottom: 20px;
-            line-height: 1.2;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF5722 50%, #27AE60 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Space Grotesk', sans-serif;
             letter-spacing: -1px;
         }
 
         .hero-description {
-            font-size: 20px;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto;
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
             font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .btn-hero {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #FF5722 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(255, 107, 53, 0.5);
         }
 
         /* Container */
         .container {
             max-width: 1600px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 20px;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #FF5722 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            border-radius: 2px;
         }
 
         /* Grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
             margin-bottom: 60px;
-        }
-
-        @media (max-width: 1024px) {
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 20px;
-            }
         }
 
         @media (max-width: 768px) {
             .grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
             }
         }
 
         /* Card */
         .card {
-            background-color: var(--card-bg);
+            background: var(--glassmorphism);
+            border: 1px solid var(--border);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: all 0.35s ease;
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
             flex-direction: column;
-            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.2), transparent);
+            transition: left 0.6s ease;
+            z-index: 1;
+        }
+
+        .card:hover::before {
+            left: 100%;
         }
 
         .card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
-            border-color: #FF6B35;
+            transform: translateY(-16px);
+            border-color: var(--primary);
+            box-shadow: 0 24px 48px rgba(255, 107, 53, 0.3);
         }
 
-        body.dark-mode .card {
-            border-color: #333;
-        }
-
-        body.dark-mode .card:hover {
-            border-color: #FF6B35;
-        }
-
-        .product-image {
+        .card-image {
             width: 100%;
             height: 240px;
-            background: linear-gradient(135deg, #004E89 0%, #1B4965 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 80px;
-            color: white;
+            font-size: 72px;
             position: relative;
             overflow: hidden;
-            background-size: cover;
-            background-position: center;
         }
 
-        .discount-badge {
+        .card-image::after {
+            content: '';
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #FF6B35;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--primary);
             color: white;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 18px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
             z-index: 10;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .card-category {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: rgba(255, 107, 53, 0.15);
-            color: #FF6B35;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            z-index: 10;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(-180deg); }
+            100% { transform: scale(1) rotate(0); }
         }
 
         .card-content {
@@ -290,98 +454,49 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            position: relative;
+            z-index: 2;
         }
 
-        .product-title {
+        .card-title {
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 12px;
-            line-height: 1.35;
-            color: var(--text-dark);
+            line-height: 1.4;
         }
 
-        body.dark-mode .product-title {
-            color: #ffffff;
-        }
-
-        .product-description {
-            font-size: 14px;
-            color: var(--text-light);
+        .card-description {
+            font-size: 13px;
+            color: var(--text-secondary);
             margin-bottom: 16px;
             flex-grow: 1;
             line-height: 1.6;
         }
 
-        .rating {
+        .card-footer {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 14px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .stars {
-            color: #FFC107;
-            font-size: 13px;
-        }
-
-        .price-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        body.dark-mode .price-section {
-            border-bottom-color: #333;
-        }
-
-        .price-original {
-            font-size: 13px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
             color: var(--text-secondary);
-            text-decoration: line-through;
-            font-weight: 500;
         }
 
-        .price-current {
-            font-size: 28px;
-            font-weight: 800;
-            color: #FF6B35;
-        }
-
-        /* Buttons */
-        .btn-primary {
-            padding: 14px 20px;
-            background-color: #FF6B35;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+        .price {
+            font-size: 20px;
             font-weight: 700;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            width: 100%;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary:hover {
-            background-color: #E55A2B;
-            transform: scale(1.02);
+            color: var(--primary);
         }
 
         /* Pages */
         .page {
             display: none;
+            animation: fadeIn 0.5s ease;
         }
 
         .page.active {
             display: block;
-            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -389,51 +504,58 @@
             to { opacity: 1; }
         }
 
-        h2 {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 40px;
-            letter-spacing: -1px;
-        }
-
-        .last-update {
-            text-align: center;
-            padding: 16px 24px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 78, 137, 0.1) 100%);
-            border-radius: 12px;
-            margin-bottom: 40px;
-            font-size: 14px;
-            color: #FF6B35;
-            font-weight: 700;
-            border-left: 4px solid #FF6B35;
-        }
-
         /* Home Grid */
         .home-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
-            margin-bottom: 50px;
         }
 
         .home-card {
-            background: white;
+            background: var(--glassmorphism);
+            border: 1px solid var(--border);
             padding: 40px 24px;
             text-align: center;
             border-radius: 16px;
-            transition: all 0.35s ease;
-            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 107, 53, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .home-card:hover::before {
+            opacity: 1;
         }
 
         .home-card:hover {
-            border-color: #FF6B35;
-            transform: translateY(-8px);
-            box-shadow: 0 12px 28px rgba(255, 107, 53, 0.15);
+            transform: translateY(-12px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
         }
 
-        .home-card-icon {
-            font-size: 52px;
+        .home-icon {
+            font-size: 56px;
             margin-bottom: 16px;
+            animation: bounce 2s infinite;
+        }
+
+        .home-card:nth-child(2) .home-icon { animation-delay: 0.2s; }
+        .home-card:nth-child(3) .home-icon { animation-delay: 0.4s; }
+        .home-card:nth-child(4) .home-icon { animation-delay: 0.6s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .home-card h3 {
@@ -443,105 +565,8 @@
         }
 
         .home-card p {
-            color: var(--text-light);
-            font-size: 15px;
-        }
-
-        /* News/Video Cards */
-        .news-card {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        body.dark-mode .news-card {
-            border-bottom-color: #333;
-        }
-
-        .news-icon {
-            font-size: 48px;
-            margin-bottom: 14px;
-        }
-
-        .news-category {
-            display: inline-block;
-            background-color: rgba(255, 107, 53, 0.15);
-            color: #FF6B35;
-            padding: 7px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .news-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.35;
-        }
-
-        .news-excerpt {
-            font-size: 14px;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-
-        .news-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
             color: var(--text-secondary);
-            padding: 15px 0 0 0;
-            border-top: 1px solid var(--border-color);
-        }
-
-        body.dark-mode .news-meta {
-            border-top-color: #333;
-        }
-
-        /* Video */
-        .video-thumbnail {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            background: #000;
-            margin-bottom: 15px;
-        }
-
-        .video-thumbnail img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 107, 53, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 28px;
-            z-index: 5;
-            transition: all 0.3s ease;
-        }
-
-        .video-thumbnail:hover .play-button {
-            background: #FF6B35;
-            transform: translate(-50%, -50%) scale(1.1);
+            font-size: 14px;
         }
 
         /* Modal */
@@ -553,68 +578,62 @@
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
         }
 
         .modal.show {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
-            background-color: var(--card-bg);
-            margin: 40px auto;
-            padding: 0;
-            border-radius: 16px;
+            background: var(--dark-bg-2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             width: 90%;
             max-width: 900px;
             max-height: 85vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        body.dark-mode .modal-content {
-            background-color: #1A1F2E;
-            color: #ffffff;
+            box-shadow: 0 40px 64px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .modal-header {
             padding: 32px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        body.dark-mode .modal-header {
-            border-bottom-color: #333;
+            align-items: flex-start;
         }
 
         .modal-title {
             font-size: 32px;
-            font-weight: 800;
+            font-weight: 700;
             flex-grow: 1;
-            letter-spacing: -0.5px;
         }
 
         .modal-close {
-            background: none;
+            background: rgba(255, 107, 53, 0.2);
             border: none;
-            font-size: 32px;
+            font-size: 28px;
             cursor: pointer;
-            color: var(--text-light);
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
         }
 
         .modal-close:hover {
-            background-color: rgba(255, 107, 53, 0.1);
-            color: #FF6B35;
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
         }
 
         .modal-body {
@@ -624,21 +643,13 @@
         .modal-body h2 {
             margin-top: 24px;
             margin-bottom: 16px;
-            font-size: 24px;
-            color: #FF6B35;
+            font-size: 22px;
         }
 
         .modal-body p {
             line-height: 1.8;
             margin-bottom: 16px;
-            font-size: 15px;
-        }
-
-        .modal-body iframe {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            margin-bottom: 24px;
+            color: var(--text-secondary);
         }
 
         .youtube-embed {
@@ -646,6 +657,8 @@
             width: 100%;
             padding-bottom: 56.25%;
             margin-bottom: 24px;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         .youtube-embed iframe {
@@ -655,159 +668,147 @@
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 12px;
         }
 
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 20px;
+            .hero-text {
+                font-size: 42px;
             }
 
             .header-title {
-                font-size: 28px;
-            }
-
-            .nav-menu {
-                width: 100%;
-                justify-content: center;
-                gap: 8px;
-            }
-
-            .hero-text {
-                font-size: 36px;
-            }
-
-            .hero-description {
-                font-size: 16px;
+                font-size: 20px;
             }
 
             h2 {
                 font-size: 32px;
             }
 
-            .modal-content {
-                width: 95%;
-                margin: 50px auto;
-            }
-
-            .modal-title {
-                font-size: 24px;
-            }
-
-            .home-grid {
-                grid-template-columns: 1fr;
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
+    <div class=\"bg-animated\">
+        <div class=\"blob blob-1\"></div>
+        <div class=\"blob blob-2\"></div>
+        <div class=\"blob blob-3\"></div>
+    </div>
+
+    <!-- Audio Toggle -->
+    <button class=\"audio-toggle\" onclick=\"toggleAudio()\" title=\"Attiva/disattiva musica\">🔊</button>
+    <audio id=\"bgAudio\" loop volume=\"0.3\">
+        <source src=\"https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3\" type=\"audio/mpeg\">
+    </audio>
+
     <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="header-title"><span>🎁</span> LamenDino</div>
-            <nav class="nav-menu">
-                <a class="nav-link" onclick="switchPage('home')">Home</a>
-                <a class="nav-link" onclick="switchPage('deals')">Offerte</a>
-                <a class="nav-link" onclick="switchPage('articles')">Articoli</a>
-                <a class="nav-link" onclick="switchPage('news')">News</a>
-                <a class="nav-link" onclick="switchPage('videos')">Video</a>
-                <a class="nav-link" onclick="switchPage('history')">Cronologia</a>
-                <button class="btn-small" onclick="toggleTheme()">🌙 Tema</button>
+    <header class=\"header\">
+        <div class=\"header-content\">
+            <div class=\"header-title\" onclick=\"switchPage('home')\">🎁 LamenDino</div>
+            <nav class=\"nav-menu\">
+                <a class=\"nav-link\" onclick=\"switchPage('home')\">Home</a>
+                <a class=\"nav-link\" onclick=\"switchPage('deals')\">Offerte</a>
+                <a class=\"nav-link\" onclick=\"switchPage('articles')\">Articoli</a>
+                <a class=\"nav-link\" onclick=\"switchPage('news')\">News</a>
+                <a class=\"nav-link\" onclick=\"switchPage('videos')\">Video</a>
+                <a class=\"nav-link\" onclick=\"switchPage('history')\">Cronologia</a>
+                <button class=\"btn-small\" onclick=\"toggleTheme()\">🌙 Tema</button>
             </nav>
         </div>
     </header>
 
     <!-- Hero -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1 class="hero-text">Le Migliori Offerte su Amazon</h1>
-            <p class="hero-description">Scopri offerte esclusive, articoli dettagliati, ultime notizie e video recensioni. Aggiornamenti quotidiani!</p>
+    <div class=\"hero\">
+        <div class=\"hero-content\">
+            <h1 class=\"hero-text\">Offerte che CAMBIANO il Gioco</h1>
+            <p class=\"hero-description\">Scopri prodotti esclusivi, articoli approfonditi e le ultime notizie tech. Aggiornamenti in tempo reale, ogni giorno.</p>
+            <div class=\"hero-buttons\">
+                <button class=\"btn-hero btn-primary\" onclick=\"switchPage('deals')\">🔥 Scopri Offerte</button>
+                <button class=\"btn-hero btn-primary\" onclick=\"switchPage('news')\" style=\"background: rgba(255, 107, 53, 0.2); color: var(--primary); border: 1px solid var(--primary);\">📱 Leggi News</button>
+            </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="container">
+    <div class=\"container\">
         <!-- Home Page -->
-        <div id="home-page" class="page active">
+        <div id=\"home-page\" class=\"page active\">
             <h2>Benvenuto su LamenDino</h2>
-            <div class="home-grid">
-                <div class="home-card" onclick="switchPage('deals')">
-                    <div class="home-card-icon">💰</div>
-                    <h3>Offerte Giornaliere</h3>
-                    <p>Sconti esclusivi selezionati per te ogni giorno</p>
+            <div class=\"home-grid\">
+                <div class=\"home-card\" onclick=\"switchPage('deals')\">
+                    <div class=\"home-icon\">💰</div>
+                    <h3>Offerte Esplosive</h3>
+                    <p>Sconti fino al 70% selezionati quotidianamente</p>
                 </div>
-                <div class="home-card" onclick="switchPage('articles')">
-                    <div class="home-card-icon">📰</div>
-                    <h3>Articoli Dettagliati</h3>
-                    <p>Guide approfondite e review completi</p>
+                <div class=\"home-card\" onclick=\"switchPage('articles')\">
+                    <div class=\"home-icon\">📚</div>
+                    <h3>Guide Dettagliate</h3>
+                    <p>Analisi approfondite e consigli esperti</p>
                 </div>
-                <div class="home-card" onclick="switchPage('news')">
-                    <div class="home-card-icon">📱</div>
-                    <h3>Tech News</h3>
-                    <p>Ultime notizie dal mondo della tecnologia</p>
+                <div class=\"home-card\" onclick=\"switchPage('news')\">
+                    <div class=\"home-icon\">⚡</div>
+                    <h3>Tech News Live</h3>
+                    <p>Breaking news dal mondo della tecnologia</p>
                 </div>
-                <div class="home-card" onclick="switchPage('videos')">
-                    <div class="home-card-icon">🎬</div>
-                    <h3>Video Recensioni</h3>
-                    <p>Presentazioni ufficiali da YouTube</p>
+                <div class=\"home-card\" onclick=\"switchPage('videos')\">
+                    <div class=\"home-icon\">🎬</div>
+                    <h3>Video Esclusivi</h3>
+                    <p>Review professionali direttamente da YouTube</p>
                 </div>
             </div>
         </div>
 
         <!-- Deals Page -->
-        <div id="deals-page" class="page">
-            <h2>Offerte Giornaliere</h2>
-            <div class="last-update" id="lastUpdateDeals"></div>
-            <div id="dealsGrid" class="grid">
-                <div style="text-align: center; padding: 60px 20px; grid-column: 1/-1;"><div class="loader"></div> Caricamento...</div>
+        <div id=\"deals-page\" class=\"page\">
+            <h2>💥 Offerte Esplosive del Giorno</h2>
+            <div id=\"dealsGrid\" class=\"grid\">
+                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento offerte...</div>
             </div>
         </div>
 
         <!-- Articles Page -->
-        <div id="articles-page" class="page">
-            <h2>Articoli e Guide</h2>
-            <div class="last-update" id="lastUpdateArticles"></div>
-            <div id="articlesGrid" class="grid">
-                <div style="text-align: center; padding: 60px 20px; grid-column: 1/-1;"><div class="loader"></div> Caricamento...</div>
+        <div id=\"articles-page\" class=\"page\">
+            <h2>📚 Articoli e Guide</h2>
+            <div id=\"articlesGrid\" class=\"grid\">
+                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento articoli...</div>
             </div>
         </div>
 
         <!-- News Page -->
-        <div id="news-page" class="page">
-            <h2>Tech News</h2>
-            <div class="last-update" id="lastUpdateNews"></div>
-            <div id="newsGrid" class="grid">
-                <div style="text-align: center; padding: 60px 20px; grid-column: 1/-1;"><div class="loader"></div> Caricamento...</div>
+        <div id=\"news-page\" class=\"page\">
+            <h2>⚡ Tech News Quotidiane</h2>
+            <div id=\"newsGrid\" class=\"grid\">
+                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento news...</div>
             </div>
         </div>
 
         <!-- Videos Page -->
-        <div id="videos-page" class="page">
-            <h2>Video Recensioni</h2>
-            <div class="last-update" id="lastUpdateVideos"></div>
-            <div id="videosGrid" class="grid">
-                <div style="text-align: center; padding: 60px 20px; grid-column: 1/-1;"><div class="loader"></div> Caricamento...</div>
+        <div id=\"videos-page\" class=\"page\">
+            <h2>🎬 Video Recensioni</h2>
+            <div id=\"videosGrid\" class=\"grid\">
+                <div style=\"text-align: center; grid-column: 1/-1; padding: 40px;\">Caricamento video...</div>
             </div>
         </div>
 
         <!-- History Page -->
-        <div id="history-page" class="page">
-            <h2>Cronologia</h2>
-            <div id="historyGrid">
-                <div style="text-align: center; padding: 60px 20px;"><div class="loader"></div> Caricamento...</div>
+        <div id=\"history-page\" class=\"page\">
+            <h2>📝 Cronologia</h2>
+            <div id=\"historyGrid\">
+                <div style=\"text-align: center; padding: 40px;\">Caricamento cronologia...</div>
             </div>
         </div>
     </div>
 
     <!-- Modal -->
-    <div id="modal" class="modal" onclick="closeModalOnBackdrop(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id=\"modal\" class=\"modal\" onclick=\"closeModalOnBackdrop(event)\">
+        <div class=\"modal-content\" onclick=\"event.stopPropagation()\">
+            <div class=\"modal-header\">
+                <h2 class=\"modal-title\" id=\"modalTitle\"></h2>
+                <button class=\"modal-close\" onclick=\"closeModal()\">✕</button>
             </div>
-            <div class="modal-body" id="modalBody"></div>
+            <div class=\"modal-body\" id=\"modalBody\"></div>
         </div>
     </div>
 
@@ -817,6 +818,7 @@
         let newsData = [];
         let videosData = [];
         let historyData = [];
+        let audioPlaying = false;
 
         async function loadData() {
             try {
@@ -834,20 +836,9 @@
                 renderNews();
                 renderVideos();
                 renderHistory();
-                updateLastUpdateTime(data.lastUpdate);
             } catch (error) {
                 console.error('Errore:', error);
             }
-        }
-
-        function updateLastUpdateTime(lastUpdate) {
-            const date = new Date(lastUpdate);
-            const formatted = date.toLocaleString('it-IT');
-            const html = `🕐 Ultimo aggiornamento: ${formatted}`;
-            document.getElementById('lastUpdateDeals').textContent = html;
-            document.getElementById('lastUpdateArticles').textContent = html;
-            document.getElementById('lastUpdateNews').textContent = html;
-            document.getElementById('lastUpdateVideos').textContent = html;
         }
 
         function switchPage(page) {
@@ -860,20 +851,17 @@
             const grid = document.getElementById('dealsGrid');
             if (!dealsData.length) return;
             grid.innerHTML = dealsData.map(deal => `
-                <div class="card" onclick="openDealModal(${deal.id})">
-                    <div class="product-image" style="background-image: url(${deal.image})">
-                        <div class="discount-badge">-${deal.discount}%</div>
-                        <div class="card-category">${deal.category}</div>
+                <div class=\"card\" onclick=\"openDealModal(${deal.id})\">
+                    <div class=\"card-image\" style=\"background-image: url(${deal.image}); background-size: cover; background-position: center;\">
+                        <div class=\"badge\">-${deal.discount}%</div>
                     </div>
-                    <div class="card-content">
-                        <h3 class="product-title">${deal.title}</h3>
-                        <p class="product-description">${deal.description}</p>
-                        <div class="rating"><span class="stars">${'★'.repeat(Math.floor(deal.rating))}${'☆'.repeat(5 - Math.floor(deal.rating))}</span> ${deal.rating}/5</div>
-                        <div class="price-section">
-                            <span class="price-original">€${deal.originalPrice.toFixed(2)}</span>
-                            <span class="price-current">€${deal.discountPrice.toFixed(2)}</span>
+                    <div class=\"card-content\">
+                        <div class=\"card-title\">${deal.title}</div>
+                        <div class=\"card-description\">${deal.description}</div>
+                        <div class=\"card-footer\">
+                            <span>⭐ ${deal.rating}/5</span>
+                            <span class=\"price\">€${deal.discountPrice.toFixed(2)}</span>
                         </div>
-                        <button class="btn-primary" onclick="event.stopPropagation(); openAmazonLink('${deal.title}')">Visualizza</button>
                     </div>
                 </div>
             `).join('');
@@ -883,19 +871,15 @@
             const grid = document.getElementById('articlesGrid');
             if (!articlesData.length) return;
             grid.innerHTML = articlesData.map(article => `
-                <div class="card" onclick="openArticleModal(${article.id})">
-                    <div class="product-image" style="background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%); display: flex; align-items: center; justify-content: center; font-size: 60px;">
-                        📄
-                    </div>
-                    <div class="card-content">
-                        <div class="news-category">${article.category}</div>
-                        <h3 class="product-title">${article.title}</h3>
-                        <p class="product-description">${article.excerpt}</p>
-                        <p style="font-size: 13px; color: var(--text-light); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color);">${article.content}</p>
-                    </div>
-                    <div class="news-meta">
-                        <span>${article.date}</span>
-                        <span>${article.readTime} min</span>
+                <div class=\"card\" onclick=\"openArticleModal(${article.id})\">
+                    <div class=\"card-image\">📄</div>
+                    <div class=\"card-content\">
+                        <div class=\"card-title\">${article.title}</div>
+                        <div class=\"card-description\">${article.excerpt}</div>
+                        <div class=\"card-footer\">
+                            <span>${article.date}</span>
+                            <span>${article.readTime} min</span>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -905,17 +889,15 @@
             const grid = document.getElementById('newsGrid');
             if (!newsData.length) return;
             grid.innerHTML = newsData.map(news => `
-                <div class="card" onclick="openNewsModal(${news.id})">
-                    <div class="news-card">
-                        <div class="news-icon">${news.icon}</div>
-                        <div class="news-category">${news.category}</div>
-                        <h3 class="news-title">${news.title}</h3>
-                        <p class="news-excerpt">${news.excerpt}</p>
-                        <p style="font-size: 13px; color: var(--text-light); margin-top: 12px; line-height: 1.6;">${news.content}</p>
-                    </div>
-                    <div class="news-meta">
-                        <span>${news.author}</span>
-                        <span>${news.date}</span>
+                <div class=\"card\" onclick=\"openNewsModal(${news.id})\">
+                    <div class=\"card-image\" style=\"font-size: 80px;\">${news.icon}</div>
+                    <div class=\"card-content\">
+                        <div class=\"card-title\">${news.title}</div>
+                        <div class=\"card-description\">${news.excerpt}</div>
+                        <div class=\"card-footer\">
+                            <span>${news.author}</span>
+                            <span>${news.date}</span>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -925,16 +907,12 @@
             const grid = document.getElementById('videosGrid');
             if (!videosData.length) return;
             grid.innerHTML = videosData.map(video => `
-                <div class="card" onclick="openVideoModal(${video.id})">
-                    <div class="video-thumbnail">
-                        <img src="${video.thumbnail}" alt="${video.product}">
-                        <div class="play-button">▶</div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="product-title">${video.product}</h3>
-                        <p class="product-description">da ${video.youtuber}</p>
-                        <p style="font-size: 13px; color: var(--text-light); margin: 12px 0; line-height: 1.6;">${video.description}</p>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-light); margin-top: auto; font-weight: 600;">
+                <div class=\"card\" onclick=\"openVideoModal(${video.id})\">
+                    <div class=\"card-image\" style=\"background-image: url(${video.thumbnail}); background-size: cover; background-position: center; font-size: 50px; color: rgba(255,255,255,0.3);\">▶️</div>
+                    <div class=\"card-content\">
+                        <div class=\"card-title\">${video.product}</div>
+                        <div class=\"card-description\">da ${video.youtuber}</div>
+                        <div class=\"card-footer\">
                             <span>👁️ ${video.views}</span>
                             <span>⭐ ${video.rating}/5</span>
                         </div>
@@ -946,13 +924,13 @@
         function renderHistory() {
             const grid = document.getElementById('historyGrid');
             if (!historyData.length) {
-                grid.innerHTML = '<p>Nessuna cronologia</p>';
+                grid.innerHTML = '<p style=\"text-align: center;\">Nessuna cronologia</p>';
                 return;
             }
             grid.innerHTML = historyData.map(entry => `
-                <div style="padding: 20px; background-color: rgba(255, 107, 53, 0.08); border-radius: 12px; margin-bottom: 16px; border-left: 4px solid #FF6B35;">
-                    <div style="font-weight: 700; color: #FF6B35; font-size: 15px;">📅 ${new Date(entry.date).toLocaleDateString('it-IT')}</div>
-                    <div style="font-size: 14px; color: var(--text-light); margin-top: 6px;">
+                <div style=\"padding: 20px; background: var(--glassmorphism); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; backdrop-filter: blur(10px);\">
+                    <div style=\"font-weight: 700; color: var(--primary); font-size: 15px;\">📅 ${new Date(entry.date).toLocaleDateString('it-IT')}</div>
+                    <div style=\"font-size: 14px; color: var(--text-secondary); margin-top: 6px;\">
                         ✅ ${entry.type === 'deals' ? entry.deals.length + ' offerte' : entry.articles.length + ' articoli'}
                     </div>
                 </div>
@@ -964,15 +942,15 @@
             if (!deal) return;
             document.getElementById('modalTitle').textContent = deal.title;
             document.getElementById('modalBody').innerHTML = `
-                <div style="text-align: center; margin-bottom: 28px;">
-                    <img src="${deal.image}" style="max-width: 400px; border-radius: 12px;">
+                <div style=\"text-align: center; margin-bottom: 28px;\">
+                    <img src=\"${deal.image}\" style=\"max-width: 400px; border-radius: 12px;\">
                 </div>
-                <h2>Informazioni Prodotto</h2>
+                <h2>Dettagli Prodotto</h2>
                 <p><strong>Categoria:</strong> ${deal.category}</p>
-                <p><strong>Prezzo:</strong> <span style="color: #FF6B35; font-weight: 700;">€${deal.discountPrice.toFixed(2)}</span> <span style="text-decoration: line-through; color: #999;">€${deal.originalPrice.toFixed(2)}</span></p>
-                <p><strong>Sconto:</strong> <span style="color: #27AE60; font-weight: 700;">-${deal.discount}%</span></p>
+                <p><strong>Prezzo:</strong> <span style=\"color: var(--primary); font-weight: 700;\">€${deal.discountPrice.toFixed(2)}</span> <span style=\"text-decoration: line-through; color: var(--text-secondary);\">€${deal.originalPrice.toFixed(2)}</span></p>
+                <p><strong>Sconto:</strong> <span style=\"color: var(--success); font-weight: 700;\">-${deal.discount}%</span></p>
                 <p><strong>Valutazione:</strong> ${deal.rating}/5 (${deal.reviews} recensioni)</p>
-                <p style="margin-top: 24px;"><a href="https://www.amazon.it/s?k=${encodeURIComponent(deal.title)}&tag=lamendino-21" target="_blank" class="btn-primary" style="display: block; text-decoration: none; color: white;">🛒 ACQUISTA SU AMAZON</a></p>
+                <button class=\"btn-hero btn-primary\" onclick=\"openAmazonLink('${deal.title}')\" style=\"width: 100%; margin-top: 24px;\">🛒 ACQUISTA SU AMAZON</button>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -982,13 +960,11 @@
             if (!article) return;
             document.getElementById('modalTitle').textContent = article.title;
             document.getElementById('modalBody').innerHTML = `
-                <p><strong style="color: #FF6B35;">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min lettura</p>
-                <h2>Contenuto Articolo</h2>
+                <p><strong style=\"color: var(--primary);\">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min</p>
+                <h2>Contenuto</h2>
                 <p>${article.excerpt}</p>
                 <h2>Approfondimento</h2>
                 <p>${article.content}</p>
-                <h2>Conclusioni</h2>
-                <p>${article.conclusion || 'Questo articolo ti fornisce una guida completa su ' + article.title.toLowerCase() + '. Consulta regolarmente questa sezione per aggiornamenti.'}</p>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -998,8 +974,8 @@
             if (!news) return;
             document.getElementById('modalTitle').textContent = news.title;
             document.getElementById('modalBody').innerHTML = `
-                <div style="text-align: center; font-size: 72px; margin-bottom: 24px;">${news.icon}</div>
-                <p><strong style="color: #FF6B35;">${news.category.toUpperCase()}</strong> • ${news.date}</p>
+                <div style=\"text-align: center; font-size: 72px; margin-bottom: 24px;\">${news.icon}</div>
+                <p><strong style=\"color: var(--primary);\">${news.category.toUpperCase()}</strong> • ${news.date}</p>
                 <p><strong>Autore:</strong> ${news.author}</p>
                 <h2>Descrizione</h2>
                 <p>${news.content}</p>
@@ -1012,26 +988,22 @@
             if (!video) return;
             document.getElementById('modalTitle').textContent = video.product;
             document.getElementById('modalBody').innerHTML = `
-                <div class="youtube-embed">
-                    <iframe src="https://www.youtube.com/embed/${video.videoId}" title="${video.product}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class=\"youtube-embed\">
+                    <iframe src=\"https://www.youtube.com/embed/${video.videoId}\" title=\"${video.product}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>
                 </div>
-                <h2>📺 Informazioni Video</h2>
-                <p><strong>Prodotto:</strong> ${video.product}</p>
-                <p><strong>Youtuber:</strong> <span style="color: #FF6B35; font-weight: 700;">${video.youtuber}</span></p>
+                <h2>📺 Info Video</h2>
+                <p><strong>Youtuber:</strong> <span style=\"color: var(--primary); font-weight: 700;\">${video.youtuber}</span></p>
                 <p><strong>Canale:</strong> ${video.channel}</p>
                 <p><strong>Visualizzazioni:</strong> 👁️ ${video.views} | <strong>Rating:</strong> ⭐ ${video.rating}/5</p>
-                <h2>Descrizione Completa</h2>
+                <h2>Descrizione</h2>
                 <p>${video.description}</p>
-                <p style="margin-top: 20px; padding: 15px; background-color: rgba(255, 107, 53, 0.1); border-radius: 8px; border-left: 4px solid #FF6B35;">
-                    <strong>💡 Consiglio:</strong> Guarda il video completo per una review approfondita e dettagli tecnici sul prodotto.
-                </p>
-                <p style="margin-top: 20px;"><a href="https://www.youtube.com/watch?v=${video.videoId}" target="_blank" class="btn-primary" style="display: block; text-decoration: none; color: white;">🎬 GUARDA SU YOUTUBE</a></p>
+                <button class=\"btn-hero btn-primary\" onclick=\"window.open('https://www.youtube.com/watch?v=${video.videoId}', '_blank')\" style=\"width: 100%; margin-top: 24px;\">🎬 GUARDA SU YOUTUBE</button>
             `;
             document.getElementById('modal').classList.add('show');
         }
 
         function openAmazonLink(productName) {
-            window.open(`https://www.amazon.it/s?k=${encodeURIComponent(productName)}&tag=lamendino-21`, 'blank');
+            window.open(`https://www.amazon.it/s?k=${encodeURIComponent(productName)}&tag=lamendino-21`, '_blank');
         }
 
         function closeModal() {
@@ -1042,19 +1014,26 @@
             if (event.target === document.getElementById('modal')) closeModal();
         }
 
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
-
-        function loadTheme() {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-mode');
+        function toggleAudio() {
+            const audio = document.getElementById('bgAudio');
+            const button = document.querySelector('.audio-toggle');
+            
+            if (audioPlaying) {
+                audio.pause();
+                button.classList.remove('playing');
+                audioPlaying = false;
+            } else {
+                audio.play();
+                button.classList.add('playing');
+                audioPlaying = true;
             }
         }
 
+        function toggleTheme() {
+            document.documentElement.style.colorScheme = document.documentElement.style.colorScheme === 'dark' ? 'light' : 'dark';
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
-            loadTheme();
             loadData();
         });
 
