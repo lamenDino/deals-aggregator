@@ -884,10 +884,14 @@
             if (!articlesData.length) return;
             grid.innerHTML = articlesData.map(article => `
                 <div class="card" onclick="openArticleModal(${article.id})">
+                    <div class="product-image" style="background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%); display: flex; align-items: center; justify-content: center; font-size: 60px;">
+                        📄
+                    </div>
                     <div class="card-content">
                         <div class="news-category">${article.category}</div>
                         <h3 class="product-title">${article.title}</h3>
                         <p class="product-description">${article.excerpt}</p>
+                        <p style="font-size: 13px; color: var(--text-light); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color);">${article.content}</p>
                     </div>
                     <div class="news-meta">
                         <span>${article.date}</span>
@@ -907,6 +911,7 @@
                         <div class="news-category">${news.category}</div>
                         <h3 class="news-title">${news.title}</h3>
                         <p class="news-excerpt">${news.excerpt}</p>
+                        <p style="font-size: 13px; color: var(--text-light); margin-top: 12px; line-height: 1.6;">${news.content}</p>
                     </div>
                     <div class="news-meta">
                         <span>${news.author}</span>
@@ -928,6 +933,7 @@
                     <div class="card-content">
                         <h3 class="product-title">${video.product}</h3>
                         <p class="product-description">da ${video.youtuber}</p>
+                        <p style="font-size: 13px; color: var(--text-light); margin: 12px 0; line-height: 1.6;">${video.description}</p>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-light); margin-top: auto; font-weight: 600;">
                             <span>👁️ ${video.views}</span>
                             <span>⭐ ${video.rating}/5</span>
@@ -976,9 +982,13 @@
             if (!article) return;
             document.getElementById('modalTitle').textContent = article.title;
             document.getElementById('modalBody').innerHTML = `
-                <p><strong style="color: #FF6B35;">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min</p>
-                <h2>Articolo</h2>
+                <p><strong style="color: #FF6B35;">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min lettura</p>
+                <h2>Contenuto Articolo</h2>
                 <p>${article.excerpt}</p>
+                <h2>Approfondimento</h2>
+                <p>${article.content}</p>
+                <h2>Conclusioni</h2>
+                <p>${article.conclusion || 'Questo articolo ti fornisce una guida completa su ' + article.title.toLowerCase() + '. Consulta regolarmente questa sezione per aggiornamenti.'}</p>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -1005,12 +1015,17 @@
                 <div class="youtube-embed">
                     <iframe src="https://www.youtube.com/embed/${video.videoId}" title="${video.product}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <h2>Dettagli Video</h2>
-                <p><strong>Youtuber:</strong> ${video.youtuber}</p>
+                <h2>📺 Informazioni Video</h2>
+                <p><strong>Prodotto:</strong> ${video.product}</p>
+                <p><strong>Youtuber:</strong> <span style="color: #FF6B35; font-weight: 700;">${video.youtuber}</span></p>
                 <p><strong>Canale:</strong> ${video.channel}</p>
-                <p><strong>Visualizzazioni:</strong> ${video.views} | <strong>Rating:</strong> ${video.rating}/5</p>
-                <h2>Descrizione</h2>
+                <p><strong>Visualizzazioni:</strong> 👁️ ${video.views} | <strong>Rating:</strong> ⭐ ${video.rating}/5</p>
+                <h2>Descrizione Completa</h2>
                 <p>${video.description}</p>
+                <p style="margin-top: 20px; padding: 15px; background-color: rgba(255, 107, 53, 0.1); border-radius: 8px; border-left: 4px solid #FF6B35;">
+                    <strong>💡 Consiglio:</strong> Guarda il video completo per una review approfondita e dettagli tecnici sul prodotto.
+                </p>
+                <p style="margin-top: 20px;"><a href="https://www.youtube.com/watch?v=${video.videoId}" target="_blank" class="btn-primary" style="display: block; text-decoration: none; color: white;">🎬 GUARDA SU YOUTUBE</a></p>
             `;
             document.getElementById('modal').classList.add('show');
         }
