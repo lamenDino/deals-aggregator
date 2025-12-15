@@ -1,7 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import Groq from 'groq-sdk';
-import cron from 'node-cron';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,10 +13,6 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
-});
-
 let dealsData = [];
 let articlesData = [];
 let newsData = [];
@@ -26,9 +20,7 @@ let videosData = [];
 let historyData = [];
 let lastUpdateTime = new Date();
 
-console.log('✅ Groq API inizializzata');
-console.log('🔑 API Key caricata:', process.env.GROQ_API_KEY?.substring(0, 20) + '...');
-console.log('🤖 Modello: llama-3.3-70b-versatile');
+console.log('✅ Server inizializzato');
 
 const amazonProducts = [
   { name: "Cuffie Bluetooth Premium ANC Sony WH-1000XM5", category: "elettronica", basePrice: 379.99 },
@@ -88,8 +80,8 @@ function generateRealisticDeal() {
   };
 }
 
-async function generateDailyDeals() {
-  console.log('\\n🔄 Generando offerte giornaliere...');
+function generateDailyDeals() {
+  console.log('\n🔄 Generando offerte giornaliere...');
   dealsData = [];
   const dealsCount = 12;
 
@@ -103,8 +95,8 @@ async function generateDailyDeals() {
   lastUpdateTime = new Date();
 }
 
-async function generateDailyArticles() {
-  console.log('\\n📝 Generando articoli del giorno...');
+function generateDailyArticles() {
+  console.log('\n📝 Generando articoli del giorno...');
   
   const topics = [
     "Migliori cuffie wireless con cancellazione del rumore 2024",
@@ -135,8 +127,8 @@ async function generateDailyArticles() {
   console.log(`✅ ${articlesData.length} articoli generati`);
 }
 
-async function generateDailyNews() {
-  console.log('\\n⚡ Generando tech news...');
+function generateDailyNews() {
+  console.log('\n⚡ Generando tech news...');
   
   const newsTopics = [
     { title: "Apple rilascia iOS 18 con nuove feature AI", icon: "🍎", category: "Apple", author: "Tech News" },
@@ -166,8 +158,8 @@ async function generateDailyNews() {
   console.log(`✅ ${newsData.length} news generate`);
 }
 
-async function generateDailyVideos() {
-  console.log('\\n🎬 Generando video reviews...');
+function generateDailyVideos() {
+  console.log('\n🎬 Generando video reviews...');
 
   videosData = [];
 
@@ -193,28 +185,11 @@ async function generateDailyVideos() {
 }
 
 // Genera i dati al startup
-console.log('\\n🚀 Generazione iniziale al startup...');
-await generateDailyDeals();
-await generateDailyArticles();
-await generateDailyNews();
-await generateDailyVideos();
-
-// Task schedulato ogni giorno alle 08:00 AM
-cron.schedule('0 8 * * *', async () => {
-  console.log('\\n⏰ Task schedulato: Generazione giornaliera');
-  await generateDailyDeals();
-  await generateDailyArticles();
-  await generateDailyNews();
-  await generateDailyVideos();
-  
-  // Salva la cronologia
-  historyData.push({
-    date: new Date(),
-    type: 'deals',
-    deals: dealsData,
-    articles: articlesData
-  });
-});
+console.log('\n🚀 Generazione iniziale al startup...');
+generateDailyDeals();
+generateDailyArticles();
+generateDailyNews();
+generateDailyVideos();
 
 // API Endpoints
 app.get('/api/deals', (req, res) => {
@@ -228,13 +203,13 @@ app.get('/api/deals', (req, res) => {
   });
 });
 
-app.post('/api/regenerate', async (req, res) => {
+app.post('/api/regenerate', (req, res) => {
   try {
-    console.log('\\n🔄 Rigenerazione manuale...');
-    await generateDailyDeals();
-    await generateDailyArticles();
-    await generateDailyNews();
-    await generateDailyVideos();
+    console.log('\n🔄 Rigenerazione manuale...');
+    generateDailyDeals();
+    generateDailyArticles();
+    generateDailyNews();
+    generateDailyVideos();
 
     res.json({
       success: true,
@@ -271,8 +246,7 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`\\n✅ Server avviato su http://localhost:${PORT}`);
+  console.log(`\n✅ Server avviato su http://localhost:${PORT}`);
   console.log(`📊 Dati caricati: ${dealsData.length} offerte | ${articlesData.length} articoli | ${newsData.length} news | ${videosData.length} video`);
-  console.log(`⏰ Prossima generazione: domani alle 08:00 AM`);
   console.log(`🌐 Accedi a http://localhost:${PORT}`);
 });
