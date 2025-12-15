@@ -42,46 +42,6 @@
             overflow-x: hidden;
         }
 
-        /* Audio Background */
-        .audio-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, #FF5722 100%);
-            border: none;
-            cursor: pointer;
-            font-size: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .audio-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.6);
-        }
-
-        .audio-toggle.playing::after {
-            content: '';
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.3); opacity: 0; }
-        }
-
         /* Background Animated */
         .bg-animated {
             position: fixed;
@@ -697,9 +657,6 @@
         <div class="blob blob-3"></div>
     </div>
 
-    <!-- Audio Toggle -->
-    <button class="audio-toggle" onclick="toggleAudio()" title="Attiva/disattiva musica">🔊</button>
-
     <!-- Header -->
     <header class="header">
         <div class="header-content">
@@ -815,7 +772,6 @@
         let newsData = [];
         let videosData = [];
         let historyData = [];
-        let audioPlaying = false;
 
         async function loadData() {
             try {
@@ -828,7 +784,7 @@
                 videosData = data.videos || [];
                 historyData = data.history || [];
                 
-                console.log('Dati caricati:', { dealsData, articlesData, newsData, videosData });
+                console.log('Dati caricati:', { dealsData: dealsData.length, articlesData: articlesData.length, newsData: newsData.length, videosData: videosData.length });
                 
                 renderDeals();
                 renderArticles();
@@ -935,7 +891,7 @@
         function renderHistory() {
             const grid = document.getElementById('historyGrid');
             if (!historyData || historyData.length === 0) {
-                grid.innerHTML = '<p style="text-align: center;">Nessuna cronologia</p>';
+                grid.innerHTML = '<p style="text-align: center;">Cronologia dei tuoi accessi</p>';
                 return;
             }
             grid.innerHTML = historyData.map(entry => `
@@ -954,13 +910,17 @@
             document.getElementById('modalTitle').textContent = deal.title;
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align: center; margin-bottom: 28px;">
-                    <img src="${deal.image}" style="max-width: 400px; border-radius: 12px;">
+                    <img src="${deal.image}" style="max-width: 400px; border-radius: 12px; display: block;">
                 </div>
                 <h2>Dettagli Prodotto</h2>
-                <p><strong>Categoria:</strong> ${deal.category}</p>
-                <p><strong>Prezzo:</strong> <span style="color: var(--primary); font-weight: 700;">€${deal.discountPrice.toFixed(2)}</span> <span style="text-decoration: line-through; color: var(--text-secondary);">€${deal.originalPrice.toFixed(2)}</span></p>
-                <p><strong>Sconto:</strong> <span style="color: var(--success); font-weight: 700;">-${deal.discount}%</span></p>
-                <p><strong>Valutazione:</strong> ${deal.rating}/5 (${deal.reviews} recensioni)</p>
+                <p><strong>Categoria:</strong> <span style="color: var(--primary);">${deal.category.toUpperCase()}</span></p>
+                <p><strong>Prezzo Originale:</strong> <span style="text-decoration: line-through; color: var(--text-secondary);">€${deal.originalPrice.toFixed(2)}</span></p>
+                <p><strong>Prezzo Scontato:</strong> <span style="color: var(--primary); font-weight: 700; font-size: 24px;">€${deal.discountPrice.toFixed(2)}</span></p>
+                <p><strong>Sconto:</strong> <span style="color: var(--success); font-weight: 700; font-size: 20px;">-${deal.discount}%</span></p>
+                <p><strong>Valutazione:</strong> ⭐ ${deal.rating}/5 (${deal.reviews} recensioni verificate)</p>
+                <p><strong>Descrizione:</strong> ${deal.description}</p>
+                <h2>Offerta Esclusiva</h2>
+                <p>Questo prodotto è disponibile con sconto esclusivo. Approfittane ora prima che le scorte finiscano!</p>
                 <button class="btn-hero btn-primary" onclick="openAmazonLink('${deal.title}')" style="width: 100%; margin-top: 24px;">🛒 ACQUISTA SU AMAZON</button>
             `;
             document.getElementById('modal').classList.add('show');
@@ -971,11 +931,12 @@
             if (!article) return;
             document.getElementById('modalTitle').textContent = article.title;
             document.getElementById('modalBody').innerHTML = `
-                <p><strong style="color: var(--primary);">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min</p>
-                <h2>Contenuto</h2>
+                <p><strong style="color: var(--primary);">📚 ${article.category}</strong> • ${article.date} • ${article.readTime} min lettura</p>
+                <h2>Estratto</h2>
                 <p>${article.excerpt}</p>
-                <h2>Approfondimento</h2>
+                <h2>Articolo Completo</h2>
                 <p>${article.content}</p>
+                <p style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-secondary);">Scopri altri articoli simili nella sezione Articoli.</p>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -988,8 +949,11 @@
                 <div style="text-align: center; font-size: 72px; margin-bottom: 24px;">${news.icon}</div>
                 <p><strong style="color: var(--primary);">${news.category.toUpperCase()}</strong> • ${news.date}</p>
                 <p><strong>Autore:</strong> ${news.author}</p>
-                <h2>Descrizione</h2>
+                <h2>Notizia</h2>
+                <p>${news.title}</p>
+                <h2>Approfondimento</h2>
                 <p>${news.content}</p>
+                <p style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 12px;">Pubblicato il ${news.date} da ${news.author}</p>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -1006,9 +970,9 @@
                 <p><strong>Youtuber:</strong> <span style="color: var(--primary); font-weight: 700;">${video.youtuber}</span></p>
                 <p><strong>Canale:</strong> ${video.channel}</p>
                 <p><strong>Visualizzazioni:</strong> 👁️ ${video.views} | <strong>Rating:</strong> ⭐ ${video.rating}/5</p>
-                <h2>Descrizione</h2>
+                <h2>Descrizione Completa</h2>
                 <p>${video.description}</p>
-                <button class="btn-hero btn-primary" onclick="window.open('https://www.youtube.com/watch?v=${video.videoId}', '_blank')" style="width: 100%; margin-top: 24px;">🎬 GUARDA SU YOUTUBE</button>
+                <button class="btn-hero btn-primary" onclick="window.open('https://www.youtube.com/watch?v=${video.videoId}', '_blank')" style="width: 100%; margin-top: 24px;">🎬 GUARDA IL VIDEO COMPLETO</button>
             `;
             document.getElementById('modal').classList.add('show');
         }
@@ -1023,16 +987,6 @@
 
         function closeModalOnBackdrop(event) {
             if (event.target === document.getElementById('modal')) closeModal();
-        }
-
-        function toggleAudio() {
-            audioPlaying = !audioPlaying;
-            const button = document.querySelector('.audio-toggle');
-            if (audioPlaying) {
-                button.classList.add('playing');
-            } else {
-                button.classList.remove('playing');
-            }
         }
 
         function toggleTheme() {
